@@ -21,6 +21,7 @@ export default class MuffinAI extends Client {
         type: ActivityType.Playing,
         name: 'ㅅ살려주세요..!',
       })
+      console.log(`먹힐 준비 완료`)
     }).on('messageCreate', async msg => {
       if (msg.author.bot) return
       if (!msg.content.startsWith('머핀아 ')) return
