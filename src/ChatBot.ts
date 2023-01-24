@@ -1,19 +1,7 @@
 import sqlite3 from 'sqlite3'
-import { ResponseData } from './types'
+import { ResponseData } from './types.js'
 import type { Client, Message } from 'discord.js'
-
-function arrayShuffle<T>(array: T[]): T[] {
-  array = [...array]
-
-  for (let i = array.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1))
-    const temp = array[i]
-    array[i] = array[j]
-    array[j] = temp
-  }
-
-  return array
-}
+import arrayShuffle from 'array-shuffle'
 
 export default class ChatBot {
   private db: sqlite3.Database
@@ -40,6 +28,7 @@ export default class ChatBot {
 
   public train(client: Client): ChatBot {
     client.on('messageCreate', msg => {
+      if (msg.author.bot) return
       if (msg.author.id === '1026185545837191238') {
         this.db.run(
           `INSERT INTO statement(text) VALUES('${msg.content}');`,
@@ -48,9 +37,17 @@ export default class ChatBot {
             this.getResponse(msg)
           }
         )
+      } else {
+        if (!msg.content.startsWith('머핀아 ')) return
+        const sql = `INSERT INTO statement(text) VALUES('${msg.content.replace(
+          '머핀아 ',
+          ''
+        )}')`
+        this.db.run(sql, err => {
+          if (err) throw err
+        })
       }
     })
-
     return this
   }
 }

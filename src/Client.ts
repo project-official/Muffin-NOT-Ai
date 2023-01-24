@@ -1,10 +1,13 @@
 import { ActivityType, Client, GatewayIntentBits } from 'discord.js'
-import ChatBot from './ChatBot'
-import { join } from 'node:path'
+import ChatBot from './ChatBot.js'
+import { join, dirname } from 'node:path'
+import { fileURLToPath } from 'node:url'
 import 'dotenv/config'
 
 export default class MuffinAI extends Client {
-  private chatBot = new ChatBot(join(__dirname, '..', 'db', 'db.sqlite3'))
+  private chatBot = new ChatBot(
+    join(dirname(fileURLToPath(import.meta.url)), '..', 'db', 'db.sqlite3')
+  )
   public constructor() {
     super({
       intents: [
