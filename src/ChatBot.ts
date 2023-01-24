@@ -5,17 +5,17 @@ import { Message } from 'discord.js'
 export default class ChatBot {
   private db: sqlite3.Database
   public constructor(dbPath: string) {
-    const a = sqlite3.verbose()
-    this.db = new a.Database(dbPath)
+    this.db = new sqlite3.Database(dbPath)
   }
 
-  public async getResponse(msg: Message) {
-    this.db.all('select * from statement', [], (err, rows) => {
-      const a = msg.content.replace('머핀아', '')
+  public getResponse(msg: Message) {
+    this.db.all('select * from statement', [], (err, rows: ResponseData[]) => {
       if (err) throw err
+      const a = msg.content.replace('머핀아', '')
       const data: ResponseData[] = [...rows]
       data.sort(() => Math.random() - 0.5)
-      const r = data[0].text
+      let r = data[0].text
+      if (!r) r = '살ㄹ려주세요'
       console.log(`⌨️ㅣ${a}`)
       console.log(`🍰ㅣ${r}`)
       msg.channel.sendTyping()

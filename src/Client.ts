@@ -22,11 +22,11 @@ export default class MuffinAI extends Client {
         name: 'ㅅ살려주세요..!',
       })
       console.log(`먹힐 준비 완료`)
-    }).on('messageCreate', async msg => {
+    }).on('messageCreate', msg => {
       if (msg.author.bot) return
       if (!msg.content.startsWith('머핀아 ')) return
 
-      await this.chatBot.getResponse(msg)
+      this.chatBot.getResponse(msg)
     })
     return super.login()
   }
