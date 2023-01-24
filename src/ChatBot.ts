@@ -1,7 +1,5 @@
 import sqlite3 from 'sqlite3'
-import { ResponseData } from './types.js'
 import type { Client, Message } from 'discord.js'
-import arrayShuffle from 'array-shuffle'
 
 export default class ChatBot {
   private db: sqlite3.Database
@@ -10,19 +8,21 @@ export default class ChatBot {
   }
 
   public getResponse(msg: Message, sendMsg?: boolean): ChatBot {
-    this.db.all('SELECT * FROM statement;', [], (err, rows: ResponseData[]) => {
-      if (err) throw err
-      const a = msg.content.replace('머핀아', '')
-      const data = arrayShuffle([...rows])
-      let r = data[0].text
-      if (!r) r = '살ㄹ려주세요'
-      console.log(`⌨️ㅣ${a}`)
-      console.log(`🍰ㅣ${r}`)
-      if (sendMsg) {
-        msg.channel.sendTyping()
-        setTimeout(() => msg.channel.send(r), 1000)
+    this.db.all(
+      'SELECT text FROM statement;',
+      (err, rows: Array<{ text: string }>) => {
+        if (err) throw err
+        const a = msg.content.replace('머핀아', '')
+        let r = rows[Math.floor(Math.random() * rows.length)].text
+        if (!r) r = '살ㄹ려주세요'
+        console.log(`⌨️ ㅣ${a}`)
+        console.log(`🍰ㅣ${r}`)
+        if (sendMsg) {
+          msg.channel.sendTyping()
+          setTimeout(() => msg.channel.send(r), 1000)
+        }
       }
-    })
+    )
     return this
   }
 
