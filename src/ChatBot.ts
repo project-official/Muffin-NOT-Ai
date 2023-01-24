@@ -39,15 +39,18 @@ export default class ChatBot {
         )
       } else {
         if (!msg.content.startsWith('머핀아 ')) return
-        const sql = `INSERT INTO statement(text) VALUES('${msg.content.replace(
-          '머핀아 ',
-          ''
-        )}');`
+        const sql = `INSERT INTO statement(text) VALUES('${msg.content
+          .replace('머핀아 ', '')
+          .replace("'", '')}');`
         this.db.run(sql, err => {
           if (err) throw err
         })
       }
     })
     return this
+  }
+
+  public destroy() {
+    this.db.close()
   }
 }

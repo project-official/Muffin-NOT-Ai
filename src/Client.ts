@@ -2,6 +2,7 @@ import { ActivityType, Client, GatewayIntentBits } from 'discord.js'
 import ChatBot from './ChatBot.js'
 import { join, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
+import Dokdo from 'dokdo'
 import 'dotenv/config'
 
 export default class MuffinAI extends Client {
@@ -28,10 +29,34 @@ export default class MuffinAI extends Client {
       console.log(`먹힐 준비 완료`)
     }).on('messageCreate', msg => {
       if (msg.author.bot) return
-      if (!msg.content.startsWith('머핀아 ')) return
-
-      this.chatBot.getResponse(msg, true)
+      new Dokdo(this, {
+        prefix: '멒힌아 ',
+        noPerm: msg => msg.reply('당신은 내 남자친구가 아니잖아!'),
+        aliases: ['테스트'],
+        owners: ['415135882006495242'],
+      }).run(msg)
+      if (msg.content.startsWith('머핀아 ')) this.chatBot.getResponse(msg, true)
+      else if (msg.content.startsWith('멒힌아 봇꺼')) {
+        if (msg.author.id !== '415135882006495242') {
+          msg.reply({
+            content: '당신은 내 남자친구가 아니야!',
+            allowedMentions: {
+              repliedUser: false,
+              parse: [],
+              users: [],
+              roles: [],
+            },
+          })
+          return
+        }
+        this.destroy()
+      } else return
     })
     return super.login()
+  }
+
+  public override destroy() {
+    this.chatBot.destroy()
+    super.destroy()
   }
 }
