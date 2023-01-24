@@ -31,7 +31,7 @@ export default class ChatBot {
       if (msg.author.bot) return
       if (msg.author.id === '1026185545837191238') {
         this.db.run(
-          `INSERT INTO statement(text) VALUES('${msg.content}');`,
+          `INSERT INTO statement(text, persona) VALUES('${msg.content}', 'muffin');`,
           err => {
             if (err) throw err
             this.getResponse(msg)
@@ -42,7 +42,7 @@ export default class ChatBot {
         const sql = `INSERT INTO statement(text) VALUES('${msg.content.replace(
           '머핀아 ',
           ''
-        )}')`
+        )}');`
         this.db.run(sql, err => {
           if (err) throw err
         })
