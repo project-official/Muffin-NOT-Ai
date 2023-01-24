@@ -41,7 +41,7 @@ export default class ChatBot {
         if (!msg.content.startsWith('머핀아 ')) return
         const sql = `INSERT INTO statement(text) VALUES('${msg.content
           .replace('머핀아 ', '')
-          .replace("'", '')}');`
+          .replaceAll("'", '')}');`
         this.db.run(sql, err => {
           if (err) throw err
         })
