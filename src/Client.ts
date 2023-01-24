@@ -16,6 +16,7 @@ export default class MuffinAI extends Client {
   }
 
   public override login(): Promise<string> {
+    this.chatBot.train(this)
     this.once('ready', client => {
       client.user!.setActivity({
         type: ActivityType.Playing,
@@ -26,7 +27,7 @@ export default class MuffinAI extends Client {
       if (msg.author.bot) return
       if (!msg.content.startsWith('머핀아 ')) return
 
-      this.chatBot.getResponse(msg)
+      this.chatBot.getResponse(msg, true)
     })
     return super.login()
   }

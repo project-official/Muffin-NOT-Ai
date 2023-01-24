@@ -1,6 +1,6 @@
 import sqlite3 from 'sqlite3'
 import { ResponseData } from './types'
-import { Message } from 'discord.js'
+import type { Client, Message } from 'discord.js'
 
 function arrayShuffle<T>(array: T[]): T[] {
   array = [...array]
@@ -21,19 +21,36 @@ export default class ChatBot {
     this.db = new sqlite3.Database(dbPath)
   }
 
-  public getResponse(msg: Message) {
-    this.db.all('select * from statement', [], (err, rows: ResponseData[]) => {
+  public getResponse(msg: Message, sendMsg?: boolean): ChatBot {
+    this.db.all('SELECT * FROM statement;', [], (err, rows: ResponseData[]) => {
       if (err) throw err
       const a = msg.content.replace('머핀아', '')
       const data = arrayShuffle([...rows])
-      console.log(data)
       let r = data[0].text
       if (!r) r = '살ㄹ려주세요'
       console.log(`⌨️ㅣ${a}`)
       console.log(`🍰ㅣ${r}`)
-      msg.channel.sendTyping()
-      setTimeout(() => msg.channel.send(r), 1000)
+      if (sendMsg) {
+        msg.channel.sendTyping()
+        setTimeout(() => msg.channel.send(r), 1000)
+      }
     })
+    return this
+  }
+
+  public train(client: Client): ChatBot {
+    client.on('messageCreate', msg => {
+      if (msg.author.id === '1026185545837191238') {
+        this.db.run(
+          `INSERT INTO statement(text) VALUES('${msg.content}');`,
+          err => {
+            if (err) throw err
+            this.getResponse(msg)
+          }
+        )
+      }
+    })
+
     return this
   }
 }
