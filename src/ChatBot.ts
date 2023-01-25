@@ -26,7 +26,7 @@ export default class ChatBot {
     return this
   }
 
-  public train(client: Client): ChatBot {
+  public train(client: Client, user?: boolean): ChatBot {
     client.on('messageCreate', msg => {
       if (msg.author.bot) return
       if (msg.author.id === '1026185545837191238') {
@@ -38,10 +38,11 @@ export default class ChatBot {
           }
         )
       } else {
+        if (!user) return
         if (!msg.content.startsWith('머핀아 ')) return
-        const sql = `INSERT INTO statement(text) VALUES('${msg.content
+        const sql = `INSERT INTO statement(text, persona) VALUES('${msg.content
           .replace('머핀아 ', '')
-          .replaceAll("'", '')}');`
+          .replaceAll("'", '')}', 'user');`
         this.db.run(sql, err => {
           if (err) throw err
         })

@@ -1,9 +1,21 @@
-import { ActivityType, Client, GatewayIntentBits } from 'discord.js'
+import { ActivityType, Client, GatewayIntentBits, Message } from 'discord.js'
 import ChatBot from './ChatBot.js'
 import { join, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import Dokdo from 'dokdo'
 import 'dotenv/config'
+
+function noPerm(msg: Message) {
+  msg.reply({
+    content: '당신은 내 남자친구가 아니야!',
+    allowedMentions: {
+      repliedUser: false,
+      parse: [],
+      users: [],
+      roles: [],
+    },
+  })
+}
 
 export default class MuffinAI extends Client {
   private chatBot = new ChatBot(
@@ -20,7 +32,7 @@ export default class MuffinAI extends Client {
   }
 
   public override login(): Promise<string> {
-    this.chatBot.train(this)
+    this.chatBot.train(this, true)
     this.once('ready', client => {
       client.user!.setActivity({
         type: ActivityType.Playing,
@@ -31,31 +43,14 @@ export default class MuffinAI extends Client {
       if (msg.author.bot) return
       new Dokdo(this, {
         prefix: '멒힌아 ',
-        noPerm: msg =>
-          msg.reply({
-            content: '당신은 내 남자친구가 아니야!',
-            allowedMentions: {
-              repliedUser: false,
-              parse: [],
-              users: [],
-              roles: [],
-            },
-          }),
+        noPerm,
         aliases: ['테스트'],
         owners: ['415135882006495242'],
       }).run(msg)
       if (msg.content.startsWith('머핀아 ')) this.chatBot.getResponse(msg, true)
       else if (msg.content.startsWith('멒힌아 봇꺼')) {
         if (msg.author.id !== '415135882006495242') {
-          msg.reply({
-            content: '당신은 내 남자친구가 아니야!',
-            allowedMentions: {
-              repliedUser: false,
-              parse: [],
-              users: [],
-              roles: [],
-            },
-          })
+          noPerm(msg)
           return
         }
         this.destroy()
