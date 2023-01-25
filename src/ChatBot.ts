@@ -45,9 +45,12 @@ export default class ChatBot {
       } else {
         if (this.trainType !== 'All') return
         if (!msg.content.startsWith('머핀아 ')) return
-        const sql = `INSERT INTO statement(text, persona) VALUES('${msg.content
-          .replace('머핀아 ', '')
-          .replaceAll("'", '')}', 'user');`
+        const user = `user:${msg.author.username
+          .replaceAll("'", '')
+          .slice(0, 50)
+          .toLowerCase()}`
+        const text = msg.content.replace('머핀아 ', '').replaceAll("'", '')
+        const sql = `INSERT INTO statement(text, persona) VALUES('${text}', '${user}');`
         this.db.run(sql, err => {
           if (err) throw err
         })
