@@ -1,11 +1,16 @@
 import sqlite3 from 'sqlite3'
 import type { Client, Message } from 'discord.js'
+import { dirname, join } from 'node:path'
+import { fileURLToPath } from 'node:url'
+
+type TrainType = 'muffinOnly' | 'All'
 
 export default class ChatBot {
-  private db: sqlite3.Database
-  public constructor(dbPath: string) {
-    this.db = new sqlite3.Database(dbPath)
-  }
+  private db = new sqlite3.Database(
+    join(dirname(fileURLToPath(import.meta.url)), '..', 'db', 'db.sqlite3')
+  )
+  private trainType: TrainType = 'All'
+  public constructor() {}
 
   public getResponse(msg: Message, sendMsg?: boolean): ChatBot {
     this.db.all(
@@ -26,7 +31,7 @@ export default class ChatBot {
     return this
   }
 
-  public train(client: Client, user?: boolean): ChatBot {
+  public train(client: Client): ChatBot {
     client.on('messageCreate', msg => {
       if (msg.author.bot) return
       if (msg.author.id === '1026185545837191238') {
@@ -38,7 +43,7 @@ export default class ChatBot {
           }
         )
       } else {
-        if (!user) return
+        if (this.trainType !== 'All') return
         if (!msg.content.startsWith('머핀아 ')) return
         const sql = `INSERT INTO statement(text, persona) VALUES('${msg.content
           .replace('머핀아 ', '')
@@ -51,7 +56,19 @@ export default class ChatBot {
     return this
   }
 
-  public destroy() {
+  public changeTrainType(): TrainType {
+    switch (this.trainType) {
+      case 'muffinOnly':
+        this.trainType = 'All'
+        break
+      case 'All':
+        this.trainType = 'muffinOnly'
+        break
+    }
+    return this.trainType
+  }
+
+  public destroy(): void {
     this.db.close()
   }
 }

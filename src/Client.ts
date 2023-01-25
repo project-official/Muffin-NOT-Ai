@@ -1,7 +1,5 @@
 import { ActivityType, Client, GatewayIntentBits, Message } from 'discord.js'
 import ChatBot from './ChatBot.js'
-import { join, dirname } from 'node:path'
-import { fileURLToPath } from 'node:url'
 import Dokdo from 'dokdo'
 import 'dotenv/config'
 
@@ -17,10 +15,15 @@ function noPerm(msg: Message) {
   })
 }
 
+function isNotOwner(msg: Message): boolean {
+  if (msg.author.id !== '415135882006495242') {
+    noPerm(msg)
+    return false
+  } else return true
+}
+
 export default class MuffinAI extends Client {
-  private chatBot = new ChatBot(
-    join(dirname(fileURLToPath(import.meta.url)), '..', 'db', 'db.sqlite3')
-  )
+  private chatBot = new ChatBot()
   public constructor() {
     super({
       intents: [
@@ -32,7 +35,7 @@ export default class MuffinAI extends Client {
   }
 
   public override login(): Promise<string> {
-    this.chatBot.train(this, true)
+    this.chatBot.train(this)
     this.once('ready', client => {
       client.user!.setActivity({
         type: ActivityType.Playing,
@@ -49,11 +52,19 @@ export default class MuffinAI extends Client {
       }).run(msg)
       if (msg.content.startsWith('머핀아 ')) this.chatBot.getResponse(msg, true)
       else if (msg.content.startsWith('멒힌아 봇꺼')) {
-        if (msg.author.id !== '415135882006495242') {
-          noPerm(msg)
-          return
-        }
+        if (!isNotOwner(msg)) return
         this.destroy()
+      } else if (msg.content.startsWith('멒힌아 모드변경')) {
+        if (!isNotOwner(msg)) return
+        const a = this.chatBot.changeTrainType()
+        switch (a) {
+          case 'muffinOnly':
+            msg.channel.send('현재 모드: 머핀만 학습')
+            break
+          case 'All':
+            msg.channel.send('현재 모드: 전체 학습')
+            break
+        }
       } else return
     })
     return super.login()
