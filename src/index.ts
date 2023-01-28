@@ -1,1 +1,1 @@
-import('./Client.js').then(a => new a.default().login())
+import('./Client').then(a => new a.default().login())

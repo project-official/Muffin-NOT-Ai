@@ -1,5 +1,5 @@
 import { ActivityType, Client, GatewayIntentBits, Message } from 'discord.js'
-import ChatBot from './ChatBot.js'
+import ChatBot from './ChatBot'
 import Dokdo from 'dokdo'
 import 'dotenv/config'
 
@@ -56,8 +56,19 @@ export default class MuffinAI extends Client {
         this.destroy()
       } else if (msg.content.startsWith('멒힌아 모드변경')) {
         if (!isNotOwner(msg)) return
-        const a = this.chatBot.changeTrainType()
-        switch (a) {
+        switch (this.chatBot.trainType) {
+          case 'muffinOnly':
+            this.chatBot.trainType = 'All'
+            msg.channel.send('다음 모드로 변경: 전체 학습')
+            break
+          case 'All':
+            this.chatBot.trainType = 'muffinOnly'
+            msg.channel.send('다음 모드로 변경: 머핀만 학습')
+            break
+        }
+      } else if (msg.content.startsWith('멒힌아 현재모드')) {
+        if (!isNotOwner(msg)) return
+        switch (this.chatBot.trainType) {
           case 'muffinOnly':
             msg.channel.send('현재 모드: 머핀만 학습')
             break
