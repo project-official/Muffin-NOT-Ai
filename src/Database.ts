@@ -12,15 +12,15 @@ interface ResponseData {
 }
 
 export default class Database {
-  private db: sqlite3.Database
+  private sqliteDB: sqlite3.Database
   public constructor(dbPath: string) {
-    this.db = new sqlite3.Database(dbPath)
+    this.sqliteDB = new sqlite3.Database(dbPath)
   }
 
-  public get(): Promise<ResponseData[]> {
+  public all(): Promise<ResponseData[]> {
     return new Promise((resolve, reject) => {
-      this.db.serialize(() => {
-        this.db.all('SELECT * FROM statement;', (err, rows) => {
+      this.sqliteDB.serialize(() => {
+        this.sqliteDB.all('SELECT * FROM statement;', (err, rows) => {
           if (err) reject(err)
           resolve([...rows])
         })
@@ -33,10 +33,10 @@ export default class Database {
     params: any[],
     callBack: (err: Error | null) => void
   ) {
-    this.db.run(sql, params, callBack)
+    this.sqliteDB.run(sql, params, callBack)
   }
 
   public close() {
-    this.db.close()
+    this.sqliteDB.close()
   }
 }

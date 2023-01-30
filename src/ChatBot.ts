@@ -12,13 +12,13 @@ export default class ChatBot {
   set trainType(value: TrainType) {
     this._trainType = value
   }
-  private db = new Database(join(__dirname, '..', 'db', 'db.sqlite3'))
+  public db = new Database(join(__dirname, '..', 'db', 'db.sqlite3'))
   private _trainType: TrainType = 'All'
   public constructor() {}
 
   public getResponse(msg: Message, sendMsg?: boolean): ChatBot {
     this.db
-      .get()
+      .all()
       .then(rows => {
         const a = msg.content.replace('머핀아', '')
         let r = rows[Math.floor(Math.random() * rows.length)].text
