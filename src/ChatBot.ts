@@ -1,5 +1,5 @@
 import type { Client, Message } from 'discord.js'
-import { join } from 'node:path'
+// import { join } from 'node:path'
 import Database from './Database'
 
 type TrainType = 'muffinOnly' | 'All'
@@ -12,18 +12,17 @@ export default class ChatBot {
   set trainType(value: TrainType) {
     this._trainType = value
   }
-  public db = new Database(join(__dirname, '..', 'db', 'db.sqlite3'))
+  public db = new Database(process.env.DB_PATH!)
   private _trainType: TrainType = 'All'
-  public constructor() {}
 
   public getResponse(msg: Message, sendMsg?: boolean): ChatBot {
     this.db
       .all()
       .then(rows => {
-        const a = msg.content.replace('머핀아', '')
+        const a = msg.content.replace('머핀아 ', '')
         let r = rows[Math.floor(Math.random() * rows.length)].text
         if (!r) r = '살ㄹ려주세요'
-        console.log(`⌨️ ㅣ${a}`)
+        console.log(`⌨️ㅣ${a}`)
         console.log(`🍰ㅣ${r}`)
         if (sendMsg) {
           msg.channel.sendTyping()
