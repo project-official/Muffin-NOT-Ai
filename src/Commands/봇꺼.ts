@@ -1,4 +1,4 @@
-import Command from '../Command'
+import { Command } from '../modules'
 import { type Message } from 'discord.js'
 
 export default class extends Command {

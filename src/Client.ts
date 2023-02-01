@@ -1,10 +1,8 @@
 import { ActivityType, Client, Collection, GatewayIntentBits } from 'discord.js'
-import ChatBot from './ChatBot'
+import { Command, noPerm, ChatBot } from './modules'
 import Dokdo from 'dokdo'
 import { readdirSync } from 'node:fs'
 import { join } from 'node:path'
-import Command from './Command'
-import noPerm from './noPerm'
 import 'dotenv/config'
 
 const prefix = '멒힌아 '
@@ -45,14 +43,19 @@ export default class MuffinAI extends Client {
         aliases: ['테스트'],
         owners: ['415135882006495242'],
       }).run(msg)
-      if (msg.content.startsWith('머핀아 ')) this.chatBot.getResponse(msg, true)
-      else if (msg.content.startsWith(prefix)) {
+      if (msg.content.startsWith('머핀아 ')) {
+        msg.channel.sendTyping()
+        setTimeout(
+          async () => msg.channel.send(await this.chatBot.getResponse(msg)),
+          1000
+        )
+      } else if (msg.content.startsWith(prefix)) {
         const args: string[] = msg.content
           .slice(prefix.length)
           .trim()
           .split('/ +/g')
 
-        const command = this.modules.get(args.join(' '))
+        const command = this.modules.get(args.toString())
         if (!command) return
         if (command.noPerm && msg.author.id !== '415135882006495242')
           return await noPerm(msg)

@@ -14,7 +14,8 @@ interface ResponseData {
 export default class Database {
   private sqliteDB: sqlite3.Database
   public constructor(dbPath: string) {
-    this.sqliteDB = new sqlite3.Database(dbPath)
+    const a = sqlite3.verbose()
+    this.sqliteDB = new a.Database(dbPath)
   }
 
   public all(): Promise<ResponseData[]> {

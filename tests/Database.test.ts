@@ -1,4 +1,4 @@
-import Database from '../src/Database'
+import Database from '../src/modules/Database'
 import sqlite3 from 'sqlite3'
 
 describe('Test Database', () => {
