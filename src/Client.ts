@@ -1,4 +1,10 @@
-import { ActivityType, Client, Collection, GatewayIntentBits } from 'discord.js'
+import {
+  ActivityType,
+  Client,
+  Collection,
+  GatewayIntentBits,
+  TextChannel,
+} from 'discord.js'
 import { Command, noPerm, ChatBot } from './modules'
 import Dokdo from 'dokdo'
 import { readdirSync } from 'node:fs'
@@ -9,7 +15,7 @@ const prefix = '멒힌아 '
 
 export default class MuffinAI extends Client {
   public chatBot = new ChatBot()
-  private modules: Collection<string, Command> = new Collection()
+  #modules: Collection<string, Command> = new Collection()
   public constructor() {
     super({
       intents: [
@@ -26,7 +32,7 @@ export default class MuffinAI extends Client {
     readdirSync(join(__dirname, 'Commands')).forEach(file => {
       const a = require(join(__dirname, 'Commands', file))
       const b: Command = new a.default()
-      this.modules.set(b.name, b)
+      this.#modules.set(b.name, b)
     })
 
     this.once('ready', client => {
@@ -44,18 +50,21 @@ export default class MuffinAI extends Client {
         owners: ['415135882006495242'],
       }).run(msg)
       if (msg.content.startsWith('머핀아 ')) {
-        msg.channel.sendTyping()
-        setTimeout(
-          async () => msg.channel.send(await this.chatBot.getResponse(msg)),
-          1000
-        )
+        if (msg.channel instanceof TextChannel) {
+          if (msg.channel.nsfw) return
+          await msg.channel.sendTyping()
+          setTimeout(
+            async () => msg.channel.send(await this.chatBot.getResponse(msg)),
+            1000
+          )
+        }
       } else if (msg.content.startsWith(prefix)) {
         const args: string[] = msg.content
           .slice(prefix.length)
           .trim()
           .split('/ +/g')
 
-        const command = this.modules.get(args.toString())
+        const command = this.#modules.get(args.toString())
         if (!command) return
         if (command.noPerm && msg.author.id !== '415135882006495242')
           return await noPerm(msg)

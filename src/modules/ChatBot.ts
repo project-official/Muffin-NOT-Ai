@@ -4,15 +4,7 @@ import Database from './Database'
 type TrainType = 'muffinOnly' | 'All'
 
 export default class ChatBot {
-  get trainType(): TrainType {
-    return this._trainType
-  }
-
-  set trainType(value: TrainType) {
-    this._trainType = value
-  }
   public db = new Database(process.env.DB_PATH!)
-  private _trainType: TrainType = 'muffinOnly'
 
   public async getResponse(msg: Message): Promise<string> {
     const request = msg.content.replace('머핀아 ', '')
@@ -21,16 +13,6 @@ export default class ChatBot {
     if (!response) response = '살ㄹ려주세요'
     console.log(`⌨️ㅣ${request}`)
     console.log(`🍰ㅣ${response}`)
-    // .then(rows => {
-    //   const request = msg.content.replace('머핀아 ', '')
-    //   response = rows[Math.floor(Math.random() * rows.length)].text
-    //   if (!response) response = '살ㄹ려주세요'
-    //   if (sendMsg) {
-    //     msg.channel.sendTyping()
-    //     setTimeout(() => msg.channel.send(response), 1000)
-    //   }
-    // })
-    // .catch(console.error)
     return response
   }
 
