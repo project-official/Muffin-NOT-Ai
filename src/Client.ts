@@ -53,12 +53,11 @@ export default class MuffinAI extends Client {
         if (msg.channel instanceof TextChannel) {
           if (msg.channel.nsfw) return
           await msg.channel.sendTyping()
-          setTimeout(
-            async () => msg.channel.send(await this.chatBot.getResponse(msg)),
-            1000
-          )
+          await msg.channel.send(await this.chatBot.getResponse(msg))
         }
       } else if (msg.content.startsWith(prefix)) {
+        if (msg.channel instanceof TextChannel) if (msg.channel.nsfw) return
+
         const args: string[] = msg.content
           .slice(prefix.length)
           .trim()
@@ -75,8 +74,8 @@ export default class MuffinAI extends Client {
   }
 
   public override destroy() {
-    this.chatBot.destroy()
     super.destroy()
+    process.exit()
   }
 }
 

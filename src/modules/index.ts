@@ -1,5 +1,5 @@
 import ChatBot from './ChatBot'
 import Command from './Command'
-import Database from './Database'
+import database, { ResponseData } from './Database'
 import noPerm from './noPerm'
-export { ChatBot, Command, Database, noPerm }
+export { ChatBot, Command, database, noPerm, ResponseData }

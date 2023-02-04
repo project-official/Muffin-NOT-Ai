@@ -1,6 +1,7 @@
-import sqlite3 from 'sqlite3'
+import { createPool } from 'mysql2/promise'
+import 'dotenv/config'
 
-interface ResponseData {
+export interface ResponseData {
   id: number
   text: string
   search_text: string
@@ -11,33 +12,9 @@ interface ResponseData {
   persona: string
 }
 
-export default class Database {
-  #sqliteDB: sqlite3.Database
-  public constructor(dbPath: string) {
-    const a = sqlite3.verbose()
-    this.#sqliteDB = new a.Database(dbPath)
-  }
-
-  public all(): Promise<ResponseData[]> {
-    return new Promise((resolve, reject) => {
-      this.#sqliteDB.serialize(() => {
-        this.#sqliteDB.all('SELECT * FROM statement;', (err, rows) => {
-          if (err) reject(err)
-          resolve([...rows])
-        })
-      })
-    })
-  }
-
-  public run(
-    sql: string,
-    params: any[],
-    callBack: (err: Error | null) => void
-  ) {
-    this.#sqliteDB.run(sql, params, callBack)
-  }
-
-  public close() {
-    this.#sqliteDB.close()
-  }
-}
+export default createPool({
+  host: process.env.MYSQL_HOST,
+  user: process.env.MYSQL_USER,
+  password: process.env.MYSQL_PASSWORD,
+  database: process.env.MYSQL_DATABASE,
+})
