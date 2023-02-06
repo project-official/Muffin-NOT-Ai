@@ -35,8 +35,8 @@ export default class MuffinAI extends Client {
       this.#modules.set(b.name, b)
     })
 
-    this.once('ready', client => {
-      client.user!.setActivity({
+    this.once('ready', () => {
+      this.user!.setActivity({
         type: ActivityType.Playing,
         name: 'ㅅ살려주세요..!',
       })

@@ -7,16 +7,13 @@ export default class extends Command {
   }
   public async execute(msg: Message, args: string[]) {
     const conn = await database.getConnection()
-    await conn
-      .query('SELECT * FROM statement;') //
-      .then(rows => {
-        const muffin: ResponseData[] = []
-        ;(rows[0] as ResponseData[]).forEach(row => {
-          if (row.persona === 'muffin') muffin.push(row)
-          else return
-        })
-        msg.channel.send(`머핀 데이터: ${muffin.length}개`)
-      })
+    const [rows] = await conn.query('SELECT * FROM statement;')
+    const muffin: ResponseData[] = []
+    ;(rows as ResponseData[]).forEach(row => {
+      if (row.persona === 'muffin') muffin.push(row)
+      else return
+    })
+    msg.channel.send(`머핀 데이터: ${muffin.length}개`)
     conn.release()
   }
 }
