@@ -7,7 +7,9 @@ export default class extends Command {
   }
   public async execute(msg: Message, args: string[]) {
     const conn = await database.getConnection()
-    const [rows] = await conn.query<ResponseData[]>('SELECT * FROM statement;')
+    const [rows] = await conn.execute<ResponseData[]>(
+      'SELECT * FROM statement;'
+    )
     const muffin: ResponseData[] = []
     rows.forEach(row => {
       if (row.persona === 'muffin') muffin.push(row)

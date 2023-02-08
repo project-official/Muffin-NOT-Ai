@@ -6,7 +6,9 @@ export default class ChatBot {
     const conn = await database.getConnection()
     const request = msg.content.replace('머핀아 ', '')
     console.log(`req: ${request}`)
-    const [rows] = await conn.query<ResponseData[]>('SELECT * FROM statement;')
+    const [rows] = await conn.execute<ResponseData[]>(
+      'SELECT * FROM statement;'
+    )
     let response = rows[Math.floor(Math.random() * rows.length)].text
     if (!response) response = '살ㄹ려주세요'
     console.log(`res: ${response}`)
@@ -20,7 +22,7 @@ export default class ChatBot {
       const conn = await database.getConnection()
       if (msg.author.id === '1026185545837191238') {
         const response = await this.getResponse(msg)
-        const [rows] = await conn.query<ResponseData[]>(
+        const [rows] = await conn.execute<ResponseData[]>(
           'SELECT * FROM statement;'
         )
         try {
