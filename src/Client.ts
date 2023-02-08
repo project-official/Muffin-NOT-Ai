@@ -5,8 +5,7 @@ import {
   GatewayIntentBits,
   TextChannel,
 } from 'discord.js'
-import { Command, noPerm, ChatBot } from './modules'
-import Dokdo from 'dokdo'
+import { Command, noPerm, ChatBot, NODE_ENV } from './modules'
 import { readdirSync } from 'node:fs'
 import { join } from 'node:path'
 import 'dotenv/config'
@@ -27,12 +26,14 @@ export default class MuffinAI extends Client {
   }
 
   public override login(): Promise<string> {
+    if (NODE_ENV === 'development') this.on('debug', console.info)
     this.chatBot.train(this)
 
     readdirSync(join(__dirname, 'Commands')).forEach(file => {
       const a = require(join(__dirname, 'Commands', file))
       const b: Command = new a.default()
       this.#modules.set(b.name, b)
+      if (NODE_ENV === 'development') console.log(b.name)
     })
 
     this.once('ready', () => {
@@ -43,17 +44,15 @@ export default class MuffinAI extends Client {
       console.log(`먹힐 준비 완료`)
     }).on('messageCreate', async msg => {
       if (msg.author.bot) return
-      await new Dokdo(this, {
-        prefix,
-        noPerm,
-        aliases: ['테스트'],
-        owners: ['415135882006495242'],
-      }).run(msg)
       if (msg.content.startsWith('머핀아 ')) {
         if (msg.channel instanceof TextChannel) {
           if (msg.channel.nsfw) return
           await msg.channel.sendTyping()
-          await msg.channel.send(await this.chatBot.getResponse(msg))
+          this.chatBot //
+            .getResponse(msg)
+            .then(response => {
+              msg.channel.send(response)
+            })
         }
       } else if (msg.content.startsWith(prefix)) {
         if (msg.channel instanceof TextChannel) if (msg.channel.nsfw) return
@@ -61,12 +60,13 @@ export default class MuffinAI extends Client {
         const args: string[] = msg.content
           .slice(prefix.length)
           .trim()
-          .split('/ +/g')
-
-        const command = this.#modules.get(args.toString())
+          .split(/ +/g)
+        if (NODE_ENV === 'development') console.log(args)
+        const command = this.#modules.get(args.shift()!.toLowerCase())
         if (!command) return
         if (command.noPerm && msg.author.id !== '415135882006495242')
           return await noPerm(msg)
+
         command.execute(msg, args)
       }
     })
@@ -75,7 +75,6 @@ export default class MuffinAI extends Client {
 
   public override destroy() {
     super.destroy()
-    process.exit()
   }
 }
 

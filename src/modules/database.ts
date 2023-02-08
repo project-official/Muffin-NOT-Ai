@@ -1,7 +1,7 @@
-import { createPool } from 'mysql2/promise'
+import { PoolOptions, createPool, RowDataPacket } from 'mysql2/promise'
 import 'dotenv/config'
 
-export interface ResponseData {
+export interface ResponseData extends RowDataPacket {
   id: number
   text: string
   search_text: string
@@ -12,10 +12,13 @@ export interface ResponseData {
   persona: string
 }
 
-export default createPool({
+export const config: PoolOptions = {
   host: process.env.MYSQL_HOST,
   user: process.env.MYSQL_USER,
   password: process.env.MYSQL_PASSWORD,
   database: process.env.MYSQL_DATABASE,
   port: (process.env.MYSQL_PORT as unknown as number) || 3306,
-})
+  enableKeepAlive: true,
+}
+
+export default createPool(config)
