@@ -10,8 +10,13 @@ export default class extends Command {
     if (!args) return msg.channel.send('전달받은 인자가 없습니다.')
     try {
       const a = eval(args.join(' '))
-      if (inspect(a) === `'${msg.client.token}'`)
-        return msg.channel.send('[discord_token]')
+      if (inspect(a).includes(msg.client.token))
+        return msg.channel.send(
+          `\`\`\`js\n${inspect(a).replaceAll(
+            msg.client.token,
+            '[discord_token]'
+          )}\n\`\`\``
+        )
       await msg.channel.send(`\`\`\`js\n${inspect(a)}\n\`\`\``)
     } catch (err) {
       await msg.channel.send(`\`\`\`js\n${err}\n\`\`\``)
