@@ -74,6 +74,7 @@ export default class MuffinAI extends Client {
   }
 
   public override destroy() {
+    this.chatBot.destroy()
     super.destroy()
   }
 }

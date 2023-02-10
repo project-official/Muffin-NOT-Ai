@@ -17,10 +17,11 @@
     "prettier": "^2.8.3",
     "ts-jest": "^29.0.5",
     "ts-node": "^10.9.1",
+    "tsup": "^6.6.0",
     "typescript": "^4.9.4"
   },
   "scripts": {
-    "build": "tsc",
+    "build": "tsup",
     "dev": "cross-env NODE_ENV=development ts-node src",
     "start": "cross-env NODE_ENV=production node dist",
     "test": "jest"
