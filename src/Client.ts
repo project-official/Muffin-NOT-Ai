@@ -13,7 +13,10 @@ import 'dotenv/config'
 const prefix = '멒힌아 '
 
 export default class MuffinAI extends Client {
-  public chatBot = new ChatBot()
+  get chatBot() {
+    return this.#chatBot
+  }
+  #chatBot = new ChatBot()
   #modules: Collection<string, Command> = new Collection()
   public constructor() {
     super({
@@ -46,7 +49,7 @@ export default class MuffinAI extends Client {
       if (msg.author.bot) return
       if (msg.content.startsWith('머핀아 ')) {
         if (msg.channel instanceof TextChannel) {
-          if (msg.channel.nsfw) return
+          // if (msg.channel.nsfw) return
           await msg.channel.sendTyping()
           this.chatBot //
             .getResponse(msg)
@@ -81,6 +84,6 @@ export default class MuffinAI extends Client {
 
 declare module 'discord.js' {
   interface Client {
-    chatBot: ChatBot
+    get chatBot(): ChatBot
   }
 }
