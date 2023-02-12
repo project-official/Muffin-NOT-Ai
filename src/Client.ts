@@ -49,7 +49,6 @@ export default class MuffinAI extends Client {
       if (msg.author.bot) return
       if (msg.content.startsWith('머핀아 ')) {
         if (msg.channel instanceof TextChannel) {
-          // if (msg.channel.nsfw) return
           await msg.channel.sendTyping()
           this.chatBot //
             .getResponse(msg)
@@ -67,7 +66,7 @@ export default class MuffinAI extends Client {
         if (NODE_ENV === 'development') console.log(args)
         const command = this.#modules.get(args.shift()!.toLowerCase())
         if (!command) return
-        if (command.noPerm && msg.author.id !== '415135882006495242')
+        if (command.noPerm && msg.author.id !== process.env.OWNER_ID)
           return await noPerm(msg)
 
         command.execute(msg, args)

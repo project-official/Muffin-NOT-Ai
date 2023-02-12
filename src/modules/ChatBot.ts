@@ -31,7 +31,7 @@ export default class ChatBot {
     client.on('messageCreate', async msg => {
       if (msg.author.bot) return
       const db = await this.db
-      if (msg.author.id === '1026185545837191238') {
+      if (msg.author.id === process.env.TRAIN_USER_ID) {
         const response = await this.getResponse(msg)
         const [rows] = await db.execute<ResponseData[]>(
           'SELECT * FROM statement;'
