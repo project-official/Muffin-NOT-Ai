@@ -21,8 +21,8 @@ export default class ChatBot {
         .text
     } else {
       response = rows[Math.floor(Math.random() * rows.length)].text
-      if (!response) response = '살ㄹ려주세요'
     }
+    if (!response) response = '살ㄹ려주세요'
     console.log(`res: ${response}`)
     return response
   }
