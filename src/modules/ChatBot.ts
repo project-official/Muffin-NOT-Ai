@@ -14,11 +14,11 @@ export default class ChatBot {
     const [rows] = await db.execute<ResponseData[]>('SELECT * FROM statement;')
     let response: string
     if ((msg.channel as TextChannel).nsfw) {
-      const [rows2] = await db.execute<ResponseData[]>(
+      const [rows1] = await db.execute<ResponseData[]>(
         'SELECT * FROM nsfw_content;'
       )
-      response = [...rows, ...rows2][Math.floor(Math.random() * rows.length)]
-        .text
+      const rows2 = [...rows, ...rows1]
+      response = rows2[Math.floor(Math.random() * rows2.length)].text
     } else {
       response = rows[Math.floor(Math.random() * rows.length)].text
     }
