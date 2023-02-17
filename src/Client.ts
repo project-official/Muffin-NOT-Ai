@@ -9,6 +9,7 @@ import { Command, noPerm, ChatBot, NODE_ENV } from './modules'
 import { readdirSync } from 'node:fs'
 import { join } from 'node:path'
 import 'dotenv/config'
+import { execSync } from 'node:child_process'
 
 const prefix = '멒힌아 '
 
@@ -40,6 +41,9 @@ export default class MuffinAI extends Client {
     })
 
     this.once('ready', () => {
+      console.log(
+        `Build Number: ${execSync('git rev-parse --short HEAD').toString()}`
+      )
       this.user!.setActivity({
         type: ActivityType.Playing,
         name: 'ㅅ살려주세요..!',
