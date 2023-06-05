@@ -1,6 +1,7 @@
 import type { Client, Message } from 'discord.js'
 import database, { ResponseData } from './database'
 import { TextChannel } from 'discord.js'
+import config from '../../config.json'
 
 export default class ChatBot {
   get db() {
@@ -8,9 +9,7 @@ export default class ChatBot {
   }
   #db = database
   public async getResponse(msg: Message): Promise<string> {
-    const db = await this.db
-    const request = msg.content.replace('머핀아 ', '')
-    console.log(`req: ${request}`)
+    const db = await this.db.getConnection()
     const [rows] = await db.execute<ResponseData[]>('SELECT * FROM statement;')
     let response: string
     if ((msg.channel as TextChannel).nsfw) {
@@ -23,15 +22,15 @@ export default class ChatBot {
       response = rows[Math.floor(Math.random() * rows.length)].text
     }
     if (!response) response = '살ㄹ려주세요'
-    console.log(`res: ${response}`)
+    db.release()
     return response
   }
 
-  public train(client: Client): ChatBot {
+  public async train(client: Client): Promise<ChatBot> {
+    const db = await this.db.getConnection()
     client.on('messageCreate', async msg => {
       if (msg.author.bot) return
-      const db = await this.db
-      if (msg.author.id === process.env.TRAIN_USER_ID) {
+      if (msg.author.id === config.train.user_ID) {
         const response = await this.getResponse(msg)
         const [rows] = await db.execute<ResponseData[]>(
           'SELECT * FROM statement;'
@@ -68,10 +67,11 @@ export default class ChatBot {
         }
       }
     })
+    db.release()
     return this
   }
 
   public async destroy() {
-    this.db.then(db => db.destroy())
+    this.db.end()
   }
 }

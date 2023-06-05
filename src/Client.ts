@@ -8,8 +8,8 @@ import {
 import { Command, noPerm, ChatBot, NODE_ENV } from './modules'
 import { readdirSync } from 'node:fs'
 import { join } from 'node:path'
-import 'dotenv/config'
 import { execSync } from 'node:child_process'
+import config from '../config.json'
 
 const prefix = '멒힌아 '
 
@@ -70,13 +70,13 @@ export default class MuffinAI extends Client {
         if (NODE_ENV === 'development') console.log(args)
         const command = this.#modules.get(args.shift()!.toLowerCase())
         if (!command) return
-        if (command.noPerm && msg.author.id !== process.env.OWNER_ID)
+        if (command.noPerm && msg.author.id !== config.bot.owner_ID)
           return await noPerm(msg)
 
         command.execute(msg, args)
       }
     })
-    return super.login()
+    return super.login(config.bot.token)
   }
 
   public override destroy() {

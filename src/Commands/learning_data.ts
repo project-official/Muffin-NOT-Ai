@@ -6,7 +6,7 @@ export default class extends Command {
     super('학습데이터량')
   }
   public async execute(msg: Message, args: string[]) {
-    const db = await msg.client.chatBot.db
+    const db = await msg.client.chatBot.db.getConnection()
     const [rows] = await db.execute<ResponseData[]>('SELECT * FROM statement;')
     const [nsfw] = await db.execute<NSFWData[]>('SELECT * FROM nsfw_content;')
     const muffin: ResponseData[] = []
@@ -17,5 +17,6 @@ export default class extends Command {
     msg.channel.send(
       `머핀 데이터: ${muffin.length}개\nnsfw 데이터: ${nsfw.length}`
     )
+    db.release()
   }
 }

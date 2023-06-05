@@ -1,0 +1,16 @@
+{
+  "bot": {
+    "owner_ID": "",
+    "token": ""
+  },
+  "train": {
+    "user_ID": ""
+  },
+  "mysql": {
+    "user": "",
+    "host": "",
+    "password": "",
+    "database": "",
+    "port": 3306
+  }
+}
