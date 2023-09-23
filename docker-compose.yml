@@ -19,6 +19,8 @@ services:
     build: "."
     networks:
       - muffin_ai
+    depends_on:
+      - database
 
 networks:
   muffin_ai:
