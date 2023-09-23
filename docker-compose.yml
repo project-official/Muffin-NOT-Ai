@@ -26,4 +26,4 @@ services:
 
 networks:
   muffin_ai:
-      
+      driver: bridge
