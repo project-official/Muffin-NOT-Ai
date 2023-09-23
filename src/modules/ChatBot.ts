@@ -68,6 +68,12 @@ export default class ChatBot {
       }
     })
     db.release()
+
+    setInterval(async () => {
+      const db = await database.getConnection()
+      await db.ping()
+      db.release()
+    }, 600000)
     return this
   }
 }
