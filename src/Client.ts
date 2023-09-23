@@ -42,7 +42,7 @@ export default class MuffinAI extends Client {
 
     this.once('ready', () => {
       console.log(
-        `Build Number: ${execSync('git rev-parse --short HEAD').toString()}`
+        `Build Number: ${execSync('git rev-parse --short HEAD').toString()}`,
       )
       this.user!.setActivity({
         type: ActivityType.Playing,
@@ -77,11 +77,6 @@ export default class MuffinAI extends Client {
       }
     })
     return super.login(config.bot.token)
-  }
-
-  public override destroy() {
-    this.chatBot.destroy()
-    super.destroy()
   }
 }
 

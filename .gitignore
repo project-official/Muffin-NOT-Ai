@@ -135,4 +135,5 @@ config.json
 # database
 db/
 
-.idea
+.idea/
+database/

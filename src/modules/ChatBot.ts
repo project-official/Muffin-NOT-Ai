@@ -14,7 +14,7 @@ export default class ChatBot {
     let response: string
     if ((msg.channel as TextChannel).nsfw) {
       const [rows1] = await db.execute<ResponseData[]>(
-        'SELECT * FROM nsfw_content;'
+        'SELECT * FROM nsfw_content;',
       )
       const rows2 = [...rows, ...rows1]
       response = rows2[Math.floor(Math.random() * rows2.length)].text
@@ -33,13 +33,13 @@ export default class ChatBot {
       if (msg.author.id === config.train.user_ID) {
         const response = await this.getResponse(msg)
         const [rows] = await db.execute<ResponseData[]>(
-          'SELECT * FROM statement;'
+          'SELECT * FROM statement;',
         )
         try {
           await db.beginTransaction()
           await db.execute(
             'INSERT INTO statement (id, text, persona, in_response_to) VALUES (?, ?, ?, ?);',
-            [++rows[rows.length - 1].id, msg.content, 'muffin', response]
+            [++rows[rows.length - 1].id, msg.content, 'muffin', response],
           )
           await db.commit()
         } catch (err) {
@@ -52,13 +52,13 @@ export default class ChatBot {
         const user = `user:${msg.author.username.slice(0, 50).toLowerCase()}`
         const text = msg.content.replace('머핀아 ', '')
         const [rows] = await db.execute<ResponseData[]>(
-          'SELECT * FROM nsfw_content;'
+          'SELECT * FROM nsfw_content;',
         )
         try {
           await db.beginTransaction()
           await db.execute(
             `INSERT INTO nsfw_content (id, text, persona) VALUES (?, ?, ?);`,
-            [++rows[rows.length - 1].id, text, user]
+            [++rows[rows.length - 1].id, text, user],
           )
           await db.commit()
         } catch (err) {
@@ -69,9 +69,5 @@ export default class ChatBot {
     })
     db.release()
     return this
-  }
-
-  public async destroy() {
-    this.db.end()
   }
 }

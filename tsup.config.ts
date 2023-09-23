@@ -4,6 +4,6 @@ export default defineConfig({
   clean: true,
   format: ['cjs'],
   entry: ['src/index.ts', 'src/Commands/*.ts'],
-  minify: true,
-  splitting: true,
+  // minify: true,
+  // splitting: true,
 })

@@ -1,31 +1,27 @@
 {
   "name": "muffin-ai-arujak",
   "version": "1.0.0",
-  "main": "index.js",
-  "license": "MIT",
+  "main": "dist/index.js",
+  "private": true,
   "dependencies": {
-    "discord.js": "^14.11.0",
-    "dotenv": "^16.1.4",
-    "mysql2": "^3.3.5"
+    "discord.js": "^14.13.0",
+    "dotenv": "^16.3.1",
+    "mysql2": "^3.6.1"
   },
   "devDependencies": {
     "@migan/prettier-config": "^1.0.0",
-    "@types/jest": "^29.5.2",
-    "@types/node": "^20.3.1",
+    "@types/node": "^20.6.3",
     "cross-env": "^7.0.3",
-    "jest": "^29.5.0",
-    "prettier": "^2.8.8",
-    "ts-jest": "^29.1.0",
+    "prettier": "^3.0.3",
     "ts-node": "^10.9.1",
-    "tsup": "^6.7.0",
-    "typescript": "^5.1.3"
+    "tsup": "^7.2.0",
+    "typescript": "^5.2.2"
   },
   "scripts": {
     "build": "tsup",
     "dev": "cross-env NODE_ENV=development ts-node src",
-    "start": "cross-env NODE_ENV=production node dist",
-    "test": "jest"
+    "start": "cross-env NODE_ENV=production node dist"
   },
-  "prettier": "@migan/prettier-config",
-  "packageManager": "yarn@3.6.0"
+  "packageManager": "yarn@3.6.3",
+  "prettier": "@migan/prettier-config"
 }
