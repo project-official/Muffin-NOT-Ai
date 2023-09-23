@@ -21,6 +21,8 @@ services:
       - muffin_ai
     depends_on:
       - database
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
 
 networks:
   muffin_ai:
