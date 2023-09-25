@@ -73,7 +73,7 @@ export default class ChatBot {
       const db = await database.getConnection()
       await db.ping()
       db.release()
-    }, 600000)
+    }, 60000)
     return this
   }
 }
