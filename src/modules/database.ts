@@ -17,4 +17,12 @@ export interface ResponseData extends BaseData {
 
 export { BaseData as NSFWData }
 
-export default createPool(config.mysql)
+const database = createPool(config.mysql)
+
+setInterval(async () => {
+  const db = await database.getConnection()
+  await db.ping()
+  db.release()
+}, 60000)
+
+export default database
