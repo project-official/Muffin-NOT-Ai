@@ -15,7 +15,7 @@ export default class extends Command {
       else return
     })
     msg.channel.send(
-      `머핀 데이터: ${muffin.length}개\nnsfw 데이터: ${nsfw.length}개`
+      `머핀 데이터: ${muffin.length}개\nnsfw 데이터: ${nsfw.length}개`,
     )
     db.release()
   }

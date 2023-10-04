@@ -19,10 +19,4 @@ export { BaseData as NSFWData }
 
 const database = createPool(config.mysql)
 
-setInterval(async () => {
-  const db = await database.getConnection()
-  await db.ping()
-  db.release()
-}, 60000)
-
 export default database
