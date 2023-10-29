@@ -17,6 +17,10 @@ export interface ResponseData extends BaseData {
 
 export { BaseData as NSFWData }
 
-const database = createPool(config.mysql)
+const database = createPool({
+  ...config.mysql,
+  keepAliveInitialDelay: 10000,
+  enableKeepAlive: true,
+})
 
 export default database
