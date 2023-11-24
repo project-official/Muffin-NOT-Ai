@@ -1,7 +1,8 @@
 import type { Client, Message } from 'discord.js'
-import database, { ResponseData } from './database'
+import database, { LearnData, ResponseData } from './database'
 import { TextChannel } from 'discord.js'
 import config from '../../config.json'
+import { NODE_ENV } from '.'
 
 export default class ChatBot {
   get db() {
@@ -11,6 +12,21 @@ export default class ChatBot {
   public async getResponse(msg: Message): Promise<string> {
     const db = await this.db.getConnection()
     const [rows] = await db.execute<ResponseData[]>('SELECT * FROM statement;')
+    const args = msg.content.slice('머핀아 '.length).trim().split(/ +/g)
+    const [learn] = await db.execute<LearnData[]>('SELECT * from learn;')
+    const a = Math.round(Math.random() * (2 - 1) + 1)
+
+    if (NODE_ENV === 'development') {
+      console.log(a)
+      console.log(args)
+    }
+
+    if (a === 1) {
+        if (args[0].startsWith(learn[0].command)) {
+          return `${learn[0].command}\n\`${(await msg.client.users.fetch(msg.author.id)).username}님이 알려주셨어요.\``
+        }
+    }
+
     let response: string
     if ((msg.channel as TextChannel).nsfw) {
       const [rows1] = await db.execute<ResponseData[]>(
