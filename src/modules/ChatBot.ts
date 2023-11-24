@@ -12,8 +12,15 @@ export default class ChatBot {
   public async getResponse(msg: Message): Promise<string> {
     const db = await this.db.getConnection()
     const [rows] = await db.execute<ResponseData[]>('SELECT * FROM statement;')
-    const args = msg.content.slice('머핀아 '.length).trim().split(/ +/g)
-    const [learn] = await db.execute<LearnData[]>('SELECT * from learn;')
+    const args = msg.content
+      .slice('머핀아 '.length)
+      .trim()
+      .split(/ +/g)
+      .join(' ')
+    const [learn] = await db.execute<LearnData[]>(
+      'SELECT * from learn WHERE command = ?;',
+      [args],
+    )
     const a = Math.round(Math.random() * (2 - 1) + 1)
 
     if (NODE_ENV === 'development') {
@@ -22,9 +29,13 @@ export default class ChatBot {
     }
 
     if (a === 1) {
-        if (args[0].startsWith(learn[0].command)) {
-          return `${learn[0].command}\n\`${(await msg.client.users.fetch(msg.author.id)).username}님이 알려주셨어요.\``
+      if (learn[0]) {
+        if (args.startsWith(learn[0].command)) {
+          return `${learn[0].result}\n\`${
+            (await msg.client.users.fetch(learn[0].user_id)).username
+          }님이 알려주셨어요.\``
         }
+      }
     }
 
     let response: string

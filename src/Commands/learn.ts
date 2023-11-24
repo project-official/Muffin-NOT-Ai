@@ -1,4 +1,4 @@
-import { Command } from '../modules'
+import { Command, LearnData } from '../modules'
 import { Message } from 'discord.js'
 
 export default class extends Command {
@@ -20,26 +20,50 @@ export default class extends Command {
     ]
     const disallowed = ['@everyone', '@here']
     const db = await msg.client.chatBot.db.getConnection()
+    const [learn] = await db.execute<LearnData[]>(
+      'SELECT * FROM learn WHERE command = ?;',
+      [command],
+    )
 
-    ignore.forEach(ig => {
-      if (result.includes(ig)) {
+    if (learn[0]) {
+      if (msg.author.id !== learn[0].user_id) {
+        return msg.channel.send(
+          `해ㄷ당 단어는 이미 ${
+            (await msg.client.users.fetch(learn[0].user_id)).username
+          }님에게서 배웠어요.`,
+        )
+      }
+    }
+
+    for (const ig of ignore) {
+      if (command.includes(ig)) {
         return msg.channel.send('해ㄷ당 단어는 배울ㄹ 수 없어요.')
       }
-    })
+    }
 
-    disallowed.forEach(di => {
+    for (const di of disallowed) {
       if (result.includes(di)) {
         return msg.channel.send('해당 단ㅇ어는 금지되어 있ㅅ어요.')
       }
-    })
+    }
 
     try {
       await db.beginTransaction()
-      db.execute(
-        'INSERT INTO learn (command, result, user_id) VALUES (?, ?, ?);',
-        [command, result, msg.author.id],
-      )
-      await msg.channel.send(`${command}을/를 배웠ㅇ어요.`)
+
+      if (learn[0] && msg.author.id === learn[0].user_id) {
+        await db.execute('UPDATE learn SET result = ? WHERE command = ?;', [
+          result,
+          command,
+        ])
+        await msg.channel.send(`${command}을/를 다시 배ㅂ웠어요.`)
+      } else {
+        await db.execute(
+          'INSERT INTO learn (command, result, user_id) VALUES (?, ?, ?);',
+          [command, result, msg.author.id],
+        )
+        await msg.channel.send(`${command}을/를 배웠ㅇ어요.`)
+      }
+
       await db.commit()
     } catch (err) {
       console.error(err)
