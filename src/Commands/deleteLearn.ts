@@ -1,5 +1,5 @@
 import { Message } from 'discord.js'
-import { Command, LearnData } from './modules'
+import { Command, LearnData } from '../modules'
 
 export default class extends Command {
   public constructor() {
