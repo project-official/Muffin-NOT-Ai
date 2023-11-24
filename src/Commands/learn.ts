@@ -1,5 +1,6 @@
 import { Command, LearnData } from '../modules'
 import { Message } from 'discord.js'
+import config from '../../config.json'
 
 export default class extends Command {
   public constructor() {
@@ -18,7 +19,7 @@ export default class extends Command {
       'migan',
       '간미',
     ]
-    const disallowed = ['@everyone', '@here']
+    const disallowed = ['@everyone', '@here', `<@${config.bot.owner_ID}>`]
     const db = await msg.client.chatBot.db.getConnection()
     const [learn] = await db.execute<LearnData[]>(
       'SELECT * FROM learn WHERE command = ?;',
