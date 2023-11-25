@@ -8,6 +8,11 @@ export default class extends Command {
   }
 
   public async execute(msg: Message, args: string[]) {
+    if (!args[0] || !args[1]) {
+      return await msg.channel.send(
+        '```\n멒힌아 배워 (등록할 단어) (대답)\n```\n `_`를 대답에 쓰면 공백으로 바뀌ㅇ어요.',
+      )
+    }
     const command = args[0]
     const result = args[1].replaceAll('_', ' ')
     const ignore = [
@@ -18,6 +23,7 @@ export default class extends Command {
       'Migan',
       'migan',
       '간미',
+      '삭제',
     ]
     const disallowed = ['@everyone', '@here', `<@${config.bot.owner_ID}>`]
     const db = await msg.client.chatBot.db.getConnection()
