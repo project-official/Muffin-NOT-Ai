@@ -24,6 +24,7 @@ export default class extends Command {
       'migan',
       '간미',
       '삭제',
+      '삭제',
     ]
     const disallowed = ['@everyone', '@here', `<@${config.bot.owner_ID}>`]
     const db = await msg.client.chatBot.db.getConnection()
