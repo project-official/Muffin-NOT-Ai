@@ -6,16 +6,15 @@ export default class extends Command {
     super('삭제')
   }
   public async execute(msg: Message, args: string[]) {
+    if (!args[0]) {
+      return await msg.channel.send('```멒힌아 삭제 (지울 단어)```')
+    }
     const db = await msg.client.chatBot.db.getConnection()
     const command = args[0]
     const [rows] = await db.execute<LearnData[]>(
       'SELECT * FROM learn WHERE command = ?;',
       [command],
     )
-
-    if (!command) {
-      return msg.channel.send('```멒힌아 삭제 (지울 단어)```')
-    }
 
     if (!rows[0]) {
       return await msg.channel.send('해당하는 걸 찾ㅈ을 수 없어요.')
