@@ -50,14 +50,21 @@ export default class MuffinAI extends Client {
       if (NODE_ENV === 'development') console.log(b.name)
     })
 
-    this.once('ready', () => {
+    this.once('ready', client => {
       console.log(
         `Build Number: ${execSync('git rev-parse --short HEAD').toString()}`,
       )
-      this.user!.setActivity({
-        type: ActivityType.Playing,
-        name: 'ㅅ살려주세요..!',
-      })
+
+      function setStatus() {
+        client.user.setActivity({
+          type: ActivityType.Custom,
+          name: 'ㅅ살려주세요..!',
+        })
+      }
+
+      setStatus()
+      setInterval(() => setStatus(), 600000)
+
       console.log(`먹힐 준비 완료`)
     }).on('messageCreate', async msg => {
       if (msg.author.bot) return
