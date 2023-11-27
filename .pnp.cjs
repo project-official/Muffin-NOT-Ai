@@ -27,7 +27,7 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "./",\
         "packageDependencies": [\
           ["@migan/prettier-config", "virtual:5f78f1a36e0466de94f43ea735dd5701f3e6c031837169942eed8df0d4675e735ccc3da5b972171546318c35e60c2b4bc775227176dd2024d72fef38e36a9bf1#npm:1.0.0"],\
-          ["@types/node", "npm:20.9.4"],\
+          ["@types/node", "npm:20.10.0"],\
           ["cross-env", "npm:7.0.3"],\
           ["discord.js", "npm:14.14.1"],\
           ["dotenv", "npm:16.3.1"],\
@@ -682,18 +682,18 @@ const RAW_RUNTIME_STATE =
       }]\
     ]],\
     ["@types/node", [\
+      ["npm:20.10.0", {\
+        "packageLocation": "./.yarn/cache/@types-node-npm-20.10.0-22577c30ff-c7d5ddbdbf.zip/node_modules/@types/node/",\
+        "packageDependencies": [\
+          ["@types/node", "npm:20.10.0"],\
+          ["undici-types", "npm:5.26.5"]\
+        ],\
+        "linkType": "HARD"\
+      }],\
       ["npm:20.6.3", {\
         "packageLocation": "./.yarn/cache/@types-node-npm-20.6.3-7542470c42-2ccd82424c.zip/node_modules/@types/node/",\
         "packageDependencies": [\
           ["@types/node", "npm:20.6.3"]\
-        ],\
-        "linkType": "HARD"\
-      }],\
-      ["npm:20.9.4", {\
-        "packageLocation": "./.yarn/cache/@types-node-npm-20.9.4-a4808c97df-d567855b48.zip/node_modules/@types/node/",\
-        "packageDependencies": [\
-          ["@types/node", "npm:20.9.4"],\
-          ["undici-types", "npm:5.26.5"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -2048,7 +2048,7 @@ const RAW_RUNTIME_STATE =
         "packageDependencies": [\
           ["muffin-ai-arujak", "workspace:."],\
           ["@migan/prettier-config", "virtual:5f78f1a36e0466de94f43ea735dd5701f3e6c031837169942eed8df0d4675e735ccc3da5b972171546318c35e60c2b4bc775227176dd2024d72fef38e36a9bf1#npm:1.0.0"],\
-          ["@types/node", "npm:20.9.4"],\
+          ["@types/node", "npm:20.10.0"],\
           ["cross-env", "npm:7.0.3"],\
           ["discord.js", "npm:14.14.1"],\
           ["dotenv", "npm:16.3.1"],\
@@ -2750,7 +2750,7 @@ const RAW_RUNTIME_STATE =
           ["@tsconfig/node12", "npm:1.0.11"],\
           ["@tsconfig/node14", "npm:1.0.3"],\
           ["@tsconfig/node16", "npm:1.0.4"],\
-          ["@types/node", "npm:20.9.4"],\
+          ["@types/node", "npm:20.10.0"],\
           ["@types/swc__core", null],\
           ["@types/swc__wasm", null],\
           ["@types/typescript", null],\
