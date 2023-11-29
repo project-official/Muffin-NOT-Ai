@@ -1,5 +1,5 @@
 import { createPool } from 'mysql2/promise'
-import { StatementTable } from './model'
+import { LearnTable, NSFWContentTable, StatementTable } from './model'
 import config from '../../../config.json'
 
 export class MaaDatabase {
@@ -11,6 +11,14 @@ export class MaaDatabase {
 
   public get statement() {
     return new StatementTable(this._database)
+  }
+
+  public get nsfwContent() {
+    return new NSFWContentTable(this._database)
+  }
+
+  public get learn() {
+    return new LearnTable(this._database)
   }
 }
 

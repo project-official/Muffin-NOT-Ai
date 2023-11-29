@@ -2,7 +2,7 @@ import { type Pool } from 'mysql2/promise'
 import run from '../run'
 import type { BaseTable, NSFWData } from '../type'
 
-export class NsfwContentTable implements BaseTable<NSFWData, number> {
+export class NSFWContentTable implements BaseTable<NSFWData, number> {
   public name = 'nsfw_content'
   public constructor(private _database: Pool) {}
 
