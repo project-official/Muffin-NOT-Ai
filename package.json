@@ -1,6 +1,6 @@
 {
   "name": "muffin-ai-arujak",
-  "version": "2.0.0-73-oreo",
+  "version": "2.0.0-74-oreo",
   "main": "dist/index.js",
   "private": true,
   "dependencies": {
