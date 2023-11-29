@@ -20,6 +20,10 @@ export class MaaDatabase {
   public get learn() {
     return new LearnTable(this._database)
   }
+
+  public async ping() {
+    await this._database.ping()
+  }
 }
 
 const database = createPool({
