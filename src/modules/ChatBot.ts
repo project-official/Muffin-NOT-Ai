@@ -1,5 +1,5 @@
 import type { Client, Message } from 'discord.js'
-import database, { LearnData, ResponseData } from './database'
+import { database, LearnData, ResponseData } from './database'
 import { TextChannel } from 'discord.js'
 import config from '../../config.json'
 import { NODE_ENV } from '.'

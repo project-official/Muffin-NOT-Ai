@@ -1,6 +1,7 @@
 import ChatBot from './ChatBot'
 import Command from './Command'
-import database, {
+import {
+  database,
   ResponseData,
   NSFWData,
   LearnData,
