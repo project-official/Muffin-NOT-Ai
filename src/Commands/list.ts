@@ -1,5 +1,5 @@
 import { Message, codeBlock } from 'discord.js'
-import { Command, LearnData } from '../modules'
+import { Command } from '../modules'
 
 export default class extends Command {
   public constructor() {
@@ -7,21 +7,18 @@ export default class extends Command {
   }
 
   public async execute(msg: Message<boolean>, args: string[]) {
-    const db = await msg.client.chatBot.db.getConnection()
-    const [rows] = await db.execute<LearnData[]>(
-      'SELECT * FROM learn WHERE user_id = ?;',
-      [msg.author.id],
-    )
+    const db = msg.client.chatBot.db
+    const data = await db.learn.findOneAnotherKey('user_id', msg.author.id)
     const list: string[] = []
 
-    if (!rows) {
+    if (!data[0]) {
       return await msg.channel.send(
         '당신ㄴ은 단어를 가르쳐준 기억이 없ㅅ는데요.',
       )
     }
 
-    for (const data of rows) {
-      list.push(data.command)
+    for (const listData of data) {
+      list.push(listData.command)
     }
 
     await msg.channel.send({
@@ -33,7 +30,7 @@ export default class extends Command {
             list.map(item => `-  ${item}`).join('\n'),
           ),
           color: 0x0000ff,
-          timestamp: new Date().toISOString()
+          timestamp: new Date().toISOString(),
         },
       ],
     })

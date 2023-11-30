@@ -33,16 +33,6 @@ export default class MuffinAI extends Client {
     if (NODE_ENV === 'development') this.on('debug', console.info)
     this.chatBot.train(this)
 
-    setInterval(async () => {
-      const db = await this.chatBot.db.getConnection()
-
-      await db.beginTransaction()
-      await db.ping()
-      await db.commit()
-
-      db.release()
-    }, 600000)
-
     readdirSync(join(__dirname, 'Commands')).forEach(file => {
       const a = require(join(__dirname, 'Commands', file))
       const b: Command = new a.default()

@@ -1,4 +1,4 @@
-import { Command, LearnData } from '../modules'
+import { Command } from '../modules'
 import { Message } from 'discord.js'
 import config from '../../config.json'
 
@@ -27,17 +27,14 @@ export default class extends Command {
       '삭제',
     ]
     const disallowed = ['@everyone', '@here', `<@${config.bot.owner_ID}>`]
-    const db = await msg.client.chatBot.db.getConnection()
-    const [learn] = await db.execute<LearnData[]>(
-      'SELECT * FROM learn WHERE command = ?;',
-      [command],
-    )
+    const db = msg.client.chatBot.db
+    const data = await db.learn.findOne(command)
 
-    if (learn[0]) {
-      if (msg.author.id !== learn[0].user_id) {
+    if (data[0]) {
+      if (msg.author.id !== data[0].user_id) {
         return msg.channel.send(
           `해ㄷ당 단어는 이미 ${
-            (await msg.client.users.fetch(learn[0].user_id)).username
+            (await msg.client.users.fetch(data[0].user_id)).username
           }님에게서 배웠어요.`,
         )
       }
@@ -55,30 +52,19 @@ export default class extends Command {
       }
     }
 
-    try {
-      await db.beginTransaction()
-
-      if (learn[0] && msg.author.id === learn[0].user_id) {
-        await db.execute('UPDATE learn SET result = ? WHERE command = ?;', [
-          result,
-          command,
-        ])
-        await msg.channel.send(`${command}을/를 다시 배ㅂ웠어요.`)
-      } else {
-        await db.execute(
-          'INSERT INTO learn (command, result, user_id) VALUES (?, ?, ?);',
-          [command, result, msg.author.id],
-        )
-        await msg.channel.send(`${command}을/를 배웠ㅇ어요.`)
-      }
-
-      await db.commit()
-    } catch (err) {
-      console.error(err)
-      await db.rollback()
-      await msg.channel.send('배우는데 오류ㄹ가 생겨서 배우지 못했어ㅇ요.')
-    } finally {
-      db.release()
+    if (data[0] && msg.author.id === data[0].user_id) {
+      await db.learn.update({
+        command,
+        result,
+      })
+      await msg.channel.send(`${command}을/를 다시 배ㅂ웠어요.`)
+    } else {
+      await db.learn.insert({
+        command,
+        result,
+        user_id: msg.author.id,
+      })
+      await msg.channel.send(`${command}을/를 배웠ㅇ어요.`)
     }
   }
 }
