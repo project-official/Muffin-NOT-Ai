@@ -64,8 +64,8 @@ export class LearnTable implements BaseTable<LearnData, string> {
     data: any,
   ): Promise<LearnData[]> {
     const [rows] = await this._database.execute<LearnData[]>(
-      'SELECT * FROM learn WHERE ? = ?;',
-      [key, data],
+      `SELECT * FROM learn WHERE ${key} = ?;`,
+      [data],
     )
     return rows
   }

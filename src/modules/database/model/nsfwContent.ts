@@ -60,8 +60,8 @@ export class NSFWContentTable implements BaseTable<NSFWData, number> {
     data: any,
   ): Promise<NSFWData[]> {
     const [rows] = await this._database.execute<NSFWData[]>(
-      'SELECT * FROM nsfw_content WHERE ? = ?;',
-      [key, data],
+      `SELECT * FROM nsfw_content WHERE ${key} = ?;`,
+      [data],
     )
     return rows
   }

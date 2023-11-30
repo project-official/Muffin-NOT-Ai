@@ -69,8 +69,8 @@ export class StatementTable implements BaseTable<ResponseData, number> {
     data: any,
   ): Promise<ResponseData[]> {
     const [rows] = await this._database.execute<ResponseData[]>(
-      'SELECT * FROM statement WHERE ? = ?;',
-      [key, data],
+      `SELECT * FROM statement WHERE ${key} = ?;`,
+      [data],
     )
     return rows
   }
