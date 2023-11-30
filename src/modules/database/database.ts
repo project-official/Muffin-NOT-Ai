@@ -22,7 +22,10 @@ export class MaaDatabase {
   }
 
   public async ping() {
-    await this._database.ping()
+    this._database.getConnection().then(conn => {
+      conn.ping()
+      conn.release()
+    })
   }
 }
 
