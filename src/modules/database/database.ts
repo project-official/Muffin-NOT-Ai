@@ -28,11 +28,3 @@ export class MaaDatabase {
     })
   }
 }
-
-const database = createPool({
-  ...config.mysql,
-  keepAliveInitialDelay: 10000,
-  enableKeepAlive: true,
-})
-
-export { database }
