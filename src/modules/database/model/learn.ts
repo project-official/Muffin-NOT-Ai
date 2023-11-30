@@ -58,4 +58,15 @@ export class LearnTable implements BaseTable<LearnData, string> {
       await db.execute('DELETE FROM learn WHERE command = ?;', [key])
     })
   }
+
+  public async findOneAnotherKey(
+    key: 'command' | 'result' | 'user_id' | 'created_at',
+    data: any,
+  ): Promise<LearnData[]> {
+    const [rows] = await this._database.execute<LearnData[]>(
+      'SELECT * FROM learn WHERE ? = ?;',
+      [key, data],
+    )
+    return rows
+  }
 }

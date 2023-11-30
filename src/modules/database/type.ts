@@ -31,4 +31,5 @@ export interface BaseTable<T, V> {
   insert(data: any): Promise<void>
   update(data: any): Promise<void>
   delete(key: V): Promise<void>
+  findOneAnotherKey(key: string, data: any): Promise<T[]>
 }

@@ -55,4 +55,23 @@ export class StatementTable implements BaseTable<ResponseData, number> {
       await db.execute('DELETE FROM statement WHERE id = ?;', [key])
     })
   }
+
+  public async findOneAnotherKey(
+    key:
+      | 'id'
+      | 'text'
+      | 'persona'
+      | 'created_at'
+      | 'search_text'
+      | 'conversation'
+      | 'in_response_to'
+      | 'search_in_response_to',
+    data: any,
+  ): Promise<ResponseData[]> {
+    const [rows] = await this._database.execute<ResponseData[]>(
+      'SELECT * FROM statement WHERE ? = ?;',
+      [key, data],
+    )
+    return rows
+  }
 }

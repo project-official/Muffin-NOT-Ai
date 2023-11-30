@@ -54,4 +54,15 @@ export class NSFWContentTable implements BaseTable<NSFWData, number> {
       await db.execute('DELETE FROM nsfw_content WHERE id = ?;', [key])
     })
   }
+
+  public async findOneAnotherKey(
+    key: 'id' | 'text' | 'persona' | 'created_at',
+    data: any,
+  ): Promise<NSFWData[]> {
+    const [rows] = await this._database.execute<NSFWData[]>(
+      'SELECT * FROM nsfw_content WHERE ? = ?;',
+      [key, data],
+    )
+    return rows
+  }
 }
