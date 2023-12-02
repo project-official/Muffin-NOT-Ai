@@ -30,11 +30,22 @@ export default class ChatBot {
 
     if (a === 1) {
       if (learn[0]) {
-        if (args.startsWith(learn[0].command)) {
-          db.release()
-          return `${learn[0].result}\n\`${
-            (await msg.client.users.fetch(learn[0].user_id)).username
-          }님이 알려주셨어요.\``
+        if (learn[1]) {
+          if (args.startsWith(learn[0].command)) {
+            const response =
+              learn[Math.floor(Math.random() * learn.length)].result
+            db.release()
+            return `${response}\n\`${
+              (await msg.client.users.fetch(learn[0].user_id)).username
+            }님이 알려주셨어요.\``
+          }
+        } else {
+          if (args.startsWith(learn[0].command)) {
+            db.release()
+            return `${learn[0].result}\n\`${
+              (await msg.client.users.fetch(learn[0].user_id)).username
+            }님이 알려주셨어요.\``
+          }
         }
       }
     }

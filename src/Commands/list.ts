@@ -33,7 +33,7 @@ export default class extends Command {
             list.map(item => `-  ${item}`).join('\n'),
           ),
           color: 0x0000ff,
-          timestamp: new Date().toISOString()
+          timestamp: new Date().toISOString(),
         },
       ],
     })
