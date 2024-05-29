@@ -13,7 +13,7 @@ export default class extends Command {
         '```\n멒힌아 배워 (등록할 단어) (대답)\n```\n `_`를 대답에 쓰면 공백으로 바뀌ㅇ어요.',
       )
     }
-    const command = args[0]
+    const command = args[0].replaceAll('_', ' ')
     const result = args[1].replaceAll('_', ' ')
     const ignore = [
       '학습데이터량',

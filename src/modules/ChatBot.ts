@@ -16,14 +16,14 @@ export default class ChatBot {
       .split(/ +/g)
       .join(' ')
     const learnData = await this.db.learn.findOne(args)
-    const a = Math.round(Math.random() * (2 - 1) + 1)
+    const randomNumber = Math.round(Math.random() * (2 - 1) + 1)
 
     if (NODE_ENV === 'development') {
-      console.log(a)
+      console.log(randomNumber)
       console.log(args)
     }
 
-    if (a === 1) {
+    if (randomNumber === 1) {
       if (learnData[0]) {
         if (args.startsWith(learnData[0].command)) {
           return `${learnData[0].result}\n\`${
