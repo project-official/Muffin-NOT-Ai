@@ -5,13 +5,12 @@ import {
   GatewayIntentBits,
   TextChannel,
 } from 'discord.js'
-import { Command, noPerm, ChatBot, NODE_ENV } from './modules'
+import { type Command, noPerm, ChatBot, NODE_ENV } from './modules'
 import { readdirSync } from 'node:fs'
 import { join } from 'node:path'
-import { execSync } from 'node:child_process'
 import config from '../config.json'
 
-const prefix = '멒힌아 '
+const prefix = config.bot.prefix
 
 export default class MuffinAI extends Client {
   get chatBot() {
@@ -37,14 +36,10 @@ export default class MuffinAI extends Client {
       const a = require(join(__dirname, 'Commands', file))
       const b: Command = new a.default()
       this.#modules.set(b.name, b)
-      if (NODE_ENV === 'development') console.log(b.name)
+      if (NODE_ENV === 'development') console.log(`${b.name}가 로ㄷ드됨`)
     })
 
     this.once('ready', client => {
-      console.log(
-        `Build Number: ${execSync('git rev-parse --short HEAD').toString()}`,
-      )
-
       function setStatus() {
         client.user.setActivity({
           type: ActivityType.Custom,
@@ -64,7 +59,7 @@ export default class MuffinAI extends Client {
 
       if (NODE_ENV === 'development') console.log(args)
       if (msg.author.bot) return
-      if (msg.content.startsWith('머핀아 ')) {
+      if (msg.content.startsWith(prefix)) {
         if (msg.channel instanceof TextChannel) {
           await msg.channel.sendTyping()
           const command = this.#modules.get(args.shift()!.toLowerCase())
@@ -73,22 +68,12 @@ export default class MuffinAI extends Client {
             if (command.noPerm && msg.author.id !== config.bot.owner_ID)
               return await noPerm(msg)
 
-            command.execute(msg, args)
+            await command.execute(msg, args)
           } else {
             const response = await this.chatBot.getResponse(msg)
-            await msg.channel.send(response)
+            await msg.reply(response)
           }
         }
-      } else if (msg.content.startsWith(prefix)) {
-        if (msg.channel instanceof TextChannel) if (msg.channel.nsfw) return
-        await msg.channel.sendTyping()
-
-        const command = this.#modules.get(args.shift()!.toLowerCase())
-        if (!command) return
-        if (command.noPerm && msg.author.id !== config.bot.owner_ID)
-          return await noPerm(msg)
-
-        command.execute(msg, args)
       }
     })
     return super.login(config.bot.token)

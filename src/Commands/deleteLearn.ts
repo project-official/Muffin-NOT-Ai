@@ -24,6 +24,6 @@ export default class extends Command {
     }
 
     await db.learn.delete(command)
-    await msg.channel.send('해당 단어를 삭ㄱ제했어요.')
+    await msg.reply('해당 단어를 삭ㄱ제했어요.')
   }
 }

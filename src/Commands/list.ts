@@ -21,7 +21,7 @@ export default class extends Command {
       list.push(listData.command)
     }
 
-    await msg.channel.send({
+    await msg.reply({
       embeds: [
         {
           title: '지식',

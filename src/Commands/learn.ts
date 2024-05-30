@@ -9,7 +9,7 @@ export default class extends Command {
 
   public async execute(msg: Message, args: string[]) {
     if (!args[0] || !args[1]) {
-      return await msg.channel.send(
+      return await msg.reply(
         '```\n멒힌아 배워 (등록할 단어) (대답)\n```\n `_`를 대답에 쓰면 공백으로 바뀌ㅇ어요.',
       )
     }
