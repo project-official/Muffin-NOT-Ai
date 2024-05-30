@@ -13,7 +13,7 @@ import Dokdo from 'dokdo'
 
 const prefix = config.bot.prefix
 
-export default class MuffinAI extends Client {
+export default class MuffinBot extends Client {
   get chatBot() {
     return new ChatBot()
   }
@@ -26,8 +26,10 @@ export default class MuffinAI extends Client {
       prefix,
     })
   }
+  get modules(): Collection<string, Command> {
+    return this.#modules
+  }
   #modules: Collection<string, Command> = new Collection()
-
   public constructor() {
     super({
       intents: [
@@ -45,7 +47,7 @@ export default class MuffinAI extends Client {
     readdirSync(join(__dirname, 'Commands')).forEach(file => {
       const a = require(join(__dirname, 'Commands', file))
       const b: Command = new a.default()
-      this.#modules.set(b.name, b)
+      this.modules.set(b.name, b)
       if (NODE_ENV === 'development') console.log(`${b.name}가 로ㄷ드됨`)
     })
 
@@ -75,7 +77,7 @@ export default class MuffinAI extends Client {
         } else {
           if (msg.channel instanceof TextChannel) {
             await msg.channel.sendTyping()
-            const command = this.#modules.get(args.shift()!.toLowerCase())
+            const command = this.modules.get(args.shift()!.toLowerCase())
 
             if (command) {
               if (command.noPerm && msg.author.id !== config.bot.owner_ID)
@@ -97,5 +99,6 @@ export default class MuffinAI extends Client {
 declare module 'discord.js' {
   interface Client {
     get chatBot(): ChatBot
+    get modules(): Collection<string, Command>
   }
 }
