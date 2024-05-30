@@ -9,15 +9,25 @@ import { type Command, noPerm, ChatBot, NODE_ENV } from './modules'
 import { readdirSync } from 'node:fs'
 import { join } from 'node:path'
 import config from '../config.json'
+import Dokdo from 'dokdo'
 
 const prefix = config.bot.prefix
 
 export default class MuffinAI extends Client {
   get chatBot() {
-    return this.#chatBot
+    return new ChatBot()
   }
-  #chatBot = new ChatBot()
+
+  get dokdo() {
+    return new Dokdo(this, {
+      aliases: ['dokdo', 'dok'],
+      owners: [config.bot.owner_ID],
+      noPerm,
+      prefix,
+    })
+  }
   #modules: Collection<string, Command> = new Collection()
+
   public constructor() {
     super({
       intents: [
@@ -60,18 +70,22 @@ export default class MuffinAI extends Client {
       if (NODE_ENV === 'development') console.log(args)
       if (msg.author.bot) return
       if (msg.content.startsWith(prefix)) {
-        if (msg.channel instanceof TextChannel) {
-          await msg.channel.sendTyping()
-          const command = this.#modules.get(args.shift()!.toLowerCase())
+        if (args[0].startsWith('dokdo') || args[0].startsWith('dok')) {
+          await this.dokdo.run(msg)
+        } else {
+          if (msg.channel instanceof TextChannel) {
+            await msg.channel.sendTyping()
+            const command = this.#modules.get(args.shift()!.toLowerCase())
 
-          if (command) {
-            if (command.noPerm && msg.author.id !== config.bot.owner_ID)
-              return await noPerm(msg)
+            if (command) {
+              if (command.noPerm && msg.author.id !== config.bot.owner_ID)
+                return await noPerm(msg)
 
-            await command.execute(msg, args)
-          } else {
-            const response = await this.chatBot.getResponse(msg)
-            await msg.reply(response)
+              await command.execute(msg, args)
+            } else {
+              const response = await this.chatBot.getResponse(msg)
+              await msg.reply(response)
+            }
           }
         }
       }
