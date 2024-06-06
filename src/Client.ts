@@ -62,7 +62,7 @@ export default class MuffinBot extends Client {
       setStatus()
       setInterval(() => setStatus(), 600000)
 
-      console.log(`먹힐 준비 완료`)
+      console.log(`먹힐 준ㅂ비 완료`)
     }).on('messageCreate', async msg => {
       const args: string[] = msg.content
         .slice(prefix.length)

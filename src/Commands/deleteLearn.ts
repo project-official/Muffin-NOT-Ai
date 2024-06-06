@@ -7,7 +7,7 @@ export default class extends Command {
   }
   public async execute(msg: Message, args: string[]) {
     if (!args[0]) {
-      return await msg.channel.send('```멒힌아 삭제 (지울 단어)```')
+      return await msg.channel.send('```머핀아 삭제 (지울 단어)```')
     }
     const command = args[0]
     const db = msg.client.chatBot.db
@@ -19,11 +19,11 @@ export default class extends Command {
 
     if (data[0].user_id !== msg.author.id) {
       return await msg.channel.send(
-        '당신ㄴ은 해당 지식을 안가르ㄹ쳐 주셨ㅅ는데요?',
+        '어라 당ㅅ신은 언제 가르쳐 주셨죠?',
       )
     }
 
     await db.learn.delete(command)
-    await msg.reply('해당 단어를 삭ㄱ제했어요.')
+    await msg.reply('어라 이제 그ㄱ게 기억이 안나요.')
   }
 }

@@ -48,7 +48,9 @@ export default class extends Command {
 
     for (const di of disallowed) {
       if (result.includes(di)) {
-        return msg.channel.send('해당 단ㅇ어는 금지되어 있ㅅ어요.')
+        return msg.channel.send(
+          '해당 단ㅇ어는 개발자님이 특별히 금지하였ㅇ어요.',
+        )
       }
     }
 
