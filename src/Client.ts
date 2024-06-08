@@ -5,19 +5,30 @@ import {
   GatewayIntentBits,
   TextChannel,
 } from 'discord.js'
-import { Command, noPerm, ChatBot, NODE_ENV } from './modules'
+import { type Command, noPerm, ChatBot, NODE_ENV } from './modules'
 import { readdirSync } from 'node:fs'
 import { join } from 'node:path'
-import { execSync } from 'node:child_process'
 import config from '../config.json'
+import Dokdo from 'dokdo'
 
-const prefix = '멒힌아 '
+const prefix = config.bot.prefix
 
-export default class MuffinAI extends Client {
+export default class MuffinBot extends Client {
   get chatBot() {
-    return this.#chatBot
+    return new ChatBot()
   }
-  #chatBot = new ChatBot()
+
+  get dokdo() {
+    return new Dokdo(this, {
+      aliases: ['dokdo', 'dok'],
+      owners: [config.bot.owner_ID],
+      noPerm,
+      prefix,
+    })
+  }
+  get modules(): Collection<string, Command> {
+    return this.#modules
+  }
   #modules: Collection<string, Command> = new Collection()
   public constructor() {
     super({
@@ -33,28 +44,14 @@ export default class MuffinAI extends Client {
     if (NODE_ENV === 'development') this.on('debug', console.info)
     this.chatBot.train(this)
 
-    setInterval(async () => {
-      const db = await this.chatBot.db.getConnection()
-
-      await db.beginTransaction()
-      await db.ping()
-      await db.commit()
-
-      db.release()
-    }, 600000)
-
     readdirSync(join(__dirname, 'Commands')).forEach(file => {
       const a = require(join(__dirname, 'Commands', file))
       const b: Command = new a.default()
-      this.#modules.set(b.name, b)
-      if (NODE_ENV === 'development') console.log(b.name)
+      this.modules.set(b.name, b)
+      if (NODE_ENV === 'development') console.log(`${b.name}가 로ㄷ드됨`)
     })
 
     this.once('ready', client => {
-      console.log(
-        `Build Number: ${execSync('git rev-parse --short HEAD').toString()}`,
-      )
-
       function setStatus() {
         client.user.setActivity({
           type: ActivityType.Custom,
@@ -65,32 +62,34 @@ export default class MuffinAI extends Client {
       setStatus()
       setInterval(() => setStatus(), 600000)
 
-      console.log(`먹힐 준비 완료`)
+      console.log(`먹힐 준ㅂ비 완료`)
     }).on('messageCreate', async msg => {
+      const args: string[] = msg.content
+        .slice(prefix.length)
+        .trim()
+        .split(/ +/g)
+
+      if (NODE_ENV === 'development') console.log(args)
       if (msg.author.bot) return
-      if (msg.content.startsWith('머핀아 ')) {
-        if (msg.channel instanceof TextChannel) {
-          await msg.channel.sendTyping()
-          this.chatBot //
-            .getResponse(msg)
-            .then(response => {
-              msg.channel.send(response)
-            })
+      if (msg.content.startsWith(prefix)) {
+        if (args[0].startsWith('dokdo') || args[0].startsWith('dok')) {
+          await this.dokdo.run(msg)
+        } else {
+          if (msg.channel instanceof TextChannel) {
+            await msg.channel.sendTyping()
+            const command = this.modules.get(args.shift()!.toLowerCase())
+
+            if (command) {
+              if (command.noPerm && msg.author.id !== config.bot.owner_ID)
+                return await noPerm(msg)
+
+              await command.execute(msg, args)
+            } else {
+              const response = await this.chatBot.getResponse(msg)
+              await msg.reply(response)
+            }
+          }
         }
-      } else if (msg.content.startsWith(prefix)) {
-        if (msg.channel instanceof TextChannel) if (msg.channel.nsfw) return
-
-        const args: string[] = msg.content
-          .slice(prefix.length)
-          .trim()
-          .split(/ +/g)
-        if (NODE_ENV === 'development') console.log(args)
-        const command = this.#modules.get(args.shift()!.toLowerCase())
-        if (!command) return
-        if (command.noPerm && msg.author.id !== config.bot.owner_ID)
-          return await noPerm(msg)
-
-        command.execute(msg, args)
       }
     })
     return super.login(config.bot.token)
@@ -100,5 +99,6 @@ export default class MuffinAI extends Client {
 declare module 'discord.js' {
   interface Client {
     get chatBot(): ChatBot
+    get modules(): Collection<string, Command>
   }
 }

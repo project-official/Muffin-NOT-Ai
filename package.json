@@ -1,27 +1,27 @@
 {
-  "name": "muffin-ai-arujak",
-  "version": "1.0.0",
+  "name": "muffinbot",
+  "version": "2.0.0-oreo.p240608a",
   "main": "dist/index.js",
   "private": true,
   "dependencies": {
-    "discord.js": "^14.14.1",
-    "dotenv": "^16.3.1",
-    "mysql2": "^3.6.5"
+    "discord.js": "^14.15.2",
+    "dokdo": "^0.6.2",
+    "mysql2": "^3.9.9"
   },
   "devDependencies": {
     "@migan/prettier-config": "^1.0.0",
-    "@types/node": "^20.9.4",
+    "@types/node": "^20.12.13",
     "cross-env": "^7.0.3",
-    "prettier": "^3.1.0",
-    "ts-node": "^10.9.1",
-    "tsup": "^8.0.1",
-    "typescript": "^5.3.2"
+    "prettier": "^3.2.5",
+    "ts-node": "^10.9.2",
+    "tsup": "^8.0.2",
+    "typescript": "^5.4.5"
   },
   "scripts": {
     "build": "tsup",
     "dev": "cross-env NODE_ENV=development ts-node src",
     "start": "cross-env NODE_ENV=production node dist"
   },
-  "packageManager": "yarn@4.0.2",
+  "packageManager": "yarn@4.2.2",
   "prettier": "@migan/prettier-config"
 }
