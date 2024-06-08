@@ -1,8 +1,7 @@
 {
   "bot": {
     "owner_ID": "",
-    "token": "",
-    "prefix": ""
+    "token": ""
   },
   "train": {
     "user_ID": ""

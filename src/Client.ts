@@ -11,7 +11,7 @@ import { join } from 'node:path'
 import config from '../config.json'
 import Dokdo from 'dokdo'
 
-const prefix = config.bot.prefix
+const prefix = '머핀아 '
 
 export default class MuffinBot extends Client {
   get chatBot() {
