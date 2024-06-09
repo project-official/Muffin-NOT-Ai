@@ -22,7 +22,6 @@ export class StatementTable implements BaseTable<ResponseData, number> {
   }
 
   public async insert(data: {
-    id: number
     text: string
     persona: string
     in_response_to: string
@@ -31,8 +30,8 @@ export class StatementTable implements BaseTable<ResponseData, number> {
 
     await run(db, async () => {
       await db.execute(
-        'INSERT INTO statement (id, text, persona, in_response_to) VALUES (?, ?, ?, ?);',
-        [data.id, data.text, data.persona, data.in_response_to],
+        'INSERT INTO statement (text, persona, in_response_to) VALUES (?, ?, ?);',
+        [data.text, data.persona, data.in_response_to],
       )
     })
   }

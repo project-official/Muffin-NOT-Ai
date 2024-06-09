@@ -9,12 +9,9 @@ export default class ChatBot {
     return new MaaDatabase()
   }
   public async getResponse(msg: Message): Promise<string> {
+    const prefix = msg.client.prefix
     const data = await this.db.statement.all()
-    const args = msg.content
-      .slice('머핀아 '.length)
-      .trim()
-      .split(/ +/g)
-      .join(' ')
+    const args = msg.content.slice(prefix.length).trim().split(/ +/g).join(' ')
     const learnData = await this.db.learn.findOne(args)
     const randomNumber = Math.round(Math.random() * (2 - 1) + 1)
 
@@ -23,14 +20,14 @@ export default class ChatBot {
       console.log(args)
     }
 
-    if (randomNumber === 1) {
-      if (learnData[0]) {
-        if (args.startsWith(learnData[0].command)) {
-          return `${learnData[0].result}\n\`${
-            (await msg.client.users.fetch(learnData[0].user_id)).username
-          }님이 알려주셨어요.\``
-        }
-      }
+    if (
+      randomNumber === 1 &&
+      learnData[0] &&
+      args.startsWith(learnData[0].command)
+    ) {
+      return `${learnData[0].result}\n\`${
+        (await msg.client.users.fetch(learnData[0].user_id)).username
+      }님이 알려주셨어요.\``
     }
 
     let response: string
@@ -46,27 +43,24 @@ export default class ChatBot {
   }
 
   public async train(client: Client): Promise<ChatBot> {
+    const prefix = client.prefix
     client.on('messageCreate', async msg => {
       if (msg.author.bot) return
       if (msg.author.id === config.train.user_ID) {
         const response = await this.getResponse(msg)
-        const data = await this.db.statement.all()
         await this.db.statement.insert({
-          id: ++data[data.length - 1].id,
           text: msg.content,
           persona: 'muffin',
           in_response_to: response,
         })
       } else {
         if (!(msg.channel as TextChannel).nsfw) return
-        if (!msg.content.startsWith('머핀아 ')) return
-        const user = `user:${msg.author.username.slice(0, 50).toLowerCase()}`
+        if (!msg.content.startsWith(prefix)) return
+        const persona = `user:${msg.author.username.slice(0, 50).toLowerCase()}`
         const text = msg.content.replace('머핀아 ', '')
-        const data = await this.db.nsfwContent.all()
         await this.db.nsfwContent.insert({
-          id: ++data[data.length - 1].id,
           text,
-          persona: user,
+          persona,
         })
       }
     })

@@ -14,22 +14,20 @@ import Dokdo from 'dokdo'
 const prefix = '머핀아 '
 
 export default class MuffinBot extends Client {
+  #modules: Collection<string, Command> = new Collection()
   get chatBot() {
     return new ChatBot()
-  }
-
-  get dokdo() {
-    return new Dokdo(this, {
-      aliases: ['dokdo', 'dok'],
-      owners: [config.bot.owner_ID],
-      noPerm,
-      prefix,
-    })
   }
   get modules(): Collection<string, Command> {
     return this.#modules
   }
-  #modules: Collection<string, Command> = new Collection()
+  public dokdo: Dokdo = new Dokdo(this, {
+    aliases: ['dokdo', 'dok'],
+    owners: [config.bot.owner_ID],
+    noPerm,
+    prefix,
+  })
+  public prefix = prefix
   public constructor() {
     super({
       intents: [
@@ -75,19 +73,17 @@ export default class MuffinBot extends Client {
         if (args[0].startsWith('dokdo') || args[0].startsWith('dok')) {
           await this.dokdo.run(msg)
         } else {
-          if (msg.channel instanceof TextChannel) {
-            await msg.channel.sendTyping()
-            const command = this.modules.get(args.shift()!.toLowerCase())
+          await msg.channel.sendTyping()
+          const command = this.modules.get(args.shift()!.toLowerCase())
 
-            if (command) {
-              if (command.noPerm && msg.author.id !== config.bot.owner_ID)
-                return await noPerm(msg)
+          if (command) {
+            if (command.noPerm && msg.author.id !== config.bot.owner_ID)
+              return await noPerm(msg)
 
-              await command.execute(msg, args)
-            } else {
-              const response = await this.chatBot.getResponse(msg)
-              await msg.reply(response)
-            }
+            await command.execute(msg, args)
+          } else {
+            const response = await this.chatBot.getResponse(msg)
+            await msg.reply(response)
           }
         }
       }
@@ -100,5 +96,7 @@ declare module 'discord.js' {
   interface Client {
     get chatBot(): ChatBot
     get modules(): Collection<string, Command>
+    dokdo: Dokdo
+    prefix: string
   }
 }

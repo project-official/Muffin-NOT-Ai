@@ -16,6 +16,7 @@ export interface ResponseData extends BaseData {
 }
 
 export interface LearnData extends RowDataPacket {
+  id: number
   command: string
   result: string
   user_id: Snowflake

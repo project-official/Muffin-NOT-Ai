@@ -60,7 +60,7 @@ export class LearnTable implements BaseTable<LearnData, string> {
   }
 
   public async findOneAnotherKey(
-    key: 'command' | 'result' | 'user_id' | 'created_at',
+    key: 'id' | 'command' | 'result' | 'user_id' | 'created_at',
     data: any,
   ): Promise<LearnData[]> {
     const [rows] = await this._database.execute<LearnData[]>(

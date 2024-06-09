@@ -21,17 +21,13 @@ export class NSFWContentTable implements BaseTable<NSFWData, number> {
     return rows
   }
 
-  public async insert(data: {
-    id: number
-    text: string
-    persona: string
-  }): Promise<void> {
+  public async insert(data: { text: string; persona: string }): Promise<void> {
     const db = await this._database.getConnection()
 
     await run(db, async () => {
       await db.execute(
-        'INSERT INTO nsfw_content (id, text, persona) VALUES (?, ?, ?);',
-        [data.id, data.text, data.persona],
+        'INSERT INTO nsfw_content (text, persona) VALUES (?, ?);',
+        [data.text, data.persona],
       )
     })
   }
