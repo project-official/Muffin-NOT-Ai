@@ -30,15 +30,15 @@ export default class extends Command {
     const db = msg.client.chatBot.db
     const data = await db.learn.findOne(command)
 
-    if (data[0]) {
-      if (msg.author.id !== data[0].user_id) {
-        return msg.channel.send(
-          `해ㄷ당 단어는 이미 ${
-            (await msg.client.users.fetch(data[0].user_id)).username
-          }님에게서 배웠어요.`,
-        )
-      }
-    }
+    // if (data[0]) {
+    //   if (msg.author.id !== data[0].user_id) {
+    //     return msg.channel.send(
+    //       `해ㄷ당 단어는 이미 ${
+    //         (await msg.client.users.fetch(data[0].user_id)).username
+    //       }님에게서 배웠어요.`,
+    //     )
+    //   }
+    // }
 
     for (const ig of ignore) {
       if (command.includes(ig)) {

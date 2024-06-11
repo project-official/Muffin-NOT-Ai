@@ -3,6 +3,8 @@ import { MaaDatabase } from './database'
 import { TextChannel } from 'discord.js'
 import config from '../../config.json'
 import { NODE_ENV } from '.'
+import learn from '../Commands/learn'
+import learning_data from '../Commands/learning_data'
 
 export default class ChatBot {
   get db() {
@@ -12,21 +14,19 @@ export default class ChatBot {
     const prefix = msg.client.prefix
     const data = await this.db.statement.all()
     const args = msg.content.slice(prefix.length).trim().split(/ +/g).join(' ')
-    const learnData = await this.db.learn.findOne(args)
+    const learn = await this.db.learn.findOne(args)
+    const learnData = learn[Math.floor(Math.random() * learn.length)]
     const randomNumber = Math.round(Math.random() * (2 - 1) + 1)
 
     if (NODE_ENV === 'development') {
       console.log(randomNumber)
+      console.log(learnData)
       console.log(args)
     }
 
-    if (
-      randomNumber === 1 &&
-      learnData[0] &&
-      args.startsWith(learnData[0].command)
-    ) {
-      return `${learnData[0].result}\n\`${
-        (await msg.client.users.fetch(learnData[0].user_id)).username
+    if (randomNumber === 1 && learnData && args.startsWith(learnData.command)) {
+      return `${learnData.result}\n\`${
+        (await msg.client.users.fetch(learnData.user_id)).username
       }님이 알려주셨어요.\``
     }
 

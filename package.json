@@ -1,6 +1,6 @@
 {
   "name": "muffinbot",
-  "version": "2.1.0-oreo.d240609a",
+  "version": "2.1.0-oreo.b240611a",
   "main": "dist/index.js",
   "private": true,
   "dependencies": {
