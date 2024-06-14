@@ -22,9 +22,6 @@ export class MaaDatabase {
   }
 
   public async ping() {
-    this._database.getConnection().then(conn => {
-      conn.ping()
-      conn.release()
-    })
+    this._database.ping()
   }
 }
