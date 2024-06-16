@@ -1,20 +1,20 @@
 {
   "name": "muffinbot",
-  "version": "2.0.0-oreo.r240616a",
+  "version": "2.0.0-oreo.r240616b",
   "main": "dist/index.js",
   "private": true,
   "dependencies": {
-    "discord.js": "^14.15.2",
+    "discord.js": "^14.15.3",
     "dokdo": "^0.6.2",
-    "mysql2": "^3.9.9"
+    "mysql2": "^3.10.1"
   },
   "devDependencies": {
     "@migan/prettier-config": "^1.0.0",
-    "@types/node": "^20.12.13",
+    "@types/node": "^20.14.2",
     "cross-env": "^7.0.3",
-    "prettier": "^3.2.5",
+    "prettier": "^3.3.2",
     "ts-node": "^10.9.2",
-    "tsup": "^8.0.2",
+    "tsup": "^8.1.0",
     "typescript": "^5.4.5"
   },
   "scripts": {
