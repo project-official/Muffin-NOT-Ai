@@ -73,7 +73,7 @@ export default class ChatBot {
 
     setInterval(async () => {
       await this.db.ping()
-    }, 60000)
+    }, 600000)
     return this
   }
 }
