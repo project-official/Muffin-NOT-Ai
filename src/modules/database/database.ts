@@ -1,27 +1,25 @@
 import { createPool } from 'mysql2/promise'
 import { LearnTable, NSFWContentTable, StatementTable } from './model'
 import config from '../../../config.json'
+import run from './run'
 
 export class MaaDatabase {
   private _database = createPool({
     ...config.mysql,
     keepAliveInitialDelay: 10000,
     enableKeepAlive: true,
+  }).on('release', conn => {
+    console.log(`${conn.threadId} released.`)
   })
-
-  public get statement() {
-    return new StatementTable(this._database)
-  }
-
-  public get nsfwContent() {
-    return new NSFWContentTable(this._database)
-  }
-
-  public get learn() {
-    return new LearnTable(this._database)
-  }
+  public statement = new StatementTable(this._database)
+  public nsfwContent = new NSFWContentTable(this._database)
+  public learn = new LearnTable(this._database)
 
   public async ping() {
-    this._database.ping()
+    const db = await this._database.getConnection()
+
+    await run(db, async () => {
+      await db.ping()
+    })
   }
 }

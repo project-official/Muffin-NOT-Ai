@@ -1,13 +1,11 @@
-import type { Client, Message } from 'discord.js'
+import type { Client, Message, TextChannel } from 'discord.js'
 import { MaaDatabase } from './database'
-import { TextChannel } from 'discord.js'
 import config from '../../config.json'
 import { NODE_ENV } from '.'
 
 export default class ChatBot {
-  get db() {
-    return new MaaDatabase()
-  }
+  public db = new MaaDatabase()
+
   public async getResponse(msg: Message): Promise<string> {
     const data = await this.db.statement.all()
     const args = msg.content

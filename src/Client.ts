@@ -14,22 +14,14 @@ import Dokdo from 'dokdo'
 const prefix = '머핀아 '
 
 export default class MuffinBot extends Client {
-  get chatBot() {
-    return new ChatBot()
-  }
-
-  get dokdo() {
-    return new Dokdo(this, {
-      aliases: ['dokdo', 'dok'],
-      owners: [config.bot.owner_ID],
-      noPerm,
-      prefix,
-    })
-  }
-  get modules(): Collection<string, Command> {
-    return this.#modules
-  }
-  #modules: Collection<string, Command> = new Collection()
+  public chatBot = new ChatBot()
+  public dokdo = new Dokdo(this, {
+    aliases: ['dokdo', 'dok'],
+    owners: [config.bot.owner_ID],
+    noPerm,
+    prefix,
+  })
+  public modules: Collection<string, Command> = new Collection()
   public constructor() {
     super({
       intents: [
@@ -98,7 +90,7 @@ export default class MuffinBot extends Client {
 
 declare module 'discord.js' {
   interface Client {
-    get chatBot(): ChatBot
-    get modules(): Collection<string, Command>
+    chatBot: ChatBot
+    modules: Collection<string, Command>
   }
 }
