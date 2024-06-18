@@ -73,4 +73,14 @@ export class StatementTable implements BaseTable<ResponseData, number> {
     )
     return rows
   }
+
+  public async execute<W>(sql: string, values?: any): Promise<W> {
+    const db = await this._database.getConnection()
+    let data: any
+
+    await run(db, async () => {
+      data = await db.execute(sql, [...values])
+    })
+    return data
+  }
 }
