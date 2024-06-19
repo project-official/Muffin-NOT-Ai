@@ -25,10 +25,10 @@ export default class extends Command {
       embeds: [
         {
           title: '지식',
-          description: codeBlock(
+          description: `총합: ${data.length}개\n${codeBlock(
             'md',
             list.map(item => `-  ${item}`).join('\n'),
-          ),
+          )}`,
           color: 0x0000ff,
           timestamp: new Date().toISOString(),
         },
