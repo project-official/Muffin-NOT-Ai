@@ -1,9 +1,10 @@
+import type { BaseTable, NSFWData } from '../type'
 import { type Pool } from 'mysql2/promise'
 import run from '../run'
-import type { BaseTable, NSFWData } from '../type'
 
 export class NSFWContentTable implements BaseTable<NSFWData, number> {
   public name = 'nsfw_content'
+
   public constructor(private _database: Pool) {}
 
   public async all(): Promise<NSFWData[]> {
@@ -56,19 +57,11 @@ export class NSFWContentTable implements BaseTable<NSFWData, number> {
     data: any,
   ): Promise<NSFWData[]> {
     const [rows] = await this._database.execute<NSFWData[]>(
-      `SELECT * FROM nsfw_content WHERE ${key} = ?;`,
+      `SELECT *
+       FROM nsfw_content
+       WHERE ${key} = ?;`,
       [data],
     )
     return rows
-  }
-
-  public async execute<W>(sql: string, values?: any): Promise<W> {
-    const db = await this._database.getConnection()
-    let data: any
-
-    await run(db, async () => {
-      data = await db.execute(sql, [...values])
-    })
-    return data
   }
 }

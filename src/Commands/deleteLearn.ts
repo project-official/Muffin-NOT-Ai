@@ -7,12 +7,12 @@ export default class extends Command {
   }
   public async execute(msg: Message, args: string[]) {
     if (!args[0]) {
-      return await msg.channel.send('```머핀아 삭제 (지울 단어)```')
+      return await msg.channel.send('사용법: \n```머핀아 삭제 (지울 단어)```')
     }
 
     const command = args[0]
     const db = msg.client.chatBot.db
-    const [data] = await db.learn.execute<LearnData[]>(
+    const [data] = await db.execute<LearnData[]>(
       'SELECT * FROM learn WHERE command = ? AND user_id = ?;',
       [command, msg.author.id],
     )
@@ -29,7 +29,7 @@ export default class extends Command {
       console.log('a')
     } else {
       // await db.learn.delete(command)
-      // await msg.reply('어라 이제 그ㄱ게 기억이 안나요. 뭐ㅇ였죠?')
+      // await msg.reply('어라 이제 그ㄱ게 기억이 안나요. 그게 뭐ㅇ였죠?')
       console.log('b')
     }
 

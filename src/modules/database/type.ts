@@ -33,5 +33,4 @@ export interface BaseTable<T, V> {
   update(data: any): Promise<void>
   delete(key: V): Promise<void>
   findOneAnotherKey(key: string, data: any): Promise<T[]>
-  execute<W>(sql: string, values?: any): Promise<W>
 }

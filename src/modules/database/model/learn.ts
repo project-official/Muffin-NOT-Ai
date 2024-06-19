@@ -1,7 +1,7 @@
-import { type Pool } from 'mysql2/promise'
-import run from '../run'
 import type { BaseTable, LearnData } from '../type'
+import { type Pool } from 'mysql2/promise'
 import { Snowflake } from 'discord.js'
+import run from '../run'
 
 export class LearnTable implements BaseTable<LearnData, string> {
   public name = 'learn'
@@ -68,15 +68,5 @@ export class LearnTable implements BaseTable<LearnData, string> {
       [data],
     )
     return rows
-  }
-
-  public async execute<W>(sql: string, values?: any): Promise<W> {
-    const db = await this._database.getConnection()
-    let data: any
-
-    await run(db, async () => {
-      data = await db.execute(sql, [...values])
-    })
-    return data
   }
 }

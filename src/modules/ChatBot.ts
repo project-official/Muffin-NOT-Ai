@@ -1,15 +1,15 @@
-import type { Client, Message } from 'discord.js'
+import type { Client, Message, TextChannel } from 'discord.js'
 import { MaaDatabase } from './database'
-import { TextChannel } from 'discord.js'
 import config from '../../config.json'
 import { NODE_ENV } from '.'
-import learn from '../Commands/learn'
-import learning_data from '../Commands/learning_data'
 
 export default class ChatBot {
-  get db() {
-    return new MaaDatabase()
+  public constructor(public db: MaaDatabase) {
+    setInterval(async () => {
+      this.db.ping()
+    }, 60000)
   }
+
   public async getResponse(msg: Message): Promise<string> {
     const prefix = msg.client.prefix
     const data = await this.db.statement.all()
@@ -64,10 +64,6 @@ export default class ChatBot {
         })
       }
     })
-
-    setInterval(async () => {
-      await this.db.ping()
-    }, 60000)
     return this
   }
 }

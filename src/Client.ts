@@ -1,33 +1,24 @@
-import {
-  ActivityType,
-  Client,
-  Collection,
-  GatewayIntentBits,
-  TextChannel,
-} from 'discord.js'
-import { type Command, noPerm, ChatBot, NODE_ENV } from './modules'
+import { ActivityType, Client, Collection, GatewayIntentBits } from 'discord.js'
+import { type Command, noPerm, ChatBot, NODE_ENV, MaaDatabase } from './modules'
 import { readdirSync } from 'node:fs'
-import { join } from 'node:path'
 import config from '../config.json'
+import { join } from 'node:path'
 import Dokdo from 'dokdo'
 
 const prefix = '머핀아 '
 
 export default class MuffinBot extends Client {
-  #modules: Collection<string, Command> = new Collection()
-  get chatBot() {
-    return new ChatBot()
-  }
-  get modules(): Collection<string, Command> {
-    return this.#modules
-  }
+  public modules: Collection<string, Command> = new Collection()
+  public database = new MaaDatabase()
+  public chatBot = new ChatBot(this.database)
+  public prefix = prefix
   public dokdo: Dokdo = new Dokdo(this, {
     aliases: ['dokdo', 'dok'],
     owners: [config.bot.owner_ID],
     noPerm,
     prefix,
   })
-  public prefix = prefix
+
   public constructor() {
     super({
       intents: [
@@ -94,8 +85,8 @@ export default class MuffinBot extends Client {
 
 declare module 'discord.js' {
   interface Client {
-    get chatBot(): ChatBot
-    get modules(): Collection<string, Command>
+    chatBot: ChatBot
+    modules: Collection<string, Command>
     dokdo: Dokdo
     prefix: string
   }

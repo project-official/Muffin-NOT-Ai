@@ -1,6 +1,6 @@
 {
   "name": "muffinbot",
-  "version": "2.1.0-oreo.b240618a",
+  "version": "3.0.0-cake.d240619a",
   "main": "dist/index.js",
   "private": true,
   "dependencies": {
@@ -22,6 +22,5 @@
     "dev": "cross-env NODE_ENV=development ts-node src",
     "start": "cross-env NODE_ENV=production node dist"
   },
-  "packageManager": "yarn@4.2.2",
-  "prettier": "@migan/prettier-config"
+  "packageManager": "yarn@4.2.2"
 }
