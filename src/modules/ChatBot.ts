@@ -1,7 +1,7 @@
 import type { Client, Message, TextChannel } from 'discord.js'
-import { MaaDatabase } from './database'
+import type { MaaDatabase } from './database'
 import config from '../../config.json'
-import { NODE_ENV } from '.'
+import { NODE_ENV } from './env'
 
 export default class ChatBot {
   public constructor(public db: MaaDatabase) {

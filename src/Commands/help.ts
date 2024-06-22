@@ -1,16 +1,18 @@
-import { Command } from '../modules'
 import { codeBlock, type Message } from 'discord.js'
+import { ApplyOptions } from '@sapphire/decorators'
+import { Command } from '@sapphire/framework'
 import { version } from '../../package.json'
 
+@ApplyOptions<Command.Options>({
+  name: '도움말',
+  aliases: ['명령어', '도움', 'help'],
+  description: '기본적인 사용ㅂ법이에요.',
+})
 export default class extends Command {
-  public constructor() {
-    super('도움말')
-  }
-
-  public async execute(msg: Message, args: string[]) {
+  public async messageRun(msg: Message) {
     const commandList: string[] = []
 
-    msg.client.modules.forEach(module => {
+    this.container.stores.get('commands').forEach(module => {
       commandList.push(module.name)
     })
 

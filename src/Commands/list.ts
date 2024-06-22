@@ -1,13 +1,15 @@
+import { ApplyOptions } from '@sapphire/decorators'
 import { Message, codeBlock } from 'discord.js'
-import { Command } from '../modules'
+import { Command } from '@sapphire/framework'
 
+@ApplyOptions<Command.Options>({
+  name: '리스트',
+  aliases: ['list', '목록'],
+  description: '당신이 가ㄹ르쳐준 단어를 나열해요.',
+})
 export default class extends Command {
-  public constructor() {
-    super('리스트')
-  }
-
-  public async execute(msg: Message<boolean>, args: string[]) {
-    const db = msg.client.chatBot.db
+  public async messageRun(msg: Message<boolean>) {
+    const db = this.container.database
     const data = await db.learn.findOneAnotherKey('user_id', msg.author.id)
     const list: string[] = []
 

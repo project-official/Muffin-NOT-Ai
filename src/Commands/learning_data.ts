@@ -1,12 +1,16 @@
-import { Command, type ResponseData } from '../modules'
+import { ApplyOptions } from '@sapphire/decorators'
+import { type ResponseData } from '../modules'
+import { Command } from '@sapphire/framework'
 import { type Message } from 'discord.js'
 
+@ApplyOptions<Command.Options>({
+  name: '데이터학습량',
+  aliases: ['학습데이터량', '데이터량'],
+  description: '봇이 학습한 데ㅇ이터량을 보여줘요.',
+})
 export default class extends Command {
-  public constructor() {
-    super('학습데이터량')
-  }
-  public async execute(msg: Message<true>, args: string[]) {
-    const db = msg.client.chatBot.db
+  public async messageRun(msg: Message<true>) {
+    const db = this.container.database
     const data = await db.statement.all()
     const nsfwData = await db.nsfwContent.all()
     const learnData = await db.learn.all()

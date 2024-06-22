@@ -1,9 +1,15 @@
 {
   "name": "muffinbot",
-  "version": "3.0.0-cake.d240619b",
+  "version": "3.0.0-cake.d240622a",
   "main": "dist/index.js",
   "private": true,
   "dependencies": {
+    "@sapphire/decorators": "^6.1.0",
+    "@sapphire/discord.js-utilities": "^7.3.0",
+    "@sapphire/framework": "^5.2.1",
+    "@sapphire/pieces": "^4.2.2",
+    "@sapphire/utilities": "^3.16.2",
+    "discord-api-types": "^0.37.90",
     "discord.js": "^14.15.2",
     "dokdo": "^0.6.2",
     "mysql2": "^3.9.9"
@@ -19,7 +25,7 @@
   },
   "scripts": {
     "build": "tsup",
-    "dev": "cross-env NODE_ENV=development ts-node src",
+    "dev": "yarn build && cross-env NODE_ENV=development node dist",
     "start": "cross-env NODE_ENV=production node dist"
   },
   "packageManager": "yarn@4.2.2"
