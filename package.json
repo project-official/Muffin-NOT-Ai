@@ -1,6 +1,6 @@
 {
   "name": "muffinbot",
-  "version": "3.0.0-cake.d240622a",
+  "version": "3.0.0-cake.d240622b",
   "main": "dist/index.js",
   "private": true,
   "dependencies": {
@@ -25,7 +25,7 @@
   },
   "scripts": {
     "build": "tsup",
-    "dev": "yarn build && cross-env NODE_ENV=development node dist",
+    "dev": "cross-env NODE_ENV=development tsup --watch --onSuccess \"node dist\"",
     "start": "cross-env NODE_ENV=production node dist"
   },
   "packageManager": "yarn@4.2.2"

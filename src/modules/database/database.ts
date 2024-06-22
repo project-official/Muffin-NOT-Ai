@@ -1,14 +1,20 @@
-import { createPool } from 'mysql2/promise'
 import { LearnTable, NSFWContentTable, StatementTable } from './model'
-import config from '../../../config.json'
+import { container } from '@sapphire/framework'
+import { createPool } from 'mysql2/promise'
 import run from './run'
 
 export class MaaDatabase {
   private _database = createPool({
-    ...config.mysql,
+    ...container.config.mysql,
     keepAliveInitialDelay: 10000,
     enableKeepAlive: true,
   })
+    .on('release', conn => {
+      container.logger.debug(`[MaaDatabase] ${conn.threadId} Released.`)
+    })
+    .on('connection', conn => {
+      container.logger.debug(`[MaaDatabase] ${conn.threadId} Connected.`)
+    })
   public statement = new StatementTable(this._database)
   public nsfwContent = new NSFWContentTable(this._database)
   public learn = new LearnTable(this._database)
