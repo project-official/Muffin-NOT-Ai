@@ -76,6 +76,7 @@ export default class extends Command {
                     inline: false,
                   },
             ],
+            timestamp: new Date().toISOString(),
           },
         ],
       })

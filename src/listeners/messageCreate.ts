@@ -18,6 +18,7 @@ export default class extends Listener {
         .trim()
         .split(/ +/g)
 
+      this.container.logger.debug(`[ChatBot] command: ${args.join(' ')}`)
       if (args[0].startsWith('dokdo') || args[0].startsWith('dok')) {
         await dokdo.run(msg)
       } else {

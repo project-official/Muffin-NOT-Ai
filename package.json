@@ -1,6 +1,6 @@
 {
   "name": "muffinbot",
-  "version": "3.0.0-cake.d240623a",
+  "version": "3.0.0-cake.d240624a",
   "main": "dist/index.js",
   "private": true,
   "dependencies": {
@@ -10,23 +10,25 @@
     "@sapphire/pieces": "^4.2.2",
     "@sapphire/utilities": "^3.16.2",
     "discord-api-types": "^0.37.90",
-    "discord.js": "^14.15.2",
+    "discord.js": "^14.15.3",
     "dokdo": "^0.6.2",
-    "mysql2": "^3.9.9"
+    "mysql2": "^3.10.1",
+    "ws": "^8.17.1"
   },
   "devDependencies": {
     "@migan/prettier-config": "^1.0.0",
-    "@types/node": "^20.12.13",
+    "@types/node": "^20.14.8",
+    "@types/ws": "^8",
     "cross-env": "^7.0.3",
-    "prettier": "^3.2.5",
+    "prettier": "^3.3.2",
     "ts-node": "^10.9.2",
-    "tsup": "^8.0.2",
-    "typescript": "^5.4.5"
+    "tsup": "^8.1.0",
+    "typescript": "^5.5.2"
   },
   "scripts": {
     "build": "tsup",
-    "dev": "cross-env NODE_ENV=development tsup --watch --onSuccess \"node dist\"",
+    "dev": "cross-env NODE_ENV=development tsup --watch --onSuccess \"node --enable-source-maps dist\"",
     "start": "cross-env NODE_ENV=production node dist"
   },
-  "packageManager": "yarn@4.2.2"
+  "packageManager": "yarn@4.3.1"
 }
