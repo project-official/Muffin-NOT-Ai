@@ -7,6 +7,9 @@ import { type Message } from 'discord.js'
   name: '데이터학습량',
   aliases: ['학습데이터량', '데이터량'],
   description: '봇이 학습한 데ㅇ이터량을 보여줘요.',
+  detailedDescription: {
+    usage: '머핀아 학습데이터량',
+  },
 })
 export default class extends Command {
   public async messageRun(msg: Message<true>) {

@@ -6,7 +6,11 @@ import { type Message } from 'discord.js'
 @ApplyOptions<Command.Options>({
   name: '삭제',
   aliases: ['지워', '잊어'],
-  description: '배운 단어를 삭ㅈ제해요.'
+  description: '배운 단어를 삭ㅈ제해요.',
+  detailedDescription: {
+    usage: '머핀아 삭제 (삭제할 단어)',
+    examples: ['머핀아 삭제 머핀'],
+  },
 })
 export default class extends Command {
   public async messageRun(msg: Message, args: Args) {

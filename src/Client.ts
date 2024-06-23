@@ -1,10 +1,12 @@
 import { SapphireClient, container, LogLevel } from '@sapphire/framework'
 import { GatewayIntentBits, type Snowflake } from 'discord.js'
 import { ChatBot, NODE_ENV, MaaDatabase } from './modules'
+import { version } from '../package.json'
 import config from '../config.json'
 
 container.config = config
 container.prefix = '머핀아 '
+container.version = version
 container.database = new MaaDatabase()
 container.chatBot = new ChatBot(container.database)
 
@@ -35,6 +37,7 @@ declare module '@sapphire/pieces' {
     database: MaaDatabase
     chatBot: ChatBot
     prefix: string
+    version: string
     config: {
       bot: {
         owner_ID: Snowflake
@@ -51,5 +54,12 @@ declare module '@sapphire/pieces' {
         port: number
       }
     }
+  }
+}
+
+declare module '@sapphire/framework' {
+  interface DetailedDescriptionCommandObject {
+    usage: string
+    examples?: string[]
   }
 }

@@ -6,6 +6,9 @@ import { Command } from '@sapphire/framework'
   name: '리스트',
   aliases: ['list', '목록'],
   description: '당신이 가ㄹ르쳐준 단어를 나열해요.',
+  detailedDescription: {
+    usage: '머핀아 리스트'
+  }
 })
 export default class extends Command {
   public async messageRun(msg: Message<boolean>) {

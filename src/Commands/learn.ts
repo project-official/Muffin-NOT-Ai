@@ -6,6 +6,14 @@ import { type Message } from 'discord.js'
   name: '배워',
   aliases: ['공부'],
   description: '단어를 가르치는 명령ㅇ어에요.',
+  detailedDescription: {
+    usage: '머핀아 배워 (등록할 단어) (대답)',
+    examples: [
+      '머핀아 배워 안녕 안녕!',
+      '머핀아 배워 "야 죽을래?" "아니요 ㅠㅠㅠ"',
+      '머핀아 배워 미간은_누구야? 이봇의_개발자요',
+    ],
+  },
 })
 export default class extends Command {
   public async messageRun(msg: Message, args: Args) {
