@@ -6,11 +6,13 @@
   "dependencies": {
     "discord.js": "^14.15.3",
     "dokdo": "^0.6.2",
-    "mysql2": "^3.10.1"
+    "mysql2": "^3.10.1",
+    "ws": "^8.17.1"
   },
   "devDependencies": {
     "@migan/prettier-config": "^1.0.0",
     "@types/node": "^20.14.2",
+    "@types/ws": "^8",
     "cross-env": "^7.0.3",
     "prettier": "^3.3.2",
     "ts-node": "^10.9.2",
