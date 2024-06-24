@@ -39,7 +39,18 @@ export default class extends Command {
         aliases.push(alias)
       })
     })
-    const ignore = [...commands, ...aliases, '미간', 'Migan', 'migan', '간미']
+    const ignore = [
+      ...commands,
+      ...aliases,
+      '미간',
+      'Migan',
+      'migan',
+      '간미',
+      'dokdo',
+      'dok',
+      'Dokdo',
+      'Dok',
+    ]
     const disallowed = ['@everyone', '@here', `<@${config.bot.owner_ID}>`]
     const db = this.container.database
 
