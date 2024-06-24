@@ -1,6 +1,6 @@
 import { LearnTable, NSFWContentTable, StatementTable } from './model'
-import { createPool, type QueryResult } from 'mysql2/promise'
 import { container } from '@sapphire/framework'
+import { createPool } from 'mysql2/promise'
 
 export class MaaDatabase {
   public readonly database = createPool({
