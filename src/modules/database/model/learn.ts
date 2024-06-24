@@ -55,7 +55,7 @@ export class LearnTable implements BaseTable<LearnData, string> {
     const db = await this._database.getConnection()
 
     await run(db, async () => {
-      await db.execute('DELETE FROM learn WHERE command = ?;', [key])
+      await db.execute('DELETE FROM learn WHERE id = ?;', [key])
     })
   }
 

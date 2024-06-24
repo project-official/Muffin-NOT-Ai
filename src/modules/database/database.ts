@@ -1,10 +1,9 @@
 import { LearnTable, NSFWContentTable, StatementTable } from './model'
 import { createPool, type QueryResult } from 'mysql2/promise'
 import { container } from '@sapphire/framework'
-import run from './run'
 
 export class MaaDatabase {
-  public database = createPool({
+  public readonly database = createPool({
     ...container.config.mysql,
     keepAliveInitialDelay: 10000,
     enableKeepAlive: true,
