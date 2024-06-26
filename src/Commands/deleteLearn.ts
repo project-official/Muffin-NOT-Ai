@@ -5,7 +5,11 @@ import {
   codeBlock,
 } from 'discord.js'
 import { ApplyOptions } from '@sapphire/decorators'
-import { Args, Command } from '@sapphire/framework'
+import {
+  Args,
+  Command,
+  DetailedDescriptionCommandObject,
+} from '@sapphire/framework'
 import { type LearnData } from '../modules'
 
 @ApplyOptions<Command.Options>({
@@ -28,7 +32,9 @@ export default class extends Command {
     )
 
     if (!command) {
-      return await msg.channel.send('사용법: \n```머핀아 삭제 (지울 단어)```')
+      return await msg.channel.send(
+        `사용법: \n\`\`\`${(this.detailedDescription as DetailedDescriptionCommandObject).usage}\`\`\``,
+      )
     }
 
     if (!datas) {

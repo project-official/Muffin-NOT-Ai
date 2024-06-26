@@ -7,8 +7,8 @@ import { Command } from '@sapphire/framework'
   aliases: ['list', '목록'],
   description: '당신이 가ㄹ르쳐준 단어를 나열해요.',
   detailedDescription: {
-    usage: '머핀아 리스트'
-  }
+    usage: '머핀아 리스트',
+  },
 })
 export default class extends Command {
   public async messageRun(msg: Message<boolean>) {
@@ -29,7 +29,7 @@ export default class extends Command {
     await msg.reply({
       embeds: [
         {
-          title: '지식',
+          title: `${msg.author.username}님의 지식`,
           description: `총합: ${data.length}개\n${codeBlock(
             'md',
             list.map(item => `-  ${item}`).join('\n'),

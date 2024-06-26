@@ -21,13 +21,13 @@ export default class extends Command {
       const commandList: string[] = []
 
       this.container.stores.get('commands').forEach(module => {
-        commandList.push(module.name)
+        commandList.push(`${module.name} - ${module.description}`)
       })
 
       await msg.reply({
         embeds: [
           {
-            title: '머핀봇의 도움말',
+            title: `${this.container.client.user?.username}의 도움말`,
             description: codeBlock(
               'md',
               commandList.map(item => `-  ${item}`).join('\n'),
@@ -35,6 +35,7 @@ export default class extends Command {
             footer: {
               text: `머핀봇 버전: ${this.container.version}`,
             },
+            timestamp: new Date().toISOString(),
           },
         ],
       })
@@ -46,7 +47,7 @@ export default class extends Command {
       await msg.reply({
         embeds: [
           {
-            title: '머핀봇의 도움말',
+            title: `${this.container.client.user?.username}의 도움말`,
             description: `명령어: ${name}`,
             fields: [
               {
@@ -76,6 +77,9 @@ export default class extends Command {
                     inline: false,
                   },
             ],
+            footer: {
+              text: `머핀봇 버전: ${this.container.version}`,
+            },
             timestamp: new Date().toISOString(),
           },
         ],

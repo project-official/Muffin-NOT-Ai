@@ -15,6 +15,6 @@ export default class extends Listener {
     setStatus()
     setInterval(() => setStatus(), 600000)
 
-    this.container.logger.info(`[MuffinBotClient] 먹힐 준ㅂ비 완료`)
+    this.container.logger.info(`[MuffinBot] 먹힐 준ㅂ비 완료`)
   }
 }

@@ -5,10 +5,11 @@ import { version } from '../package.json'
 import config from '../config.json'
 
 container.config = config
-container.prefix = '머핀아 '
+container.prefix = config.bot.prefix
 container.version = version
 container.database = new MaaDatabase()
 container.chatBot = new ChatBot(container.database)
+container.dokdoAliases = ['dokdo', 'dok', 'Dokdo', 'Dok', '테스트']
 
 export default class MuffinBot extends SapphireClient {
   public constructor() {
@@ -38,6 +39,7 @@ declare module '@sapphire/pieces' {
     chatBot: ChatBot
     prefix: string
     version: string
+    dokdoAliases: string[]
     config: {
       bot: {
         owner_ID: Snowflake

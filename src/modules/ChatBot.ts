@@ -59,7 +59,7 @@ export default class ChatBot {
         if (!(msg.channel as TextChannel).nsfw) return
         if (!msg.content.startsWith(prefix)) return
         const persona = `user:${msg.author.username.slice(0, 50).toLowerCase()}`
-        const text = msg.content.replace('머핀아 ', '')
+        const text = msg.content.replace(prefix, '')
         await this.db.nsfwContent.insert({
           text,
           persona,
