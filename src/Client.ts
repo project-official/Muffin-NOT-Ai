@@ -29,6 +29,11 @@ export default class MuffinBot extends Client {
         GatewayIntentBits.GuildMessages,
         GatewayIntentBits.MessageContent,
       ],
+      allowedMentions: {
+        users: [],
+        roles: [],
+        repliedUser: true,
+      },
     })
   }
 
