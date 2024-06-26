@@ -24,6 +24,11 @@ export default class MuffinBot extends SapphireClient {
       logger: {
         level: NODE_ENV === 'development' ? LogLevel.Debug : LogLevel.Info,
       },
+      allowedMentions: {
+        roles: [],
+        users: [],
+        repliedUser: true,
+      },
     })
   }
 
