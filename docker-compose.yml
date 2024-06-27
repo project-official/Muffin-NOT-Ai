@@ -1,0 +1,27 @@
+version: "3.9"
+
+services:
+  database:
+    container_name: "muffin_database"
+    image: mariadb:10.9.4
+    volumes:
+      - "./database/:/var/lib/mysql"
+      - "/etc/localtime:/etc/localtime"
+      - "./scripts/:/docker-entrypoint-initdb.d/"
+    ports:
+      - "1502:3306"
+    env_file:
+      - "./.env"
+    networks:
+      - muffin_ai
+  discord_bot:
+    container_name: "maa"
+    build: "."
+    networks:
+      - muffin_ai
+    depends_on:
+      - database
+
+networks:
+  muffin_ai:
+      driver: bridge

@@ -1,0 +1,42 @@
+{
+  "name": "muffinbot",
+  "version": "3.0.0-cake.d240626b",
+  "main": "dist/index.js",
+  "private": true,
+  "dependencies": {
+    "@sapphire/decorators": "^6.1.0",
+    "@sapphire/discord.js-utilities": "^7.3.0",
+    "@sapphire/framework": "^5.2.1",
+    "@sapphire/pieces": "^4.2.2",
+    "@sapphire/utilities": "^3.16.2",
+    "discord-api-types": "^0.37.90",
+    "discord.js": "^14.15.3",
+    "dokdo": "^0.6.2",
+    "mysql2": "^3.10.1",
+    "ws": "^8.17.1"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3.1.0",
+    "@eslint/js": "^9.5.0",
+    "@migan/prettier-config": "^1.0.0",
+    "@types/node": "^20.14.8",
+    "@types/ws": "^8",
+    "@typescript-eslint/eslint-plugin": "^7.13.1",
+    "@typescript-eslint/parser": "^7.13.1",
+    "cross-env": "^7.0.3",
+    "eslint": "^9.5.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.1.3",
+    "globals": "^15.6.0",
+    "prettier": "^3.3.2",
+    "ts-node": "^10.9.2",
+    "tsup": "^8.1.0",
+    "typescript": "^5.5.2"
+  },
+  "scripts": {
+    "build": "tsup",
+    "dev": "cross-env NODE_ENV=development tsup --watch --onSuccess \"node --enable-source-maps dist\"",
+    "start": "cross-env NODE_ENV=production node dist"
+  },
+  "packageManager": "yarn@4.3.1"
+}
