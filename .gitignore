@@ -139,3 +139,5 @@ db/
 
 .idea/
 ./database/
+
+.DS_Store

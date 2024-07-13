@@ -15,16 +15,18 @@ export default class extends Command {
     }
     const command = args[0].replaceAll('_', ' ')
     const result = args[1].replaceAll('_', ' ')
+    const commands: string[] = []
+
+    msg.client.modules.map(a => commands.push(a.name))
+
     const ignore = [
-      '학습데이터량',
-      '봇꺼',
-      '테스트',
+      ...commands,
       '미간',
       'Migan',
       'migan',
       '간미',
-      '삭제',
-      '삭제',
+      'dokdo',
+      'dok',
     ]
     const disallowed = ['@everyone', '@here', `<@${config.bot.owner_ID}>`]
     const db = msg.client.chatBot.db
