@@ -1,5 +1,5 @@
 import { SapphireClient, container, LogLevel } from '@sapphire/framework'
-import { GatewayIntentBits, type Snowflake } from 'discord.js'
+import { GatewayIntentBits, Partials, type Snowflake } from 'discord.js'
 import { ChatBot, NODE_ENV, MaaDatabase } from './modules'
 import { version } from '../package.json'
 import config from '../config.json'
@@ -26,9 +26,9 @@ export default class MuffinBot extends SapphireClient {
       },
       allowedMentions: {
         roles: [],
-        users: [],
         repliedUser: true,
       },
+      partials: [Partials.Message, Partials.ThreadMember],
     })
   }
 
@@ -59,6 +59,9 @@ declare module '@sapphire/pieces' {
         password: string
         database: string
         port: number
+      }
+      api: {
+        opendict: string
       }
     }
   }

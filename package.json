@@ -1,6 +1,6 @@
 {
   "name": "muffinbot",
-  "version": "3.0.0-cake.d240626b",
+  "version": "3.0.0-cake.d240713a",
   "main": "dist/index.js",
   "private": true,
   "dependencies": {
@@ -13,6 +13,7 @@
     "discord.js": "^14.15.3",
     "dokdo": "^0.6.2",
     "mysql2": "^3.10.1",
+    "undici": "^6.19.2",
     "ws": "^8.17.1"
   },
   "devDependencies": {

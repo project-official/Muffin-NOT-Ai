@@ -1,13 +1,16 @@
-import ChatBot from './ChatBot'
 import { ResponseData, NSFWData, LearnData, MaaDatabase } from './database'
-import noPerm from './noPerm'
+import { WordRelay } from './wordRelay'
 import { NODE_ENV } from './env'
+import ChatBot from './ChatBot'
+import noPerm from './noPerm'
+
 export {
-  ChatBot,
-  noPerm,
   ResponseData,
-  NODE_ENV,
-  NSFWData,
-  LearnData,
   MaaDatabase,
+  LearnData,
+  WordRelay,
+  NODE_ENV,
+  ChatBot,
+  NSFWData,
+  noPerm,
 }
