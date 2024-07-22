@@ -1,9 +1,7 @@
-version: "3.9"
-
 services:
   database:
     container_name: "muffin_database"
-    image: mariadb:10.9.4
+    image: mariadb:11.4.2
     volumes:
       - "./database/:/var/lib/mysql"
       - "/etc/localtime:/etc/localtime"
