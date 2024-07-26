@@ -18,8 +18,7 @@ export class MaaDatabase {
   public async ping() {
     const db = await this._database.getConnection()
 
-    await run(db, async () => {
-      await db.ping()
-    })
+    await db.ping()
+    db.release()
   }
 }
