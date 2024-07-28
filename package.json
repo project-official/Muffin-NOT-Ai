@@ -1,6 +1,6 @@
 {
   "name": "muffinbot",
-  "version": "3.0.0-cake.d240728a",
+  "version": "3.0.0-cake.d240728b",
   "main": "dist/index.js",
   "private": true,
   "dependencies": {

@@ -32,8 +32,8 @@ export class WordRelay {
       },
     }).then(res => res.body.json())
 
-    if (res.channel.total === 0) return true
-    else return false
+    if (res.channel.total === 0) return false
+    else return true
   }
 
   public startGame(msg: Message<true>) {
@@ -80,7 +80,7 @@ export class WordRelay {
                 collector.stop(`${MAAWR_COLLECTED}: ${message.content}`)
               }
             })
-            .on('end', (collected, reason) => {
+            .on('end', (_, reason) => {
               if (reason === 'time') {
                 thread.send(
                   `<@${userID}>님, 60초동안 시작단어를 입력하지 않아 자동ㅇ으로 게임이 종료되었어요.`,
