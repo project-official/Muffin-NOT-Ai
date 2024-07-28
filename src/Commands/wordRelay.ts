@@ -8,8 +8,8 @@ import { WordRelay } from '../modules'
   aliases: ['끄투', '끄투리오'],
   description: '머핀봇이랑 끝말잇기를 해보ㅅ세요.',
   detailedDescription: {
-    usage: '머핀아 끝말잇기'
-  }
+    usage: '머핀아 끝말잇기',
+  },
 })
 export default class extends Command {
   public async messageRun(msg: Message<true>) {

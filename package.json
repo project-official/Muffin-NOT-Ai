@@ -19,7 +19,7 @@
   "devDependencies": {
     "@eslint/eslintrc": "^3.1.0",
     "@eslint/js": "^9.8.0",
-    "@migan/prettier-config": "^1.1.1",
+    "@migan/prettier-config": "^1.2.0",
     "@types/node": "^20.14.12",
     "@types/ws": "^8.5.11",
     "@typescript-eslint/eslint-plugin": "^7.17.0",
