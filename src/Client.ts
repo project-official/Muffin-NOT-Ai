@@ -38,7 +38,7 @@ export default class MuffinBot extends SapphireClient {
   }
 }
 
-declare module '@sapphire/pieces' {
+declare module '@sapphire/framework' {
   interface Container {
     database: MaaDatabase
     chatBot: ChatBot
