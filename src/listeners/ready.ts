@@ -1,5 +1,5 @@
+import { container, Listener } from '@sapphire/framework'
 import { ApplyOptions } from '@sapphire/decorators'
-import { Listener } from '@sapphire/framework'
 import { ActivityType, Client } from 'discord.js'
 
 @ApplyOptions<Listener.Options>({ once: true })
@@ -8,13 +8,13 @@ export default class extends Listener {
     function setStatus() {
       client.user.setActivity({
         type: ActivityType.Custom,
-        name: 'ㅅ살려주세요..!',
+        name: `현재 개발중. (${container.version})`,
       })
     }
 
     setStatus()
     setInterval(() => setStatus(), 600000)
 
-    this.container.logger.info(`[MuffinBot] 먹힐 준ㅂ비 완료`)
+    this.container.logger.info(`[BlueBerry] Bot Ready.`)
   }
 }

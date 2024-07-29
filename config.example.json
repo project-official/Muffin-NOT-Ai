@@ -4,9 +4,6 @@
     "token": "",
     "prefix": ""
   },
-  "train": {
-    "user_ID": ""
-  },
   "mysql": {
     "user": "",
     "host": "",

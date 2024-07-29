@@ -5,10 +5,10 @@ import { Args, Command } from '@sapphire/framework'
 @ApplyOptions<Command.Options>({
   name: '도움말',
   aliases: ['명령어', '도움', 'help'],
-  description: '기본적인 사용ㅂ법이에요.',
+  description: '기본적인 사용법이에요.',
   detailedDescription: {
-    usage: '머핀아 도움말 [명령어]',
-    examples: ['머핀아 도움말', '머핀아 도움말 배워'],
+    usage: '베리야 도움말 [명령어]',
+    examples: ['베리야 도움말', '베리야 도움말 배워'],
   },
 })
 export default class extends Command {
@@ -33,7 +33,7 @@ export default class extends Command {
               commandList.map(item => `-  ${item}`).join('\n'),
             ),
             footer: {
-              text: `머핀봇 버전: ${this.container.version}`,
+              text: `블루베리 버전: ${this.container.version}`,
             },
             timestamp: new Date().toISOString(),
           },
@@ -78,7 +78,7 @@ export default class extends Command {
                   },
             ],
             footer: {
-              text: `머핀봇 버전: ${this.container.version}`,
+              text: `블루베리 버전: ${this.container.version}`,
             },
             timestamp: new Date().toISOString(),
           },

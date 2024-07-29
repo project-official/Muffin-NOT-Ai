@@ -6,9 +6,9 @@ import { WordRelay } from '../modules'
 @ApplyOptions<Command.Options>({
   name: '끝말잇기',
   aliases: ['끄투', '끄투리오'],
-  description: '머핀봇이랑 끝말잇기를 해보ㅅ세요.',
+  description: '베리랑 끝말잇기를 해보세요.',
   detailedDescription: {
-    usage: '머핀아 끝말잇기',
+    usage: '베리야 끝말잇기',
   },
 })
 export default class extends Command {
@@ -18,7 +18,7 @@ export default class extends Command {
         PermissionFlagsBits.CreatePublicThreads,
       )
     )
-      return msg.reply('제게 공개 스레드 만들기 권한ㅇ이 없어요.')
+      return msg.reply('제게 공개 스레드 만들기 권한이 없어요.')
 
     new WordRelay().startGame(msg)
   }

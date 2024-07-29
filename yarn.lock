@@ -1113,6 +1113,40 @@ __metadata:
   languageName: node
   linkType: hard
 
+"blueberry@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "blueberry@workspace:."
+  dependencies:
+    "@eslint/eslintrc": "npm:^3.1.0"
+    "@eslint/js": "npm:^9.8.0"
+    "@migan/prettier-config": "npm:^1.2.0"
+    "@sapphire/decorators": "npm:^6.1.0"
+    "@sapphire/discord.js-utilities": "npm:^7.3.0"
+    "@sapphire/framework": "npm:^5.2.1"
+    "@sapphire/pieces": "npm:^4.3.1"
+    "@sapphire/utilities": "npm:^3.17.0"
+    "@types/node": "npm:^20.14.12"
+    "@types/ws": "npm:^8.5.11"
+    "@typescript-eslint/eslint-plugin": "npm:^7.17.0"
+    "@typescript-eslint/parser": "npm:^7.17.0"
+    cross-env: "npm:^7.0.3"
+    discord-api-types: "npm:^0.37.93"
+    discord.js: "npm:^14.15.3"
+    dokdo: "npm:^0.6.2"
+    eslint: "npm:^9.8.0"
+    eslint-config-prettier: "npm:^9.1.0"
+    eslint-plugin-prettier: "npm:^5.2.1"
+    globals: "npm:^15.8.0"
+    mysql2: "npm:^3.11.0"
+    prettier: "npm:^3.3.3"
+    ts-node: "npm:^10.9.2"
+    tsup: "npm:^8.2.3"
+    typescript: "npm:^5.5.4"
+    undici: "npm:^6.19.4"
+    ws: "npm:^8.18.0"
+  languageName: unknown
+  linkType: soft
+
 "brace-expansion@npm:^1.1.7":
   version: 1.1.11
   resolution: "brace-expansion@npm:1.1.11"
@@ -2453,40 +2487,6 @@ __metadata:
   checksum: 10/673cdb2c3133eb050c745908d8ce632ed2c02d85640e2edb3ace856a2266a813b30c613569bf3354fdf4ea7d1a1494add3bfa95e2713baa27d0c2c71fc44f58f
   languageName: node
   linkType: hard
-
-"muffinbot@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "muffinbot@workspace:."
-  dependencies:
-    "@eslint/eslintrc": "npm:^3.1.0"
-    "@eslint/js": "npm:^9.8.0"
-    "@migan/prettier-config": "npm:^1.2.0"
-    "@sapphire/decorators": "npm:^6.1.0"
-    "@sapphire/discord.js-utilities": "npm:^7.3.0"
-    "@sapphire/framework": "npm:^5.2.1"
-    "@sapphire/pieces": "npm:^4.3.1"
-    "@sapphire/utilities": "npm:^3.17.0"
-    "@types/node": "npm:^20.14.12"
-    "@types/ws": "npm:^8.5.11"
-    "@typescript-eslint/eslint-plugin": "npm:^7.17.0"
-    "@typescript-eslint/parser": "npm:^7.17.0"
-    cross-env: "npm:^7.0.3"
-    discord-api-types: "npm:^0.37.93"
-    discord.js: "npm:^14.15.3"
-    dokdo: "npm:^0.6.2"
-    eslint: "npm:^9.8.0"
-    eslint-config-prettier: "npm:^9.1.0"
-    eslint-plugin-prettier: "npm:^5.2.1"
-    globals: "npm:^15.8.0"
-    mysql2: "npm:^3.11.0"
-    prettier: "npm:^3.3.3"
-    ts-node: "npm:^10.9.2"
-    tsup: "npm:^8.2.3"
-    typescript: "npm:^5.5.4"
-    undici: "npm:^6.19.4"
-    ws: "npm:^8.18.0"
-  languageName: unknown
-  linkType: soft
 
 "mysql2@npm:^3.11.0":
   version: 3.11.0

@@ -1,6 +1,6 @@
 services:
   database:
-    container_name: "muffin_database"
+    container_name: "blueberry_database"
     image: mariadb:11.4.2
     volumes:
       - "./database/:/var/lib/mysql"
@@ -11,15 +11,15 @@ services:
     env_file:
       - "./.env"
     networks:
-      - muffin_ai
+      - blueberry
   discord_bot:
-    container_name: "maa"
+    container_name: "blueberry"
     build: "."
     networks:
-      - muffin_ai
+      - blueberry
     depends_on:
       - database
 
 networks:
-  muffin_ai:
+  blueberry:
       driver: bridge

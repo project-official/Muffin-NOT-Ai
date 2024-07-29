@@ -33,7 +33,6 @@ export default class MuffinBot extends SapphireClient {
   }
 
   public override async login(): Promise<string> {
-    await container.chatBot.train(this)
     return super.login(config.bot.token)
   }
 }
@@ -49,9 +48,6 @@ declare module '@sapphire/framework' {
       bot: {
         owner_ID: Snowflake
         token: string
-      }
-      train: {
-        user_ID: Snowflake
       }
       mysql: {
         user: string

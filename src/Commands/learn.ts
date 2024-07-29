@@ -5,13 +5,13 @@ import { ApplyOptions } from '@sapphire/decorators'
 @ApplyOptions<Command.Options>({
   name: '배워',
   aliases: ['공부'],
-  description: '단어를 가르치는 명령ㅇ어에요.',
+  description: '단어를 가르치는 명령어에요.',
   detailedDescription: {
-    usage: '머핀아 배워 (등록할 단어) (대답)',
+    usage: '베리야 배워 (등록할 단어) (대답)',
     examples: [
-      '머핀아 배워 안녕 안녕!',
-      '머핀아 배워 "야 죽을래?" "아니요 ㅠㅠㅠ"',
-      '머핀아 배워 미간은_누구야? 이봇의_개발자요',
+      '베리야 배워 안녕 안녕!',
+      '베리야 배워 "야 죽을래?" "아니요"',
+      '베리야 배워 미간은_누구야? 이봇의_개발자요',
     ],
   },
 })
@@ -56,13 +56,13 @@ export default class extends Command {
 
     for (const ig of ignore) {
       if (command.includes(ig)) {
-        return msg.reply('해ㄷ당 단어는 배울ㄹ 수 없어요.')
+        return msg.reply('해당 단어는 배울 수 없어요.')
       }
     }
 
     for (const di of disallowed) {
       if (result.includes(di)) {
-        return msg.reply('해당 단ㅇ어는 개발자님이 특별히 금지하였ㅇ어요.')
+        return msg.reply('해당 단어는 개발자님이 특별히 금지하였어요.')
       }
     }
 
@@ -71,6 +71,6 @@ export default class extends Command {
       command,
       result,
     })
-    await msg.reply(`${command}을/를 배웠ㅇ어요.`)
+    await msg.reply(`${command}을/를 배웠어요.`)
   }
 }

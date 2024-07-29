@@ -15,10 +15,10 @@ import { type LearnData } from '../modules'
 @ApplyOptions<Command.Options>({
   name: '삭제',
   aliases: ['지워', '잊어'],
-  description: '배운 단어를 삭ㅈ제해요.',
+  description: '배운 단어를 삭제해요.',
   detailedDescription: {
-    usage: '머핀아 삭제 (삭제할 단어)',
-    examples: ['머핀아 삭제 머핀'],
+    usage: '베리야 삭제 (삭제할 단어)',
+    examples: ['베리야 삭제 베리'],
   },
 })
 export default class extends Command {
@@ -38,14 +38,14 @@ export default class extends Command {
     }
 
     if (!datas) {
-      return await msg.channel.send('해당하는 걸 찾ㅈ을 수 없어요.')
+      return await msg.channel.send('해당하는 걸 찾을 수 없어요.')
     }
 
     datas.forEach(data => {
       console.log(data)
       options.push({
         label: `${data.id}번`,
-        value: `maa$deleteLearn-${data.id}`,
+        value: `blueberry$deleteLearn-${data.id}`,
         description: data.result.slice(0, 100),
       })
     })
@@ -67,8 +67,8 @@ export default class extends Command {
           components: [
             {
               type: ComponentType.StringSelect,
-              customId: 'maa$deleteLearn',
-              placeholder: '지울 데이터를 선택해ㅈ주세요',
+              customId: 'blueberry$deleteLearn',
+              placeholder: '지울 데이터를 선택해주세요',
               options,
             },
           ],

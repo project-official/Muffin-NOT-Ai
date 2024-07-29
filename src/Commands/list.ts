@@ -5,9 +5,9 @@ import { Command } from '@sapphire/framework'
 @ApplyOptions<Command.Options>({
   name: '리스트',
   aliases: ['list', '목록'],
-  description: '당신이 가ㄹ르쳐준 단어를 나열해요.',
+  description: '당신이 가르쳐준 단어를 나열해요.',
   detailedDescription: {
-    usage: '머핀아 리스트',
+    usage: '베리야 리스트',
   },
 })
 export default class extends Command {
@@ -18,7 +18,7 @@ export default class extends Command {
 
     if (!data[0]) {
       return await msg.channel.send(
-        '당신ㄴ은 단어를 가르쳐준 기억이 없ㅅ는데요.',
+        '당신은 단어를 가르쳐준 기억이 없는데요.',
       )
     }
 
