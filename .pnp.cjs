@@ -36,6 +36,7 @@ const RAW_RUNTIME_STATE =
           ["@sapphire/pieces", "npm:4.3.1"],\
           ["@sapphire/utilities", "npm:3.17.0"],\
           ["@types/node", "npm:20.14.12"],\
+          ["@types/semver", "npm:7.5.8"],\
           ["@types/ws", "npm:8.5.11"],\
           ["@typescript-eslint/eslint-plugin", "virtual:df417fa6ed58592061b3cdd25305c567cb83e355f566a3f712cecb8d4e6c4814c3ed842a030a9c3a51e2de30e93ecf82143ea19accc29756c7a7ac08166c7416#npm:7.17.0"],\
           ["@typescript-eslint/parser", "virtual:df417fa6ed58592061b3cdd25305c567cb83e355f566a3f712cecb8d4e6c4814c3ed842a030a9c3a51e2de30e93ecf82143ea19accc29756c7a7ac08166c7416#npm:7.17.0"],\
@@ -49,6 +50,7 @@ const RAW_RUNTIME_STATE =
           ["globals", "npm:15.8.0"],\
           ["mysql2", "npm:3.11.0"],\
           ["prettier", "npm:3.3.3"],\
+          ["semver", "npm:7.6.3"],\
           ["ts-node", "virtual:df417fa6ed58592061b3cdd25305c567cb83e355f566a3f712cecb8d4e6c4814c3ed842a030a9c3a51e2de30e93ecf82143ea19accc29756c7a7ac08166c7416#npm:10.9.2"],\
           ["tsup", "virtual:df417fa6ed58592061b3cdd25305c567cb83e355f566a3f712cecb8d4e6c4814c3ed842a030a9c3a51e2de30e93ecf82143ea19accc29756c7a7ac08166c7416#npm:8.2.3"],\
           ["typescript", "patch:typescript@npm%3A5.5.4#optional!builtin<compat/typescript>::version=5.5.4&hash=379a07"],\
@@ -1029,6 +1031,15 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "./.yarn/cache/@types-node-npm-20.6.3-7542470c42-2ccd82424c.zip/node_modules/@types/node/",\
         "packageDependencies": [\
           ["@types/node", "npm:20.6.3"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["@types/semver", [\
+      ["npm:7.5.8", {\
+        "packageLocation": "./.yarn/cache/@types-semver-npm-7.5.8-26073743d7-3496808818.zip/node_modules/@types/semver/",\
+        "packageDependencies": [\
+          ["@types/semver", "npm:7.5.8"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -2987,6 +2998,7 @@ const RAW_RUNTIME_STATE =
           ["@sapphire/pieces", "npm:4.3.1"],\
           ["@sapphire/utilities", "npm:3.17.0"],\
           ["@types/node", "npm:20.14.12"],\
+          ["@types/semver", "npm:7.5.8"],\
           ["@types/ws", "npm:8.5.11"],\
           ["@typescript-eslint/eslint-plugin", "virtual:df417fa6ed58592061b3cdd25305c567cb83e355f566a3f712cecb8d4e6c4814c3ed842a030a9c3a51e2de30e93ecf82143ea19accc29756c7a7ac08166c7416#npm:7.17.0"],\
           ["@typescript-eslint/parser", "virtual:df417fa6ed58592061b3cdd25305c567cb83e355f566a3f712cecb8d4e6c4814c3ed842a030a9c3a51e2de30e93ecf82143ea19accc29756c7a7ac08166c7416#npm:7.17.0"],\
@@ -3000,6 +3012,7 @@ const RAW_RUNTIME_STATE =
           ["globals", "npm:15.8.0"],\
           ["mysql2", "npm:3.11.0"],\
           ["prettier", "npm:3.3.3"],\
+          ["semver", "npm:7.6.3"],\
           ["ts-node", "virtual:df417fa6ed58592061b3cdd25305c567cb83e355f566a3f712cecb8d4e6c4814c3ed842a030a9c3a51e2de30e93ecf82143ea19accc29756c7a7ac08166c7416#npm:10.9.2"],\
           ["tsup", "virtual:df417fa6ed58592061b3cdd25305c567cb83e355f566a3f712cecb8d4e6c4814c3ed842a030a9c3a51e2de30e93ecf82143ea19accc29756c7a7ac08166c7416#npm:8.2.3"],\
           ["typescript", "patch:typescript@npm%3A5.5.4#optional!builtin<compat/typescript>::version=5.5.4&hash=379a07"],\
@@ -3480,6 +3493,13 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "./.yarn/cache/semver-npm-7.6.2-0fec6944bb-296b17d027.zip/node_modules/semver/",\
         "packageDependencies": [\
           ["semver", "npm:7.6.2"]\
+        ],\
+        "linkType": "HARD"\
+      }],\
+      ["npm:7.6.3", {\
+        "packageLocation": "./.yarn/cache/semver-npm-7.6.3-57e82c14d5-36b1fbe1a2.zip/node_modules/semver/",\
+        "packageDependencies": [\
+          ["semver", "npm:7.6.3"]\
         ],\
         "linkType": "HARD"\
       }]\

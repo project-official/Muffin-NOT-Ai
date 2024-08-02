@@ -1,6 +1,6 @@
 {
   "name": "muffinbot",
-  "version": "3.0.0-cake.p240801a",
+  "version": "3.0.0-cake.p240802a",
   "main": "dist/index.js",
   "private": true,
   "dependencies": {
@@ -13,6 +13,7 @@
     "discord.js": "^14.15.3",
     "dokdo": "^0.6.2",
     "mysql2": "^3.11.0",
+    "semver": "^7.6.3",
     "undici": "^6.19.4",
     "ws": "^8.18.0"
   },
@@ -21,6 +22,7 @@
     "@eslint/js": "^9.8.0",
     "@migan/prettier-config": "^1.2.0",
     "@types/node": "^20.14.12",
+    "@types/semver": "^7",
     "@types/ws": "^8.5.11",
     "@typescript-eslint/eslint-plugin": "^7.17.0",
     "@typescript-eslint/parser": "^7.17.0",

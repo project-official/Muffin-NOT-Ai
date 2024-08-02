@@ -14,6 +14,22 @@ export default class extends Listener {
     })
     if (msg.author.bot) return
     if (msg.content.startsWith(prefix)) {
+      if (this.container.release === 'PRE-RELEASE') {
+        await msg.reply({
+          embeds: [
+            {
+              title: '정식 출시 이전 버전 사용안내',
+              description:
+                `현재 이 버전의 ${this.container.client.user?.username}은 개발중ㅇ이라 오류가 있을수 있어요.\n` +
+                `만약 오류가 발견되면 ${(await this.container.client.users.fetch(this.container.config.bot.owner_ID)).username}님에게 알려주세요.\n`,
+              color: 0xff0000,
+              footer: {
+                text: `현재 브랜치: ${this.container.release.toLowerCase()} 버전: ${this.container.version}`,
+              },
+            },
+          ],
+        })
+      }
       const args = msg.content.slice(prefix.length).trim().split(/ +/g)
 
       this.container.logger.debug(`[ChatBot] command: ${args.join(' ')}`)
