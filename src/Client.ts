@@ -5,6 +5,10 @@ import { version } from '../package.json'
 import config from '../config.json'
 import semver from 'semver'
 
+import './interaction-handlers/_load'
+import './listeners/_load'
+import './Commands/_load'
+
 container.config = config
 container.prefix = config.bot.prefix
 container.version = version
@@ -43,6 +47,7 @@ export default class MuffinBot extends SapphireClient {
         repliedUser: true,
       },
       partials: [Partials.Message, Partials.ThreadMember],
+      baseUserDirectory: null,
     })
   }
 

@@ -1,6 +1,6 @@
+import { Args, Command, container } from '@sapphire/framework'
 import { codeBlock, type Message } from 'discord.js'
 import { ApplyOptions } from '@sapphire/decorators'
-import { Args, Command } from '@sapphire/framework'
 
 @ApplyOptions<Command.Options>({
   name: '도움말',
@@ -11,7 +11,7 @@ import { Args, Command } from '@sapphire/framework'
     examples: ['머핀아 도움말', '머핀아 도움말 배워'],
   },
 })
-export default class extends Command {
+class HelpCommand extends Command {
   public async messageRun(msg: Message, args: Args) {
     const commandName = await args.pick('string').catch(() => null)
     if (
@@ -87,3 +87,9 @@ export default class extends Command {
     }
   }
 }
+
+void container.stores.loadPiece({
+  piece: HelpCommand,
+  name: 'help',
+  store: 'commands',
+})

@@ -1,4 +1,4 @@
-import { type Args, Command } from '@sapphire/framework'
+import { type Args, Command, container } from '@sapphire/framework'
 import { codeBlock, type Message } from 'discord.js'
 import { ApplyOptions } from '@sapphire/decorators'
 
@@ -15,7 +15,7 @@ import { ApplyOptions } from '@sapphire/decorators'
     ],
   },
 })
-export default class extends Command {
+class LearnCommand extends Command {
   public async messageRun(msg: Message, args: Args) {
     if (typeof this.detailedDescription === 'string') return
     const config = this.container.config
@@ -74,3 +74,9 @@ export default class extends Command {
     await msg.reply(`${command}을/를 배웠ㅇ어요.`)
   }
 }
+
+void container.stores.loadPiece({
+  piece: LearnCommand,
+  name: 'learn',
+  store: 'commands',
+})

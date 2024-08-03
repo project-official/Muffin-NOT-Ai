@@ -1,6 +1,6 @@
 import { ApplyOptions } from '@sapphire/decorators'
 import { Message, codeBlock } from 'discord.js'
-import { Command } from '@sapphire/framework'
+import { Command, container } from '@sapphire/framework'
 
 @ApplyOptions<Command.Options>({
   name: '리스트',
@@ -10,7 +10,7 @@ import { Command } from '@sapphire/framework'
     usage: '머핀아 리스트',
   },
 })
-export default class extends Command {
+class ListCommand extends Command {
   public async messageRun(msg: Message<boolean>) {
     const db = this.container.database
     const data = await db.learn.findOneAnotherKey('user_id', msg.author.id)
@@ -41,3 +41,9 @@ export default class extends Command {
     })
   }
 }
+
+void container.stores.loadPiece({
+  piece: ListCommand,
+  name: 'list',
+  store: 'commands',
+})

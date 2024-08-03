@@ -1,9 +1,9 @@
-import { Listener } from '@sapphire/framework'
+import { Listener, container } from '@sapphire/framework'
 import { type Message } from 'discord.js'
 import { noPerm } from '../modules'
 import Dokdo from 'dokdo'
 
-export default class extends Listener {
+class MessageCreateListener extends Listener {
   public async run(msg: Message) {
     const prefix = this.container.prefix
     const dokdo = new Dokdo(this.container.client, {
@@ -46,3 +46,9 @@ export default class extends Listener {
     }
   }
 }
+
+void container.stores.loadPiece({
+  piece: MessageCreateListener,
+  name: 'messageCreate',
+  store: 'listeners',
+})
