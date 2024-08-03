@@ -20,7 +20,8 @@ class MessageCreateListener extends Listener {
             {
               title: '정식 출시 이전 버전 사용안내',
               description:
-                `현재 이 버전의 ${this.container.client.user?.username}은 개발중ㅇ이라 오류가 있을수 있어요.\n` +
+                `현재 이 버전의 ${this.container.client.user?.username}은 정식출시 되기 이전이라 많이 불안정할 수 있어요.\n` +
+                `또한 이 버전의 ${this.container.client.user?.username}의 데이터는 정식버전과 연동이 안돼요.\n` +
                 `만약 오류가 발견되면 ${(await this.container.client.users.fetch(this.container.config.bot.owner_ID)).username}님에게 알려주세요.\n`,
               color: 0xff0000,
               footer: {
