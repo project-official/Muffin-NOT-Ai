@@ -1490,6 +1490,7 @@ const RAW_RUNTIME_STATE =
           ["@sapphire/pieces", "npm:4.3.1"],\
           ["@sapphire/utilities", "npm:3.17.0"],\
           ["@types/node", "npm:20.14.12"],\
+          ["@types/semver", "npm:7.5.8"],\
           ["@types/ws", "npm:8.5.11"],\
           ["@typescript-eslint/eslint-plugin", "virtual:f96990f29da18aed6da359c6ef7f9f0a925f40696fa5a18827f7968837099151e1a026383c9b01a9e3101ce5ba69a03935108dba447901b3be2155a61c8d6392#npm:7.17.0"],\
           ["@typescript-eslint/parser", "virtual:f96990f29da18aed6da359c6ef7f9f0a925f40696fa5a18827f7968837099151e1a026383c9b01a9e3101ce5ba69a03935108dba447901b3be2155a61c8d6392#npm:7.17.0"],\
@@ -1503,6 +1504,7 @@ const RAW_RUNTIME_STATE =
           ["globals", "npm:15.8.0"],\
           ["mysql2", "npm:3.11.0"],\
           ["prettier", "npm:3.3.3"],\
+          ["semver", "npm:7.6.3"],\
           ["ts-node", "virtual:f96990f29da18aed6da359c6ef7f9f0a925f40696fa5a18827f7968837099151e1a026383c9b01a9e3101ce5ba69a03935108dba447901b3be2155a61c8d6392#npm:10.9.2"],\
           ["tsup", "virtual:f96990f29da18aed6da359c6ef7f9f0a925f40696fa5a18827f7968837099151e1a026383c9b01a9e3101ce5ba69a03935108dba447901b3be2155a61c8d6392#npm:8.2.3"],\
           ["typescript", "patch:typescript@npm%3A5.5.4#optional!builtin<compat/typescript>::version=5.5.4&hash=379a07"],\
@@ -3018,42 +3020,6 @@ const RAW_RUNTIME_STATE =
           ["ms", "npm:2.1.2"]\
         ],\
         "linkType": "HARD"\
-      }]\
-    ]],\
-    ["muffinbot", [\
-      ["workspace:.", {\
-        "packageLocation": "./",\
-        "packageDependencies": [\
-          ["muffinbot", "workspace:."],\
-          ["@eslint/eslintrc", "npm:3.1.0"],\
-          ["@eslint/js", "npm:9.8.0"],\
-          ["@migan/prettier-config", "npm:1.2.0"],\
-          ["@sapphire/decorators", "npm:6.1.0"],\
-          ["@sapphire/discord.js-utilities", "npm:7.3.0"],\
-          ["@sapphire/framework", "npm:5.2.1"],\
-          ["@sapphire/pieces", "npm:4.3.1"],\
-          ["@sapphire/utilities", "npm:3.17.0"],\
-          ["@types/node", "npm:20.14.12"],\
-          ["@types/ws", "npm:8.5.11"],\
-          ["@typescript-eslint/eslint-plugin", "virtual:df417fa6ed58592061b3cdd25305c567cb83e355f566a3f712cecb8d4e6c4814c3ed842a030a9c3a51e2de30e93ecf82143ea19accc29756c7a7ac08166c7416#npm:7.17.0"],\
-          ["@typescript-eslint/parser", "virtual:df417fa6ed58592061b3cdd25305c567cb83e355f566a3f712cecb8d4e6c4814c3ed842a030a9c3a51e2de30e93ecf82143ea19accc29756c7a7ac08166c7416#npm:7.17.0"],\
-          ["cross-env", "npm:7.0.3"],\
-          ["discord-api-types", "npm:0.37.93"],\
-          ["discord.js", "npm:14.15.3"],\
-          ["dokdo", "virtual:df417fa6ed58592061b3cdd25305c567cb83e355f566a3f712cecb8d4e6c4814c3ed842a030a9c3a51e2de30e93ecf82143ea19accc29756c7a7ac08166c7416#npm:0.6.2"],\
-          ["eslint", "npm:9.8.0"],\
-          ["eslint-config-prettier", "virtual:df417fa6ed58592061b3cdd25305c567cb83e355f566a3f712cecb8d4e6c4814c3ed842a030a9c3a51e2de30e93ecf82143ea19accc29756c7a7ac08166c7416#npm:9.1.0"],\
-          ["eslint-plugin-prettier", "virtual:df417fa6ed58592061b3cdd25305c567cb83e355f566a3f712cecb8d4e6c4814c3ed842a030a9c3a51e2de30e93ecf82143ea19accc29756c7a7ac08166c7416#npm:5.2.1"],\
-          ["globals", "npm:15.8.0"],\
-          ["mysql2", "npm:3.11.0"],\
-          ["prettier", "npm:3.3.3"],\
-          ["ts-node", "virtual:df417fa6ed58592061b3cdd25305c567cb83e355f566a3f712cecb8d4e6c4814c3ed842a030a9c3a51e2de30e93ecf82143ea19accc29756c7a7ac08166c7416#npm:10.9.2"],\
-          ["tsup", "virtual:df417fa6ed58592061b3cdd25305c567cb83e355f566a3f712cecb8d4e6c4814c3ed842a030a9c3a51e2de30e93ecf82143ea19accc29756c7a7ac08166c7416#npm:8.2.3"],\
-          ["typescript", "patch:typescript@npm%3A5.5.4#optional!builtin<compat/typescript>::version=5.5.4&hash=379a07"],\
-          ["undici", "npm:6.19.4"],\
-          ["ws", "virtual:df417fa6ed58592061b3cdd25305c567cb83e355f566a3f712cecb8d4e6c4814c3ed842a030a9c3a51e2de30e93ecf82143ea19accc29756c7a7ac08166c7416#npm:8.18.0"]\
-        ],\
-        "linkType": "SOFT"\
       }]\
     ]],\
     ["mysql2", [\

@@ -10,5 +10,8 @@
     "password": "",
     "database": "",
     "port": 3306
+  },
+  "api": {
+    "opendict": ""
   }
 }

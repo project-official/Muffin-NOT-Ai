@@ -75,6 +75,9 @@ declare module '@sapphire/framework' {
         database: string
         port: number
       }
+      api: {
+        opendict: string
+      }
     }
     release: 'DEV' | 'PRE-RELEASE' | 'RELEASE'
   }
