@@ -1,4 +1,5 @@
 import {
+  container,
   InteractionHandler,
   InteractionHandlerTypes,
 } from '@sapphire/framework'
@@ -8,7 +9,7 @@ import { ApplyOptions } from '@sapphire/decorators'
 @ApplyOptions<InteractionHandler.Options>({
   interactionHandlerType: InteractionHandlerTypes.SelectMenu,
 })
-export default class extends InteractionHandler {
+class DeleteLearnHandler extends InteractionHandler {
   public async parse(interaction: StringSelectMenuInteraction) {
     if (interaction.customId !== 'blueberry$deleteLearn') return this.none()
     return this.some()
@@ -34,3 +35,9 @@ export default class extends InteractionHandler {
     })
   }
 }
+
+void container.stores.loadPiece({
+  piece: DeleteLearnHandler,
+  name: 'deleteLearn',
+  store: 'interaction-handlers',
+})

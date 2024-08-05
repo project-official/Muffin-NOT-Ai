@@ -1,5 +1,5 @@
 import { ApplyOptions } from '@sapphire/decorators'
-import { Command } from '@sapphire/framework'
+import { Command, container } from '@sapphire/framework'
 import { type Message } from 'discord.js'
 
 @ApplyOptions<Command.Options>({
@@ -10,7 +10,7 @@ import { type Message } from 'discord.js'
     usage: '베리야 학습데이터량',
   },
 })
-export default class extends Command {
+class LearnDataCommand extends Command {
   public async messageRun(msg: Message<true>) {
     const db = this.container.database
     const learnData = await db.learn.all()
@@ -20,3 +20,9 @@ export default class extends Command {
 ${msg.author.username}님이 가르쳐준 단어: ${userData.length}개`)
   }
 }
+
+void container.stores.loadPiece({
+  piece: LearnDataCommand,
+  name: 'learn_data',
+  store: 'commands',
+})

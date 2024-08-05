@@ -3,7 +3,7 @@ import { ApplyOptions } from '@sapphire/decorators'
 import { ActivityType, Client } from 'discord.js'
 
 @ApplyOptions<Listener.Options>({ once: true })
-export default class extends Listener {
+class ClientReadyListener extends Listener {
   public async run(client: Client<true>) {
     function setStatus() {
       client.user.setActivity({
@@ -18,3 +18,9 @@ export default class extends Listener {
     this.container.logger.info(`[BlueBerry] Bot Ready.`)
   }
 }
+
+void container.stores.loadPiece({
+  piece: ClientReadyListener,
+  name: 'ready',
+  store: 'listeners',
+})

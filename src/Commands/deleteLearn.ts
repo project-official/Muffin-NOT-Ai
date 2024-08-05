@@ -1,15 +1,16 @@
 import {
+  Args,
+  Command,
+  container,
+  DetailedDescriptionCommandObject,
+} from '@sapphire/framework'
+import {
   type SelectMenuComponentOptionData,
   type Message,
   ComponentType,
   codeBlock,
 } from 'discord.js'
 import { ApplyOptions } from '@sapphire/decorators'
-import {
-  Args,
-  Command,
-  DetailedDescriptionCommandObject,
-} from '@sapphire/framework'
 import { type LearnData } from '../modules'
 
 @ApplyOptions<Command.Options>({
@@ -21,7 +22,7 @@ import { type LearnData } from '../modules'
     examples: ['베리야 삭제 베리'],
   },
 })
-export default class extends Command {
+class DeleteLearnCommand extends Command {
   public async messageRun(msg: Message, args: Args) {
     const command = await args.rest('string').catch(() => null)
     const options: SelectMenuComponentOptionData[] = []
@@ -77,3 +78,9 @@ export default class extends Command {
     })
   }
 }
+
+void container.stores.loadPiece({
+  piece: DeleteLearnCommand,
+  name: 'delete',
+  store: 'commands',
+})

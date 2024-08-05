@@ -3,13 +3,30 @@ import { GatewayIntentBits, Partials, type Snowflake } from 'discord.js'
 import { ChatBot, NODE_ENV, MaaDatabase } from './modules'
 import { version } from '../package.json'
 import config from '../config.json'
+import semver from 'semver'
+
+import './interaction-handlers/_load'
+import './listeners/_load'
+import './Commands/_load'
 
 container.config = config
 container.prefix = config.bot.prefix
 container.version = version
 container.database = new MaaDatabase()
-container.chatBot = new ChatBot(container.database)
 container.dokdoAliases = ['dokdo', 'dok', 'Dokdo', 'Dok', '테스트']
+container.chatBot = new ChatBot(container.database)
+
+const release = version
+  .slice((semver.coerce(version)?.toString() + '-').length)
+  .split('.')[1]
+
+if (release.startsWith('d')) {
+  container.release = 'DEV'
+} else if (release.startsWith('p')) {
+  container.release = 'PRE-RELEASE'
+} else {
+  container.release = 'RELEASE'
+}
 
 export default class MuffinBot extends SapphireClient {
   public constructor() {
@@ -25,10 +42,12 @@ export default class MuffinBot extends SapphireClient {
         level: NODE_ENV === 'development' ? LogLevel.Debug : LogLevel.Info,
       },
       allowedMentions: {
+        users: [],
         roles: [],
         repliedUser: true,
       },
       partials: [Partials.Message, Partials.ThreadMember],
+      baseUserDirectory: null,
     })
   }
 
@@ -56,10 +75,8 @@ declare module '@sapphire/framework' {
         database: string
         port: number
       }
-      api: {
-        opendict: string
-      }
     }
+    release: 'DEV' | 'PRE-RELEASE' | 'RELEASE'
   }
 }
 
