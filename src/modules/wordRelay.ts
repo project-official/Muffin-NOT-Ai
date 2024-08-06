@@ -38,9 +38,9 @@ export class WordRelay {
 
   public startGame(msg: Message<true>) {
     /**
-     * @description MAAWRCollected: Muffin Ai Arujak(MAA) Collected
+     * @description BBWRCollected: BlueBerry WordRelay(WR) Collected
      */
-    const MAAWR_COLLECTED = 'MAAWRCollected'
+    const BBWR_COLLECTED = 'BBWRCollected'
     const userID = msg.author.id
 
     try {
@@ -50,7 +50,7 @@ export class WordRelay {
         })
         .then(thread => {
           thread.send(
-            `<@${userID}>님, 여기 들어와서 시작단어를ㄹ 60초안에 입력해주세요!`,
+            `<@${userID}>님, 여기 들어와서 시작단어를 60초안에 입력해주세요!`,
           )
 
           const collector = thread.createMessageCollector({
@@ -62,11 +62,11 @@ export class WordRelay {
             .on('collect', async message => {
               if (message.content.length < 2) {
                 await message.reply(
-                  '해당 단어는 너무 짧ㅇ아요. 다시 한번 입력해주세요.',
+                  '해당 단어는 너무 짧아요. 다시 한번 입력해주세요.',
                 )
               } else if (!(await this.validWord(message.content))) {
                 await message.reply(
-                  '해당 단어는 일치하지 않아요. 다시 한ㅂ번 입력해주세요.',
+                  '해당 단어는 일치하지 않아요. 다시 한번 입력해주세요.',
                 )
               } else if (
                 !(await this.getWord(
@@ -74,21 +74,19 @@ export class WordRelay {
                 ))
               ) {
                 await message.reply(
-                  '시작단어가 한방단어면 안돼요. 다시 한번 입력ㅎ해주세요.',
+                  '시작단어가 한방단어면 안돼요. 다시 한번 입력해주세요.',
                 )
               } else {
-                collector.stop(`${MAAWR_COLLECTED}: ${message.content}`)
+                collector.stop(`${BBWR_COLLECTED}: ${message.content}`)
               }
             })
             .on('end', (_, reason) => {
               if (reason === 'time') {
                 thread.send(
-                  `<@${userID}>님, 60초동안 시작단어를 입력하지 않아 자동ㅇ으로 게임이 종료되었어요.`,
+                  `<@${userID}>님, 60초동안 시작단어를 입력하지 않아 자동으로 게임이 종료되었어요.`,
                 )
-              } else if (reason.startsWith(MAAWR_COLLECTED)) {
-                this._usedWords.push(
-                  reason.slice(`${MAAWR_COLLECTED}: `.length),
-                )
+              } else if (reason.startsWith(BBWR_COLLECTED)) {
+                this._usedWords.push(reason.slice(`${BBWR_COLLECTED}: `.length))
               }
             })
         })
