@@ -17,6 +17,9 @@ export class MaaDatabase {
   public learn = new LearnTable(this.database)
 
   public ping() {
-    this.database.ping()
+    this.database.getConnection().then(conn => {
+      void conn.ping()
+      conn.release()
+    })
   }
 }
