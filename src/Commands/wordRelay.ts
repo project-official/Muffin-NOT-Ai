@@ -1,6 +1,6 @@
 import { type Message, PermissionFlagsBits } from 'discord.js'
+import { Command, container } from '@sapphire/framework'
 import { ApplyOptions } from '@sapphire/decorators'
-import { Command } from '@sapphire/framework'
 import { WordRelay } from '../modules'
 
 @ApplyOptions<Command.Options>({
@@ -11,7 +11,7 @@ import { WordRelay } from '../modules'
     usage: '베리야 끝말잇기',
   },
 })
-export default class extends Command {
+class WordRelayCommand extends Command {
   public async messageRun(msg: Message<true>) {
     if (
       !msg.guild.members.me?.permissions.has(
@@ -23,3 +23,9 @@ export default class extends Command {
     new WordRelay().startGame(msg)
   }
 }
+
+void container.stores.loadPiece({
+  piece: WordRelayCommand,
+  name: 'wordRelay',
+  store: 'commands',
+})
