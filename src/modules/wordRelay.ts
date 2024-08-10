@@ -58,25 +58,23 @@ export class WordRelay {
       })
 
       collector.on('collect', async message => {
-        if (message.content.length < 2) {
+        if (message.content.length < 2)
           await message.reply(
             '해당 단어는 너무 짧아요. 다시 한번 입력해주세요.',
           )
-        } else if (!(await this.validWord(message.content))) {
+        else if (!(await this.validWord(message.content)))
           await message.reply(
             '해당 단어는 일치하지 않아요. 다시 한번 입력해주세요.',
           )
-        } else if (
+        else if (
           !(await this.getWord(
             message.content.slice(message.content.length - 1),
           ))
-        ) {
+        )
           await message.reply(
             '시작단어가 한방단어면 안돼요. 다시 한번 입력해주세요.',
           )
-        } else {
-          collector.stop(`${BBWR_COLLECTED}: ${message.content}`)
-        }
+        else collector.stop(`${BBWR_COLLECTED}: ${message.content}`)
       })
 
       collector.on('end', (_, reason) => {
