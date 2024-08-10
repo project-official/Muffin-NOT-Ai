@@ -40,7 +40,9 @@ class MessageCreateListener extends Listener {
         if (!this.container.stores.get('commands').get(args[0])) {
           await msg.channel.sendTyping()
           const response = await this.container.chatBot.getResponse(msg)
-          await msg.reply(response)
+          response
+            ? await msg.reply(response)
+            : await msg.reply('해당하는걸 찾을 수 없어요.')
         }
       }
     }

@@ -9,11 +9,13 @@ export default class ChatBot {
     }, 60000)
   }
 
-  public async getResponse(msg: Message): Promise<string> {
+  public async getResponse(msg: Message): Promise<string | null> {
     const prefix = container.prefix
     const args = msg.content.slice(prefix.length).trim().split(/ +/g).join(' ')
     const learn = await this.db.learn.findOne(args)
     const learnData = learn[Math.floor(Math.random() * learn.length)]
+
+    if (!learnData) return null
 
     container.logger.debug(`[ChatBot] command: ${args}`)
 
