@@ -1,74 +1,82 @@
-import { Command } from '../modules'
-import { Message } from 'discord.js'
-import config from '../../config.json'
+import { type Args, Command, container } from '@sapphire/framework'
+import { codeBlock, type Message } from 'discord.js'
+import { ApplyOptions } from '@sapphire/decorators'
 
-export default class extends Command {
-  public constructor() {
-    super('배워')
-  }
-
-  public async execute(msg: Message, args: string[]) {
-    if (!args[0] || !args[1]) {
+@ApplyOptions<Command.Options>({
+  name: '배워',
+  aliases: ['공부'],
+  description: '단어를 가르치는 명령ㅇ어에요.',
+  detailedDescription: {
+    usage: '머핀아 배워 (등록할 단어) (대답)',
+    examples: [
+      '머핀아 배워 안녕 안녕!',
+      '머핀아 배워 "야 죽을래?" "아니요 ㅠㅠㅠ"',
+      '머핀아 배워 미간은_누구야? 이봇의_개발자요',
+    ],
+  },
+})
+class LearnCommand extends Command {
+  public async messageRun(msg: Message, args: Args) {
+    if (typeof this.detailedDescription === 'string') return
+    const config = this.container.config
+    const command = (await args.pick('string').catch(() => null))?.replaceAll(
+      '_',
+      ' ',
+    )
+    const result = (await args.pick('string').catch(() => null))?.replaceAll(
+      '_',
+      ' ',
+    )
+    if (!command || !result) {
       return await msg.reply(
-        '```\n멒힌아 배워 (등록할 단어) (대답)\n```\n `_`를 대답에 쓰면 공백으로 바뀌ㅇ어요.',
+        codeBlock(
+          'md',
+          `사용법: ${this.detailedDescription}
+          예시: ${this.detailedDescription.examples?.map(example => example).join('\n')}`,
+        ),
       )
     }
-    const command = args[0].replaceAll('_', ' ')
-    const result = args[1].replaceAll('_', ' ')
     const commands: string[] = []
-
-    msg.client.modules.map(a => commands.push(a.name))
-
+    const aliases: string[] = []
+    this.container.stores.get('commands').forEach(module => {
+      commands.push(module.name)
+      module.aliases.forEach(alias => aliases.push(alias))
+    })
     const ignore = [
       ...commands,
+      ...aliases,
+      ...this.container.dokdoAliases,
       '미간',
       'Migan',
       'migan',
       '간미',
-      'dokdo',
-      'dok',
     ]
     const disallowed = ['@everyone', '@here', `<@${config.bot.owner_ID}>`]
-    const db = msg.client.chatBot.db
-    const data = await db.learn.findOne(command)
-
-    if (data[0]) {
-      if (msg.author.id !== data[0].user_id) {
-        return msg.channel.send(
-          `해ㄷ당 단어는 이미 ${
-            (await msg.client.users.fetch(data[0].user_id)).username
-          }님에게서 배웠어요.`,
-        )
-      }
-    }
+    const db = this.container.database
 
     for (const ig of ignore) {
       if (command.includes(ig)) {
-        return msg.channel.send('해ㄷ당 단어는 배울ㄹ 수 없어요.')
+        return msg.reply('해ㄷ당 단어는 배울ㄹ 수 없어요.')
       }
     }
 
     for (const di of disallowed) {
       if (result.includes(di)) {
-        return msg.channel.send(
-          '해당 단ㅇ어는 개발자님이 특별히 금지하였ㅇ어요.',
-        )
+        return msg.reply('해당 단ㅇ어는 개발자님이 특별히 금지하였ㅇ어요.')
       }
     }
 
-    if (data[0] && msg.author.id === data[0].user_id) {
-      await db.learn.update({
-        command,
-        result,
-      })
-      await msg.channel.send(`${command}을/를 다시 배ㅂ웠어요.`)
-    } else {
-      await db.learn.insert({
-        command,
-        result,
-        user_id: msg.author.id,
-      })
-      await msg.channel.send(`${command}을/를 배웠ㅇ어요.`)
-    }
+    await db.learn.insert({
+      user_id: msg.author.id,
+      command,
+      result,
+    })
+    await msg.reply(`${command}을/를 배웠ㅇ어요.`)
   }
 }
+
+void container.stores.loadPiece({
+  piece: LearnCommand,
+  name: 'learn',
+  store: 'commands',
+})

@@ -1,24 +1,27 @@
-import { createPool } from 'mysql2/promise'
 import { LearnTable, NSFWContentTable, StatementTable } from './model'
-import config from '../../../config.json'
-import run from './run'
+import { container } from '@sapphire/framework'
+import { createPool } from 'mysql2/promise'
 
 export class MaaDatabase {
-  private _database = createPool({
-    ...config.mysql,
+  public readonly database = createPool({
+    ...container.config.mysql,
     keepAliveInitialDelay: 10000,
     enableKeepAlive: true,
-  }).on('release', conn => {
-    console.log(`${conn.threadId} released.`)
   })
-  public statement = new StatementTable(this._database)
-  public nsfwContent = new NSFWContentTable(this._database)
-  public learn = new LearnTable(this._database)
+    .on('release', conn => {
+      container.logger.debug(`[MaaDatabase] ${conn.threadId} Released.`)
+    })
+    .on('connection', conn => {
+      container.logger.debug(`[MaaDatabase] ${conn.threadId} Connected.`)
+    })
+  public statement = new StatementTable(this.database)
+  public nsfwContent = new NSFWContentTable(this.database)
+  public learn = new LearnTable(this.database)
 
-  public async ping() {
-    const db = await this._database.getConnection()
-
-    await db.ping()
-    db.release()
+  public ping() {
+    this.database.getConnection().then(conn => {
+      conn.ping()
+      conn.release()
+    })
   }
 }

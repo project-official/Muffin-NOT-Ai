@@ -1,27 +1,34 @@
-import {
-  ActivityType,
-  Client,
-  Collection,
-  GatewayIntentBits,
-  TextChannel,
-} from 'discord.js'
-import { type Command, noPerm, ChatBot, NODE_ENV } from './modules'
-import { readdirSync } from 'node:fs'
-import { join } from 'node:path'
+import { SapphireClient, container, LogLevel } from '@sapphire/framework'
+import { GatewayIntentBits, Partials, type Snowflake } from 'discord.js'
+import { ChatBot, NODE_ENV, MaaDatabase } from './modules'
+import { version } from '../package.json'
 import config from '../config.json'
-import Dokdo from 'dokdo'
+import semver from 'semver'
 
-const prefix = '머핀아 '
+import './interaction-handlers/_load'
+import './listeners/_load'
+import './Commands/_load'
 
-export default class MuffinBot extends Client {
-  public chatBot = new ChatBot()
-  public dokdo = new Dokdo(this, {
-    aliases: ['dokdo', 'dok'],
-    owners: [config.bot.owner_ID],
-    noPerm,
-    prefix,
-  })
-  public modules: Collection<string, Command> = new Collection()
+container.config = config
+container.prefix = config.bot.prefix
+container.version = version
+container.database = new MaaDatabase()
+container.dokdoAliases = ['dokdo', 'dok', 'Dokdo', 'Dok', '테스트']
+container.chatBot = new ChatBot(container.database)
+
+const release = version
+  .slice((semver.coerce(version)?.toString() + '-').length)
+  .split('.')[1]
+
+if (release.startsWith('d')) {
+  container.release = 'DEV'
+} else if (release.startsWith('p')) {
+  container.release = 'PRE-RELEASE'
+} else {
+  container.release = 'RELEASE'
+}
+
+export default class MuffinBot extends SapphireClient {
   public constructor() {
     super({
       intents: [
@@ -29,73 +36,57 @@ export default class MuffinBot extends Client {
         GatewayIntentBits.GuildMessages,
         GatewayIntentBits.MessageContent,
       ],
+      loadMessageCommandListeners: true,
+      defaultPrefix: container.prefix,
+      logger: {
+        level: NODE_ENV === 'development' ? LogLevel.Debug : LogLevel.Info,
+      },
       allowedMentions: {
         users: [],
         roles: [],
         repliedUser: true,
       },
+      partials: [Partials.Message, Partials.ThreadMember],
+      baseUserDirectory: null,
     })
   }
 
-  public override login(): Promise<string> {
-    if (NODE_ENV === 'development') this.on('debug', console.info)
-    this.chatBot.train(this)
-
-    readdirSync(join(__dirname, 'Commands')).forEach(file => {
-      const a = require(join(__dirname, 'Commands', file))
-      const b: Command = new a.default()
-      this.modules.set(b.name, b)
-      if (NODE_ENV === 'development') console.log(`${b.name}가 로ㄷ드됨`)
-    })
-
-    this.once('ready', client => {
-      function setStatus() {
-        client.user.setActivity({
-          type: ActivityType.Custom,
-          name: 'ㅅ살려주세요..!',
-        })
-      }
-
-      setStatus()
-      setInterval(() => setStatus(), 600000)
-
-      console.log(`먹힐 준ㅂ비 완료`)
-    }).on('messageCreate', async msg => {
-      const args: string[] = msg.content
-        .slice(prefix.length)
-        .trim()
-        .split(/ +/g)
-
-      if (NODE_ENV === 'development') console.log(args)
-      if (msg.author.bot) return
-      if (msg.content.startsWith(prefix)) {
-        if (args[0].startsWith('dokdo') || args[0].startsWith('dok')) {
-          await this.dokdo.run(msg)
-        } else {
-          if (msg.channel instanceof TextChannel) {
-            await msg.channel.sendTyping()
-            const command = this.modules.get(args.shift()!.toLowerCase())
-
-            if (command) {
-              if (command.noPerm && msg.author.id !== config.bot.owner_ID)
-                return await noPerm(msg)
-
-              await command.execute(msg, args)
-            } else {
-              const response = await this.chatBot.getResponse(msg)
-              await msg.reply(response)
-            }
-          }
-        }
-      }
-    })
+  public override async login(): Promise<string> {
+    await container.chatBot.train(this)
     return super.login(config.bot.token)
   }
 }
 
-declare module 'discord.js' {
-  interface Client {
+declare module '@sapphire/framework' {
+  interface Container {
+    database: MaaDatabase
     chatBot: ChatBot
-    modules: Collection<string, Command>
+    prefix: string
+    version: string
+    dokdoAliases: string[]
+    config: {
+      bot: {
+        owner_ID: Snowflake
+        token: string
+      }
+      train: {
+        user_ID: Snowflake
+      }
+      mysql: {
+        user: string
+        host: string
+        password: string
+        database: string
+        port: number
+      }
+    }
+    release: 'DEV' | 'PRE-RELEASE' | 'RELEASE'
+  }
+}
+
+declare module '@sapphire/framework' {
+  interface DetailedDescriptionCommandObject {
+    usage: string
+    examples?: string[]
   }
 }
