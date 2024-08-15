@@ -4,19 +4,19 @@ import { Snowflake } from 'discord.js'
 import run from '../run'
 
 export class LearnTable implements BaseTable<LearnData, string> {
-  public name = 'learn'
+  public readonly name = 'learn'
   public constructor(private _database: Pool) {}
 
   public async all(): Promise<LearnData[]> {
     const [rows] = await this._database.execute<LearnData[]>(
-      'SELECT * FROM learn;',
+      `SELECT * FROM ${this.name};`,
     )
     return rows
   }
 
   public async findOne(key: string): Promise<LearnData[]> {
     const [rows] = await this._database.execute<LearnData[]>(
-      'SELECT * FROM learn WHERE command = ?;',
+      `SELECT * FROM ${this.name} WHERE command = ?;`,
       [key],
     )
     return rows
@@ -31,7 +31,7 @@ export class LearnTable implements BaseTable<LearnData, string> {
 
     await run(db, async () => {
       await db.execute(
-        'INSERT INTO learn (command, result, user_id) VALUES (?, ?, ?);',
+        `INSERT INTO ${this.name} (command, result, user_id) VALUES (?, ?, ?);`,
         [data.command, data.result, data.user_id],
       )
     })
@@ -44,10 +44,10 @@ export class LearnTable implements BaseTable<LearnData, string> {
     const db = await this._database.getConnection()
 
     await run(db, async () => {
-      await db.execute('UPDATE learn SET result = ? WHERE command = ?;', [
-        data.command,
-        data.result,
-      ])
+      await db.execute(
+        `UPDATE ${this.name} SET result = ? WHERE command = ?;`,
+        [data.command, data.result],
+      )
     })
   }
 
@@ -55,7 +55,7 @@ export class LearnTable implements BaseTable<LearnData, string> {
     const db = await this._database.getConnection()
 
     await run(db, async () => {
-      await db.execute('DELETE FROM learn WHERE id = ?;', [key])
+      await db.execute(`DELETE FROM ${this.name} WHERE id = ?;`, [key])
     })
   }
 
@@ -64,7 +64,7 @@ export class LearnTable implements BaseTable<LearnData, string> {
     data: any,
   ): Promise<LearnData[]> {
     const [rows] = await this._database.execute<LearnData[]>(
-      `SELECT * FROM learn WHERE ${key} = ?;`,
+      `SELECT * FROM ${this.name} WHERE ${key} = ?;`,
       [data],
     )
     return rows
