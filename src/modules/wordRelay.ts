@@ -47,8 +47,7 @@ export class WordRelay {
       },
     )
 
-    if (res.data.channel.total === 0) return false
-    else return true
+    return res.data.channel.total !== 0
   }
 
   public async startGame(msg: Message<true>) {
