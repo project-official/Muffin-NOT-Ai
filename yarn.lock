@@ -816,15 +816,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/ws@npm:^8.5.10":
-  version: 8.5.10
-  resolution: "@types/ws@npm:8.5.10"
-  dependencies:
-    "@types/node": "npm:*"
-  checksum: 10c0/e9af279b984c4a04ab53295a40aa95c3e9685f04888df5c6920860d1dd073fcc57c7bd33578a04b285b2c655a0b52258d34bee0a20569dca8defb8393e1e5d29
-  languageName: node
-  linkType: hard
-
 "@types/ws@npm:^8.5.11":
   version: 8.5.11
   resolution: "@types/ws@npm:8.5.11"
@@ -2475,7 +2466,6 @@ __metadata:
     "@sapphire/utilities": "npm:^3.17.0"
     "@types/node": "npm:^20.14.12"
     "@types/semver": "npm:^7"
-    "@types/ws": "npm:^8.5.11"
     "@typescript-eslint/eslint-plugin": "npm:^7.17.0"
     "@typescript-eslint/parser": "npm:^7.17.0"
     cross-env: "npm:^7.0.3"
@@ -2493,7 +2483,6 @@ __metadata:
     tsup: "npm:^8.2.3"
     typescript: "npm:^5.5.4"
     undici: "npm:^6.19.4"
-    ws: "npm:^8.18.0"
   languageName: unknown
   linkType: soft
 
@@ -3501,22 +3490,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ws@npm:^8.16.0":
-  version: 8.17.0
-  resolution: "ws@npm:8.17.0"
-  peerDependencies:
-    bufferutil: ^4.0.1
-    utf-8-validate: ">=5.0.2"
-  peerDependenciesMeta:
-    bufferutil:
-      optional: true
-    utf-8-validate:
-      optional: true
-  checksum: 10c0/55241ec93a66fdfc4bf4f8bc66c8eb038fda2c7a4ee8f6f157f2ca7dc7aa76aea0c0da0bf3adb2af390074a70a0e45456a2eaf80e581e630b75df10a64b0a990
-  languageName: node
-  linkType: hard
-
-"ws@npm:^8.18.0":
+"ws@npm:8.18.0":
   version: 8.18.0
   resolution: "ws@npm:8.18.0"
   peerDependencies:
