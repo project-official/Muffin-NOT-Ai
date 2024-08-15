@@ -1,8 +1,20 @@
 import { container } from '@sapphire/framework'
+import axios, { AxiosResponse } from 'axios'
 import { type Message } from 'discord.js'
-import { request } from 'undici'
 
 interface APIResponse {
+  channel: {
+    title: string
+    link: string
+    description: string
+    total: number
+    start: number
+    num: number
+    item: Item[]
+  }
+}
+
+interface Item {
   word: string
   sense: {
     target_code: number
@@ -21,18 +33,21 @@ export class WordRelay {
   private _reqType = 'json'
 
   public async validWord(word: string): Promise<boolean> {
-    const res: any = await request(`${this._url}`, {
-      query: {
-        key: this._key,
-        req_type: this._reqType,
-        advanced: 'y',
-        type1: 'word',
-        type3: 'general',
-        q: word,
+    const res = await axios.get<string, AxiosResponse<APIResponse>>(
+      `${this._url}`,
+      {
+        params: {
+          key: this._key,
+          req_type: this._reqType,
+          advanced: 'y',
+          type1: 'word',
+          type3: 'general',
+          q: word,
+        },
       },
-    }).then(res => res.body.json())
+    )
 
-    if (res.channel.total === 0) return false
+    if (res.data.channel.total === 0) return false
     else return true
   }
 
@@ -58,23 +73,26 @@ export class WordRelay {
       })
 
       collector.on('collect', async message => {
-        if (message.content.length < 2)
-          await message.reply(
+        const content = message.content
+        if (content.length < 2)
+          return await message.reply(
             '해당 단어는 너무 짧아요. 다시 한번 입력해주세요.',
           )
-        else if (!(await this.validWord(message.content)))
-          await message.reply(
+
+        const isValid = await this.validWord(message.content)
+        const nextWord = await this.getWord(content.slice(content.length - 1))
+
+        if (!isValid)
+          return await message.reply(
             '해당 단어는 일치하지 않아요. 다시 한번 입력해주세요.',
           )
-        else if (
-          !(await this.getWord(
-            message.content.slice(message.content.length - 1),
-          ))
-        )
-          await message.reply(
+
+        if (!nextWord)
+          return await message.reply(
             '시작단어가 한방단어면 안돼요. 다시 한번 입력해주세요.',
           )
-        else collector.stop(`${BBWR_COLLECTED}: ${message.content}`)
+
+        collector.stop(`${BBWR_COLLECTED}: ${message.content}`)
       })
 
       collector.on('end', (_, reason) => {
@@ -91,19 +109,21 @@ export class WordRelay {
     }
   }
 
-  private _getRandomWord(wordList: APIResponse[] | null): APIResponse | null {
-    if (!wordList) return null
+  private _getRandomWord(wordList: APIResponse): Item | null {
+    if (!wordList.channel.total) return null
 
-    const wordInfo = wordList[Math.floor(Math.random() * wordList.length)]
+    const items = wordList.channel.item
+    const wordInfo = items[Math.floor(Math.random() * items.length)]
 
     if (this._usedWords.includes(wordInfo.word))
       return this._getRandomWord(wordList)
-    else return wordInfo
+
+    return wordInfo
   }
 
-  public async getWord(lastWord: string): Promise<APIResponse | null> {
-    const res: any = await request(this._url, {
-      query: {
+  public async getWord(lastWord: string) {
+    const res = await axios.get<string, AxiosResponse<APIResponse>>(this._url, {
+      params: {
         key: this._key,
         req_type: this._reqType,
         advanced: 'y',
@@ -115,8 +135,8 @@ export class WordRelay {
         num: 100,
         pos: 1,
       },
-    }).then(res => res.body.json())
+    })
 
-    return this._getRandomWord(res.channel.item)
+    return this._getRandomWord(res.data)
   }
 }

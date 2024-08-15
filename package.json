@@ -1,6 +1,6 @@
 {
   "name": "blueberry",
-  "version": "1.0.0-blueberry.d240810a",
+  "version": "1.0.0-blueberry.d240815a",
   "description": "Public discord bot based Muffin-NOT-Ai",
   "main": "dist/index.js",
   "private": true,
@@ -10,12 +10,12 @@
     "@sapphire/framework": "^5.2.1",
     "@sapphire/pieces": "^4.3.1",
     "@sapphire/utilities": "^3.17.0",
+    "axios": "^1.7.3",
     "discord-api-types": "^0.37.93",
     "discord.js": "^14.15.3",
     "dokdo": "^0.6.2",
     "mysql2": "^3.11.0",
     "semver": "^7.6.3",
-    "undici": "^6.19.4",
     "ws": "^8.18.0"
   },
   "devDependencies": {
