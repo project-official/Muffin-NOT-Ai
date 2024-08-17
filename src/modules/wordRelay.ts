@@ -2,6 +2,7 @@ import { container } from '@sapphire/framework'
 import axios, { AxiosResponse } from 'axios'
 import { type Message } from 'discord.js'
 
+// TODO: 타입 부문 코드 분리
 interface APIResponse {
   channel: {
     title: string
@@ -26,6 +27,7 @@ interface Item {
   }
 }
 
+// TODO: 우리말샘 API부분 코드 분리
 export class WordRelay {
   private _url = 'https://opendict.korean.go.kr/api/search'
   private _key = container.config.api.opendict
@@ -51,7 +53,6 @@ export class WordRelay {
     return res.data.channel.total !== 0
   }
 
-  // TODO: 타임아웃 추가
   public async startGame(msg: Message<true>) {
     const TIMEOUT_PRE_START = 'timeout: pre start'
     const userID = msg.author.id
@@ -90,10 +91,11 @@ export class WordRelay {
 
         const isValid = await this.validWord(content)
 
-        if (!isValid)
+        if (!this._isStarted && !isValid)
           return await message.reply(
             '해당 단어는 일치하지 않아요. 다시 한번 입력해주세요.',
           )
+        else if (this._isStarted && !isValid) return collector.stop(BOT_WIN)
 
         const lastChar = content.charAt(content.length - 1)
         const nextWordInfo = await this.getWord(lastChar)
@@ -127,8 +129,7 @@ export class WordRelay {
         if (reason === USER_WIN)
           void thread.send('더이상 다음단어가 생각이 안나요. 당신이 이겼어요!')
         else if (reason === BOT_WIN)
-          // TODO: 시간에 관한 메세지 추가
-          void thread.send('제가 이겼어요!')
+          void thread.send('단어가 일치하지 않아 제가 이겼어요!')
         else if (reason === TIMEOUT_PRE_START)
           void thread.send(
             `<@${userID}>님, 60초동안 시작단어를 입력하지 않아 자동으로 게임이 종료되었어요.`,
