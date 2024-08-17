@@ -53,6 +53,7 @@ export class WordRelay {
 
   // TODO: 타임아웃 추가
   public async startGame(msg: Message<true>) {
+    const TIMEOUT_PRE_START = 'timeout: pre start'
     const USER_WIN = 'userWin'
     const BOT_WIN = 'botWin'
     const userID = msg.author.id
@@ -70,6 +71,12 @@ export class WordRelay {
       const collector = thread.createMessageCollector({
         filter,
       })
+
+      // 60초동안 사용자 입력이 없을 시 자동으로 게임종료
+      setTimeout(() => {
+        if (!this._isStarted) return collector.stop(TIMEOUT_PRE_START)
+        else return
+      }, 60_000)
 
       collector.on('collect', async message => {
         const content = message.content
@@ -97,6 +104,11 @@ export class WordRelay {
               '시작단어가 한방단어면 안돼요. 다시 한번 입력해주세요.',
             )
 
+          setTimeout(() => {
+            if (!this._isStarted) return collector.stop()
+            else return
+          }, 60_000)
+
           this._isStarted = true
         } else {
           const lastWord = this._usedWords[this._usedWords.length - 1]
@@ -122,6 +134,10 @@ export class WordRelay {
         else if (reason === BOT_WIN)
           // TODO: 시간에 관한 메세지 추가
           void thread.send('제가 이겼어요!')
+        else if (reason === TIMEOUT_PRE_START)
+          void thread.send(
+            `<@${userID}>님, 60초동안 시작단어를 입력하지 않아 자동으로 게임이 종료되었어요.`,
+          )
       })
     } catch (err) {
       console.error(err)
