@@ -54,9 +54,9 @@ export class WordRelay {
   // TODO: 타임아웃 추가
   public async startGame(msg: Message<true>) {
     const TIMEOUT_PRE_START = 'timeout: pre start'
+    const userID = msg.author.id
     const USER_WIN = 'userWin'
     const BOT_WIN = 'botWin'
-    const userID = msg.author.id
     const filter = (message: Message) => message.author.id === userID
 
     try {
@@ -103,11 +103,6 @@ export class WordRelay {
             return await message.reply(
               '시작단어가 한방단어면 안돼요. 다시 한번 입력해주세요.',
             )
-
-          setTimeout(() => {
-            if (!this._isStarted) return collector.stop()
-            else return
-          }, 60_000)
 
           this._isStarted = true
         } else {
