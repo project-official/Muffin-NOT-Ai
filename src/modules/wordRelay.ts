@@ -129,8 +129,6 @@ export class WordRelay {
   }
 
   private _getRandomWord(res: AxiosResponse<APIResponse>): Item | null {
-    container.logger.debug(`opendict statusCode: ${res.status}`)
-
     if (!res.data) return null
     if (!res.data.channel.total) return null
 
@@ -159,6 +157,7 @@ export class WordRelay {
       },
     })
 
+    container.logger.debug(`opendict statusCode: ${res.status}`)
     return this._getRandomWord(res)
   }
 }
