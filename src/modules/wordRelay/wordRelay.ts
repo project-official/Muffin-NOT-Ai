@@ -1,56 +1,16 @@
+import type { APIResponse, Item } from './types'
 import { container } from '@sapphire/framework'
-import axios, { AxiosResponse } from 'axios'
 import { type Message } from 'discord.js'
+import { AxiosResponse } from 'axios'
+import { OpenDictAPI } from './api'
 
-// TODO: 타입 부문 코드 분리
-interface APIResponse {
-  channel: {
-    title: string
-    link: string
-    description: string
-    total: number
-    start: number
-    num: number
-    item: Item[]
-  }
-}
-
-interface Item {
-  word: string
-  sense: {
-    target_code: number
-    sense_no: number
-    definition: string
-    pos: string
-    link: string
-    type: string
-  }
-}
-
-// TODO: 우리말샘 API부분 코드 분리
 export class WordRelay {
-  private _url = 'https://opendict.korean.go.kr/api/search'
-  private _key = container.config.api.opendict
   private _usedWords: string[] = []
+  private _api = new OpenDictAPI()
   private _isStarted = false
-  private _reqType = 'json'
 
   public async validWord(word: string): Promise<boolean> {
-    const res = await axios.get<string, AxiosResponse<APIResponse>>(
-      `${this._url}`,
-      {
-        params: {
-          key: this._key,
-          req_type: this._reqType,
-          advanced: 'y',
-          type1: 'word',
-          type3: 'general',
-          q: word,
-        },
-      },
-    )
-
-    return res.data.channel.total !== 0
+    return await this._api.vaildWord(word)
   }
 
   public async startGame(msg: Message<true>) {
@@ -58,7 +18,6 @@ export class WordRelay {
     const userID = msg.author.id
     const USER_WIN = 'userWin'
     const BOT_WIN = 'botWin'
-    const filter = (message: Message) => message.author.id === userID
 
     try {
       const thread = await msg.startThread({
@@ -70,7 +29,7 @@ export class WordRelay {
       )
 
       const collector = thread.createMessageCollector({
-        filter,
+        filter: (message: Message) => message.author.id === userID,
       })
 
       // 60초동안 사용자 입력이 없을 시 자동으로 게임종료
@@ -154,22 +113,6 @@ export class WordRelay {
   }
 
   public async getWord(lastWord: string) {
-    const res = await axios.get<string, AxiosResponse<APIResponse>>(this._url, {
-      params: {
-        key: this._key,
-        req_type: this._reqType,
-        advanced: 'y',
-        type1: 'word',
-        type3: 'general',
-        method: 'start',
-        q: lastWord,
-        letter_s: 2,
-        num: 100,
-        pos: 1,
-      },
-    })
-
-    container.logger.debug(`opendict statusCode: ${res.status}`)
-    return this._getRandomWord(res)
+    return this._getRandomWord(await this._api.getWords(lastWord))
   }
 }
