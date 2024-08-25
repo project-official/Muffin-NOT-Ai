@@ -1,6 +1,6 @@
+import { type Message, type APIEmbed } from 'discord.js'
 import type { APIResponse, Item } from './types'
 import { container } from '@sapphire/framework'
-import { type Message } from 'discord.js'
 import { AxiosResponse } from 'axios'
 import { OpenDictAPI } from './api'
 
@@ -18,15 +18,23 @@ export class WordRelay {
     const userID = msg.author.id
     const USER_WIN = 'userWin'
     const BOT_WIN = 'botWin'
+    const embed: APIEmbed = {
+      title: `${msg.author.username}의 끝말잇기`,
+      footer: {
+        text: msg.author.username,
+        icon_url: msg.author.displayAvatarURL(),
+      },
+    }
 
     try {
       const thread = await msg.startThread({
         name: `${container.client.user?.username}-끝말잇기`,
       })
 
-      void thread.send(
-        `<@${userID}>님, 여기 들어와서 시작단어를 60초안에 입력해주세요!`,
-      )
+      const embedMsg = await thread.send({
+        content: `<@${userID}>님, 여기 들어와서 시작단어를 60초안에 입력해주세요!`,
+        embeds: [embed],
+      })
 
       const collector = thread.createMessageCollector({
         filter: (message: Message) => message.author.id === userID,
@@ -81,6 +89,18 @@ export class WordRelay {
 
         this._usedWords.push(content) // 유저가 친 단어
         this._usedWords.push(nextWord) // 봇이 친 단어
+
+        await embedMsg.edit({
+          embeds: [
+            {
+              ...embed,
+              description: this._usedWords
+                .map(word => `\`${word}\``)
+                .join(' -> '),
+            },
+          ],
+        })
+
         await message.reply(
           `${nextWord}\n\`${nextWordInfo.sense[0].definition}\`\n다음 단어를 입력해주세요!`,
         )
