@@ -19,5 +19,5 @@ export interface Item {
     pos: string
     link: string
     type: string
-  }
+  }[]
 }

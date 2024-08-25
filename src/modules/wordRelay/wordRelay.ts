@@ -81,7 +81,9 @@ export class WordRelay {
 
         this._usedWords.push(content) // 유저가 친 단어
         this._usedWords.push(nextWord) // 봇이 친 단어
-        await message.reply(`${nextWord}\n다음 단어를 입력해주세요!`)
+        await message.reply(
+          `${nextWord}\n\`${nextWordInfo.sense[0].definition}\`\n다음 단어를 입력해주세요!`,
+        )
       })
 
       collector.on('end', (_, reason) => {
