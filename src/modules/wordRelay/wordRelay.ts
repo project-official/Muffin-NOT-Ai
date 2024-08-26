@@ -1,6 +1,5 @@
 import { type Message, type APIEmbed } from 'discord.js'
 import type { APIResponse, Item } from './types'
-import { container } from '@sapphire/framework'
 import { AxiosResponse } from 'axios'
 import { OpenDictAPI } from './api'
 
@@ -28,7 +27,7 @@ export class WordRelay {
 
     try {
       const thread = await msg.startThread({
-        name: `${container.client.user?.username}-끝말잇기`,
+        name: `${msg.author.username}-끝말잇기`,
       })
 
       const embedMsg = await thread.send({

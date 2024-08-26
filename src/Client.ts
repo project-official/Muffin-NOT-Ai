@@ -20,7 +20,9 @@ const release = version
   .slice((semver.coerce(version)?.toString() + '-').length)
   .split('.')[1]
 
-if (release.startsWith('d')) {
+if (release.startsWith('e')) {
+  container.release = 'EXPERIMENTAL'
+} else if (release.startsWith('d')) {
   container.release = 'DEV'
 } else if (release.startsWith('p')) {
   container.release = 'PRE-RELEASE'
@@ -79,7 +81,7 @@ declare module '@sapphire/framework' {
         opendict: string
       }
     }
-    release: 'DEV' | 'PRE-RELEASE' | 'RELEASE'
+    release: 'EXPERIMENTAL' | 'DEV' | 'PRE-RELEASE' | 'RELEASE'
   }
 }
 
