@@ -1,6 +1,6 @@
 import { container } from '@sapphire/framework'
 import { createPool } from 'mysql2/promise'
-import { LearnTable } from './model'
+import { LearnTable, UserTable } from './model'
 
 export class MaaDatabase {
   public readonly database = createPool({
@@ -15,6 +15,7 @@ export class MaaDatabase {
       container.logger.debug(`[MaaDatabase] ${conn.threadId} Connected.`)
     })
   public learn = new LearnTable(this.database)
+  public user = new UserTable(this.database)
 
   public ping() {
     this.database.getConnection().then(conn => {
