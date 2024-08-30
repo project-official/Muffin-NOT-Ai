@@ -14,7 +14,7 @@ class MessageCreateListener extends Listener {
     })
     if (msg.author.bot) return
     if (msg.content.startsWith(prefix)) {
-      if (this.container.release === 'PRE-RELEASE') {
+      if (this.container.release === 'PREVIEW') {
         await msg.reply({
           embeds: [
             {
