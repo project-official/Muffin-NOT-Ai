@@ -14,4 +14,4 @@ CREATE TABLE `user` (
     `created_at` datetime NOT NULL DEFAULT current_timestamp(),
     `blocked` BOOLEAN NOT NULL DEFAULT 0,
     primary key (`id`)
-)
+);
