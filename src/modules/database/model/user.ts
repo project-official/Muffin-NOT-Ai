@@ -3,7 +3,7 @@ import type { Snowflake } from 'discord.js'
 import type { Pool } from 'mysql2/promise'
 import run from '../run'
 
-export class UserTable implements BaseTable<UserData, string> {
+export class UserTable implements BaseTable<UserData, Snowflake> {
   public readonly name = 'user'
   public constructor(private _database: Pool) {}
 
@@ -65,7 +65,7 @@ export class UserTable implements BaseTable<UserData, string> {
   }
 
   public async findOneAnotherKey(
-    key: 'id' | 'money' | 'blocked' | 'user_id' | 'created_at',
+    key: 'user_id' | 'money' | 'blocked' | 'created_at',
     data: any,
   ): Promise<UserData[]> {
     const [rows] = await this._database.execute<UserData[]>(

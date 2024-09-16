@@ -25,7 +25,7 @@ if (release.startsWith('e')) {
 } else if (release.startsWith('d')) {
   container.release = 'DEV'
 } else if (release.startsWith('p')) {
-  container.release = 'PRE-RELEASE'
+  container.release = 'PREVIEW'
 } else {
   container.release = 'RELEASE'
 }
@@ -81,7 +81,7 @@ declare module '@sapphire/framework' {
         opendict: string
       }
     }
-    release: 'EXPERIMENTAL' | 'DEV' | 'PRE-RELEASE' | 'RELEASE'
+    release: 'EXPERIMENTAL' | 'DEV' | 'PREVIEW' | 'RELEASE'
   }
 }
 

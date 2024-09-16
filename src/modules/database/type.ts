@@ -2,12 +2,12 @@ import type { RowDataPacket } from 'mysql2/promise'
 import type { Snowflake } from 'discord.js'
 
 export interface BaseData extends RowDataPacket {
-  id: number
   user_id: Snowflake
   created_at: string
 }
 
 export interface LearnData extends BaseData {
+  id: number
   command: string
   result: string
 }
