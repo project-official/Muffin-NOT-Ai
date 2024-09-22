@@ -20,10 +20,12 @@ const release = version
   .slice((semver.coerce(version)?.toString() + '-').length)
   .split('.')[1]
 
-if (release.startsWith('d')) {
+if (release.startsWith('e')) {
+  container.release = 'EXPERIMENTAL'
+} else if (release.startsWith('d')) {
   container.release = 'DEV'
 } else if (release.startsWith('p')) {
-  container.release = 'PRE-RELEASE'
+  container.release = 'PREVIEW'
 } else {
   container.release = 'RELEASE'
 }
@@ -72,15 +74,8 @@ declare module '@sapphire/framework' {
       train: {
         user_ID: Snowflake
       }
-      mysql: {
-        user: string
-        host: string
-        password: string
-        database: string
-        port: number
-      }
     }
-    release: 'DEV' | 'PRE-RELEASE' | 'RELEASE'
+    release: 'EXPERIMENTAL' | 'DEV' | 'PREVIEW' | 'RELEASE'
   }
 }
 
