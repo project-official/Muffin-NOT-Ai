@@ -4,7 +4,7 @@ import { noPerm } from '../modules'
 import Dokdo from 'dokdo'
 
 class MessageCreateListener extends Listener {
-  public async run(msg: Message) {
+  public async run(msg: Message<true>) {
     const prefix = this.container.prefix
     const dokdo = new Dokdo(this.container.client, {
       aliases: ['dokdo', 'dok'],
@@ -14,7 +14,7 @@ class MessageCreateListener extends Listener {
     })
     if (msg.author.bot) return
     if (msg.content.startsWith(prefix)) {
-      if (this.container.release === 'PRE-RELEASE') {
+      if (this.container.release === 'PREVIEW') {
         await msg.reply({
           embeds: [
             {

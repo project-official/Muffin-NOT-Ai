@@ -52,7 +52,6 @@ class LearnCommand extends Command {
       '간미',
     ]
     const disallowed = ['@everyone', '@here', `<@${config.bot.owner_ID}>`]
-    const db = this.container.database
 
     for (const ig of ignore) {
       if (command.includes(ig)) {
@@ -66,10 +65,12 @@ class LearnCommand extends Command {
       }
     }
 
-    await db.learn.insert({
-      user_id: msg.author.id,
-      command,
-      result,
+    await this.container.database.learn.create({
+      data: {
+        user_id: msg.author.id,
+        command,
+        result,
+      },
     })
     await msg.reply(`${command}을/를 배웠ㅇ어요.`)
   }

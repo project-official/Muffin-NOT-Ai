@@ -1,6 +1,5 @@
-import { ApplyOptions } from '@sapphire/decorators'
-import { type ResponseData } from '../modules'
 import { Command, container } from '@sapphire/framework'
+import { ApplyOptions } from '@sapphire/decorators'
 import { type Message } from 'discord.js'
 
 @ApplyOptions<Command.Options>({
@@ -14,11 +13,15 @@ import { type Message } from 'discord.js'
 class LearnDataCommand extends Command {
   public async messageRun(msg: Message<true>) {
     const db = this.container.database
-    const data = await db.statement.all()
-    const nsfwData = await db.nsfwContent.all()
-    const learnData = await db.learn.all()
-    const userData = await db.learn.findOneAnotherKey('user_id', msg.author.id)
-    const muffin: ResponseData[] = []
+    const data = await db.statement.findMany()
+    const nsfwData = await db.nsfw_content.findMany()
+    const learnData = await db.learn.findMany()
+    const userData = await db.learn.findMany({
+      where: {
+        user_id: msg.author.id,
+      },
+    })
+    const muffin: any[] = []
     data.forEach(row => {
       if (row.persona === 'muffin') muffin.push(row)
       else return

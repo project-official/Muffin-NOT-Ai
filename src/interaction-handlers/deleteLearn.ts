@@ -18,10 +18,14 @@ class DeleteLearnHandler extends InteractionHandler {
   public async run(interaction: StringSelectMenuInteraction) {
     await interaction.deferUpdate()
 
-    const id = interaction.values[0].slice('maa$deleteLearn-'.length)
+    const id = Number(interaction.values[0].slice('maa$deleteLearn-'.length))
     const db = this.container.database
 
-    await db.learn.delete(id)
+    await db.learn.delete({
+      where: {
+        id,
+      },
+    })
 
     await interaction.editReply({
       embeds: [

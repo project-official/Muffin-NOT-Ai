@@ -11,7 +11,6 @@ import {
   codeBlock,
 } from 'discord.js'
 import { ApplyOptions } from '@sapphire/decorators'
-import { type LearnData } from '../modules'
 
 @ApplyOptions<Command.Options>({
   name: '삭제',
@@ -26,24 +25,25 @@ class DeleteLearnCommand extends Command {
   public async messageRun(msg: Message, args: Args) {
     const command = await args.rest('string').catch(() => null)
     const options: SelectMenuComponentOptionData[] = []
-    const db = this.container.database
-    const [datas] = await db.database.execute<LearnData[]>(
-      'SELECT * FROM learn WHERE command = ? AND user_id = ?;',
-      [command, msg.author.id],
-    )
 
     if (!command) {
-      return await msg.channel.send(
+      return await msg.reply(
         `사용법: \n\`\`\`${(this.detailedDescription as DetailedDescriptionCommandObject).usage}\`\`\``,
       )
     }
 
+    const datas = await this.container.database.learn.findMany({
+      where: {
+        command,
+        user_id: msg.author.id,
+      },
+    })
+
     if (!datas) {
-      return await msg.channel.send('해당하는 걸 찾ㅈ을 수 없어요.')
+      return await msg.reply('해당하는 걸 찾ㅈ을 수 없어요.')
     }
 
     datas.forEach(data => {
-      console.log(data)
       options.push({
         label: `${data.id}번`,
         value: `maa$deleteLearn-${data.id}`,
