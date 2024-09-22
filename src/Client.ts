@@ -1,10 +1,11 @@
 import { SapphireClient, container, LogLevel } from '@sapphire/framework'
-import { GatewayIntentBits, Partials, type Snowflake } from 'discord.js'
-import { ChatBot, NODE_ENV } from './modules'
+import { GatewayIntentBits, Partials } from 'discord.js'
+import { ChatBot, Config, NODE_ENV } from './modules'
 import { version } from '../package.json'
 import { PrismaClient } from '../prisma'
-import config from '../config.json'
 import semver from 'semver'
+
+const config = new Config()
 
 // Load pieces
 import './interaction-handlers/_load'
@@ -68,15 +69,7 @@ declare module '@sapphire/framework' {
     prefix: string
     version: string
     dokdoAliases: string[]
-    config: {
-      bot: {
-        owner_ID: Snowflake
-        token: string
-      }
-      train: {
-        user_ID: Snowflake
-      }
-    }
+    config: Config
     release: 'EXPERIMENTAL' | 'DEV' | 'PREVIEW' | 'RELEASE'
   }
 }

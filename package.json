@@ -1,6 +1,6 @@
 {
   "name": "muffinbot",
-  "version": "4.0.0-pudding.e240922a",
+  "version": "4.0.0-pudding.e240922b",
   "main": "dist/index.js",
   "private": true,
   "dependencies": {
@@ -13,6 +13,7 @@
     "discord-api-types": "^0.37.100",
     "discord.js": "^14.16.2",
     "dokdo": "^0.6.2",
+    "dotenv": "^16.4.5",
     "mysql2": "^3.11.3",
     "semver": "^7.6.3",
     "undici": "^6.19.8"
