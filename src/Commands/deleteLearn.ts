@@ -23,6 +23,7 @@ import { ApplyOptions } from '@sapphire/decorators'
 })
 class DeleteLearnCommand extends Command {
   public async messageRun(msg: Message, args: Args) {
+    const CUSTOM_ID = 'maa$deleteLearn'
     const command = await args.rest('string').catch(() => null)
     const options: SelectMenuComponentOptionData[] = []
 
@@ -46,7 +47,7 @@ class DeleteLearnCommand extends Command {
     datas.forEach(data => {
       options.push({
         label: `${data.id}번`,
-        value: `maa$deleteLearn-${data.id}`,
+        value: `${CUSTOM_ID}-${data.id}`,
         description: data.result.slice(0, 100),
       })
     })
@@ -68,7 +69,7 @@ class DeleteLearnCommand extends Command {
           components: [
             {
               type: ComponentType.StringSelect,
-              customId: 'maa$deleteLearn',
+              customId: `${CUSTOM_ID}@${msg.author.id}`,
               placeholder: '지울 데이터를 선택해ㅈ주세요',
               options,
             },

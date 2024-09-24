@@ -10,15 +10,25 @@ import { ApplyOptions } from '@sapphire/decorators'
   interactionHandlerType: InteractionHandlerTypes.SelectMenu,
 })
 class DeleteLearnHandler extends InteractionHandler {
+  private readonly _CUSTOM_ID = 'maa$deleteLearn'
+
   public async parse(interaction: StringSelectMenuInteraction) {
-    if (interaction.customId !== 'maa$deleteLearn') return this.none()
+    if (!interaction.customId.startsWith(this._CUSTOM_ID)) return this.none()
+    const userId = interaction.customId.slice(`${this._CUSTOM_ID}@`.length)
+    if (interaction.user.id !== userId) {
+      await interaction.reply({
+        ephemeral: true,
+        content: '당신은 이 지ㅅ식을 안 가르쳐 주셨어요.',
+      })
+      return this.none()
+    }
     return this.some()
   }
 
   public async run(interaction: StringSelectMenuInteraction) {
     await interaction.deferUpdate()
 
-    const id = Number(interaction.values[0].slice('maa$deleteLearn-'.length))
+    const id = Number(interaction.values[0].slice(`${this._CUSTOM_ID}-`.length))
     const db = this.container.database
 
     await db.learn.delete({
