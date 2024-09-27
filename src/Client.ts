@@ -12,16 +12,17 @@ import './interaction-handlers/_load'
 import './listeners/_load'
 import './Commands/_load'
 
+const release = version
+  .slice((semver.coerce(version)?.toString() + '-').length)
+  .split('.')[1]
+
 container.config = config
 container.prefix = config.bot.prefix
 container.version = version
 container.database = new PrismaClient()
 container.dokdoAliases = ['dokdo', 'dok', 'Dokdo', 'Dok', '테스트']
 container.chatBot = new ChatBot(container.database)
-
-const release = version
-  .slice((semver.coerce(version)?.toString() + '-').length)
-  .split('.')[1]
+container.lastUpdated = new Date('2024-09-27')
 
 if (release.startsWith('e')) {
   container.release = 'EXPERIMENTAL'
@@ -71,6 +72,7 @@ declare module '@sapphire/framework' {
     dokdoAliases: string[]
     config: Config
     release: 'EXPERIMENTAL' | 'DEV' | 'PREVIEW' | 'RELEASE'
+    lastUpdated: Date
   }
 }
 
