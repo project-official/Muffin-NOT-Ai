@@ -14,7 +14,7 @@ class MessageCreateListener extends Listener {
     })
     if (msg.author.bot) return
     if (msg.content.startsWith(prefix)) {
-      if (this.container.release !== 'RELEASE') {
+      if (this.container.channel !== 'RELEASE') {
         await msg.reply({
           embeds: [
             {
@@ -24,7 +24,7 @@ class MessageCreateListener extends Listener {
                 `만약 오류가 발견되면 ${(await this.container.client.users.fetch(this.container.config.bot.owner_ID)).username}님에게 알려주세요.\n`,
               color: 0xff0000,
               footer: {
-                text: `현재 브랜치: ${this.container.release.toLowerCase()} 버전: ${this.container.version}`,
+                text: `현재 채널: ${this.container.channel.toLowerCase()} 버전: ${this.container.version}`,
               },
             },
           ],

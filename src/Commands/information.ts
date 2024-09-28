@@ -29,7 +29,7 @@ class InformationCommand extends Command {
             },
             {
               name: '채ㄴ널',
-              value: this.container.release.toLowerCase(),
+              value: this.container.channel.toLowerCase(),
               inline: true,
             },
             {

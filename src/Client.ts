@@ -25,13 +25,13 @@ container.chatBot = new ChatBot(container.database)
 container.lastUpdated = new Date('2024-09-28')
 
 if (release.startsWith('e')) {
-  container.release = 'EXPERIMENTAL'
+  container.channel = 'EXPERIMENTAL'
 } else if (release.startsWith('d')) {
-  container.release = 'DEV'
+  container.channel = 'DEV'
 } else if (release.startsWith('p')) {
-  container.release = 'PREVIEW'
+  container.channel = 'PREVIEW'
 } else {
-  container.release = 'RELEASE'
+  container.channel = 'RELEASE'
 }
 
 export default class MuffinBot extends SapphireClient {
@@ -58,11 +58,11 @@ export default class MuffinBot extends SapphireClient {
   }
 
   public override async login(): Promise<string> {
-    if (container.release === 'RELEASE') await container.chatBot.train(this)
+    if (container.channel === 'RELEASE') await container.chatBot.train(this)
     else
       container.logger.info(
         '[MuffinBot] 해당 채널은 RELEASE 채널이 아니라서 학습 기능이 꺼졌습니다.\n' +
-          `현재 채널: ${container.release}`,
+          `현재 채널: ${container.channel}`,
       )
     return super.login(config.bot.token)
   }
@@ -76,7 +76,7 @@ declare module '@sapphire/framework' {
     version: string
     dokdoAliases: string[]
     config: Config
-    release: 'EXPERIMENTAL' | 'DEV' | 'PREVIEW' | 'RELEASE'
+    channel: 'EXPERIMENTAL' | 'DEV' | 'PREVIEW' | 'RELEASE'
     lastUpdated: Date
   }
 }
