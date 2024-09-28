@@ -28,7 +28,8 @@ class DeleteLearnCommand extends Command {
     const command = await args.rest('string').catch(() => null)
     const options: SelectMenuComponentOptionData[] = []
     const db = this.container.database
-    const [datas] = await db.database.execute<LearnData[]>(
+    const deleteDataList: string[] = []
+    const [deleteDatas] = await db.database.execute<LearnData[]>(
       'SELECT * FROM learn WHERE command = ? AND user_id = ?;',
       [command, msg.author.id],
     )
@@ -39,27 +40,24 @@ class DeleteLearnCommand extends Command {
       )
     }
 
-    if (!datas) {
+    if (!deleteDatas) {
       return await msg.channel.send('해당하는 걸 찾ㅈ을 수 없어요.')
     }
 
-    datas.forEach(data => {
-      console.log(data)
+    for (let i = 1; i <= deleteDatas.length; i++) {
+      deleteDataList.push(`${i}. ${deleteDatas[i - 1].result}`)
       options.push({
-        label: `${data.id}번`,
-        value: `${CUSTOM_ID}-${data.id}`,
-        description: data.result.slice(0, 100),
+        label: `${i}번 지식`,
+        value: `${CUSTOM_ID}-${deleteDatas[i - 1].id}`,
+        description: deleteDatas[i - 1].result.slice(0, 100),
       })
-    })
+    }
 
     await msg.reply({
       embeds: [
         {
           title: '삭제',
-          description: `${codeBlock(
-            'md',
-            datas.map(data => `${data.id}. ${data.result}`).join('\n'),
-          )}`,
+          description: `${codeBlock('md', deleteDataList.join('\n'))}`,
           timestamp: new Date().toISOString(),
         },
       ],

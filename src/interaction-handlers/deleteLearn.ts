@@ -30,6 +30,11 @@ class DeleteLearnHandler extends InteractionHandler {
 
     const id = interaction.values[0].slice(`${this._CUSTOM_ID}-`.length)
     const db = this.container.database
+    const decimalRegexp = /^[0-9]/g
+
+    const itemId = interaction.component.options.map(item =>
+      item.value.endsWith(id) ? item.label.match(decimalRegexp)![0] : null,
+    )
 
     await db.learn.delete(id)
 
@@ -37,7 +42,7 @@ class DeleteLearnHandler extends InteractionHandler {
       embeds: [
         {
           title: '삭제',
-          description: `${id}번을 정상적으로 삭제하ㅇ였어요.`,
+          description: `${Number(itemId!)}번을 정상적으로 삭제하ㅇ였어요.`,
           timestamp: new Date().toISOString(),
         },
       ],

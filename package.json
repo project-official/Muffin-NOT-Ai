@@ -1,6 +1,6 @@
 {
   "name": "muffinbot",
-  "version": "3.0.2-cake.r240924a",
+  "version": "3.1.0-cake.r240928a",
   "main": "dist/index.js",
   "private": true,
   "dependencies": {
@@ -10,11 +10,10 @@
     "@sapphire/pieces": "^4.3.1",
     "@sapphire/utilities": "^3.17.0",
     "discord-api-types": "^0.37.93",
-    "discord.js": "^14.15.3",
+    "discord.js": "^14.16.2",
     "dokdo": "^0.6.2",
-    "mysql2": "^3.11.0",
-    "semver": "^7.6.3",
-    "undici": "^6.19.4"
+    "mysql2": "^3.11.3",
+    "semver": "^7.6.3"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.1.0",
