@@ -42,7 +42,8 @@
     "dev": "cross-env NODE_ENV=development tsup --watch --onSuccess \"node --enable-source-maps dist\"",
     "start": "cross-env NODE_ENV=production node dist",
     "db:pull": "pnpify prisma db pull",
-    "db:push": "pnpify prisma db push"
+    "db:push": "pnpify prisma db push",
+    "db:generate": "pnpify prisma generate"
   },
   "resolutions": {
     "@types/ws": "^8.5.11",
