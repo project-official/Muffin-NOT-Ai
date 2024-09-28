@@ -1,12 +1,12 @@
 import { Listener, container } from '@sapphire/framework'
 import { type Message } from 'discord.js'
 import { noPerm } from '../modules'
-import Dokdo from 'dokdo'
+import { Client } from 'dokdo'
 
 class MessageCreateListener extends Listener {
   public async run(msg: Message<true>) {
     const prefix = this.container.prefix
-    const dokdo = new Dokdo(this.container.client, {
+    const dokdo = new Client(this.container.client, {
       aliases: ['dokdo', 'dok'],
       owners: [this.container.config.bot.owner_ID],
       prefix: prefix,
