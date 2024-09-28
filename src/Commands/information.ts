@@ -1,6 +1,6 @@
-import { ApplyOptions } from '@sapphire/decorators'
+import { type ChatInputCommandInteraction, APIEmbed, Message } from 'discord.js'
 import { Command, container } from '@sapphire/framework'
-import { Message } from 'discord.js'
+import { ApplyOptions } from '@sapphire/decorators'
 import { platform, arch } from 'os'
 
 @ApplyOptions<Command.Options>({
@@ -11,49 +11,63 @@ import { platform, arch } from 'os'
   },
 })
 class InformationCommand extends Command {
-  public async messageRun(msg: Message) {
-    await msg.reply({
-      embeds: [
+  public registerApplicationCommands(registry: Command.Registry) {
+    registry.registerChatInputCommand(builder =>
+      builder.setName(this.name).setDescription(this.description),
+    )
+  }
+
+  private async _embed(): Promise<APIEmbed> {
+    return {
+      title: `${this.container.client.user?.username}의 정ㅂ보`,
+      fields: [
         {
-          title: `${this.container.client.user?.username}의 정ㅂ보`,
-          fields: [
-            {
-              name: '구동ㅎ환경',
-              value: `${platform()} ${arch()}`,
-              inline: false,
-            },
-            {
-              name: '버ㅈ전',
-              value: this.container.version,
-              inline: true,
-            },
-            {
-              name: '채ㄴ널',
-              value: this.container.channel.toLowerCase(),
-              inline: true,
-            },
-            {
-              name: '최근 업ㄷ데이트 날짜',
-              value: this.container.lastUpdated.toLocaleDateString('ko', {
-                dateStyle: 'long',
-              }),
-              inline: true,
-            },
-            {
-              name: '개ㅂ발자',
-              value: (
-                await this.container.client.users.fetch(
-                  this.container.config.bot.owner_ID,
-                )
-              ).username,
-              inline: false,
-            },
-          ],
-          thumbnail: {
-            url: this.container.client.user!.displayAvatarURL()!,
-          },
+          name: '구동ㅎ환경',
+          value: `${platform()} ${arch()}`,
+          inline: false,
+        },
+        {
+          name: '버ㅈ전',
+          value: this.container.version,
+          inline: true,
+        },
+        {
+          name: '채ㄴ널',
+          value: this.container.channel.toLowerCase(),
+          inline: true,
+        },
+        {
+          name: '최근 업ㄷ데이트 날짜',
+          value: this.container.lastUpdated.toLocaleDateString('ko', {
+            dateStyle: 'long',
+          }),
+          inline: true,
+        },
+        {
+          name: '개ㅂ발자',
+          value: (
+            await this.container.client.users.fetch(
+              this.container.config.bot.owner_ID,
+            )
+          ).username,
+          inline: false,
         },
       ],
+      thumbnail: {
+        url: this.container.client.user!.displayAvatarURL()!,
+      },
+    }
+  }
+
+  public async messageRun(msg: Message) {
+    await msg.reply({
+      embeds: [await this._embed()],
+    })
+  }
+
+  public async chatInputRun(interaction: ChatInputCommandInteraction) {
+    await interaction.reply({
+      embeds: [await this._embed()],
     })
   }
 }
