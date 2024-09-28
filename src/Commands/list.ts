@@ -13,13 +13,15 @@ import { Command, container } from '@sapphire/framework'
 class ListCommand extends Command {
   public async messageRun(msg: Message<boolean>) {
     const db = this.container.database
-    const data = await db.learn.findOneAnotherKey('user_id', msg.author.id)
+    const data = await db.learn.findMany({
+      where: {
+        user_id: msg.author.id,
+      },
+    })
     const list: string[] = []
 
     if (!data[0]) {
-      return await msg.channel.send(
-        '당신ㄴ은 단어를 가르쳐준 기억이 없ㅅ는데요.',
-      )
+      return await msg.reply('당신ㄴ은 단어를 가르쳐준 기억이 없ㅅ는데요.')
     }
 
     for (const listData of data) {

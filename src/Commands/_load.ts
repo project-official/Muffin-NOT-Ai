@@ -1,5 +1,6 @@
 import './learning_data'
 import './deleteLearn'
+import './information'
 import './learn'
 import './help'
 import './list'

@@ -1,46 +1,52 @@
 {
   "name": "muffinbot",
-  "version": "3.1.0-cake.d240925a",
+  "version": "4.0.0-pudding.d240928a",
   "main": "dist/index.js",
   "private": true,
   "dependencies": {
+    "@prisma/client": "^5.19.1",
     "@sapphire/decorators": "^6.1.0",
     "@sapphire/discord.js-utilities": "^7.3.0",
     "@sapphire/framework": "^5.2.1",
     "@sapphire/pieces": "^4.3.1",
     "@sapphire/utilities": "^3.17.0",
-    "discord-api-types": "^0.37.93",
-    "discord.js": "^14.15.3",
+    "discord-api-types": "^0.37.100",
+    "discord.js": "^14.16.2",
     "dokdo": "^0.6.2",
-    "mysql2": "^3.11.0",
-    "semver": "^7.6.3"
+    "dotenv": "^16.4.5",
+    "mysql2": "^3.11.3",
+    "semver": "^7.6.3",
+    "undici": "^6.19.8"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.1.0",
-    "@eslint/js": "^9.8.0",
+    "@eslint/js": "^9.11.0",
     "@migan/prettier-config": "^1.2.0",
-    "@types/node": "^20.14.12",
-    "@types/semver": "^7",
-    "@typescript-eslint/eslint-plugin": "^7.17.0",
-    "@typescript-eslint/parser": "^7.17.0",
+    "@types/node": "^22.5.5",
+    "@types/semver": "^7.5.8",
+    "@typescript-eslint/eslint-plugin": "^8.6.0",
+    "@typescript-eslint/parser": "^8.6.0",
+    "@yarnpkg/pnpify": "^4.1.2",
     "cross-env": "^7.0.3",
-    "eslint": "^9.8.0",
+    "eslint": "^9.11.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.2.1",
-    "globals": "^15.8.0",
+    "globals": "^15.9.0",
     "prettier": "^3.3.3",
-    "ts-node": "^10.9.2",
-    "tsup": "^8.2.3",
-    "typescript": "^5.5.4"
+    "prisma": "^5.19.1",
+    "tsup": "^8.3.0",
+    "typescript": "^5.6.2"
   },
   "scripts": {
     "build": "tsup",
     "dev": "cross-env NODE_ENV=development tsup --watch --onSuccess \"node --enable-source-maps dist\"",
-    "start": "cross-env NODE_ENV=production node dist"
+    "start": "cross-env NODE_ENV=production node dist",
+    "db:pull": "pnpify prisma db pull",
+    "db:push": "pnpify prisma db push"
   },
   "resolutions": {
     "@types/ws": "^8.5.11",
     "ws": "8.18.0"
   },
-  "packageManager": "yarn@4.3.1"
+  "packageManager": "yarn@4.5.0"
 }
