@@ -16,6 +16,7 @@ class InformationCommand extends Command {
       embeds: [
         {
           title: `${this.container.client.user?.username}의 정ㅂ보`,
+          color: this.container.embedColor,
           fields: [
             {
               name: '구동ㅎ환경',

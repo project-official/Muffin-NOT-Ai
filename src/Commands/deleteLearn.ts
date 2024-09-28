@@ -1,3 +1,4 @@
+import { ApplyOptions } from '@sapphire/decorators'
 import {
   Args,
   Command,
@@ -10,7 +11,6 @@ import {
   ComponentType,
   codeBlock,
 } from 'discord.js'
-import { ApplyOptions } from '@sapphire/decorators'
 
 @ApplyOptions<Command.Options>({
   name: '삭제',
@@ -59,6 +59,7 @@ class DeleteLearnCommand extends Command {
           title: '삭제',
           description: `${codeBlock('md', deleteDataList.join('\n'))}`,
           timestamp: new Date().toISOString(),
+          color: this.container.embedColor,
         },
       ],
       components: [

@@ -33,7 +33,7 @@ class DeleteLearnHandler extends InteractionHandler {
     const decimalRegexp = /^[0-9]/g
 
     const itemId = interaction.component.options.map(item =>
-      item.value.endsWith(id) ? item.label.match(decimalRegexp)![0] : null,
+      item.value.endsWith(`${id}`) ? item.label.match(decimalRegexp)![0] : null,
     )
 
     await db.learn.delete({
@@ -48,6 +48,7 @@ class DeleteLearnHandler extends InteractionHandler {
           title: '삭제',
           description: `${Number(itemId!)}번을 정상적으로 삭제하ㅇ였어요.`,
           timestamp: new Date().toISOString(),
+          color: this.container.embedColor,
         },
       ],
       components: [],

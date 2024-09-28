@@ -35,6 +35,7 @@ class HelpCommand extends Command {
             footer: {
               text: `머핀봇 버전: ${this.container.version}`,
             },
+            color: this.container.embedColor,
             timestamp: new Date().toISOString(),
           },
         ],
