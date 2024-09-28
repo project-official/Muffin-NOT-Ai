@@ -1,4 +1,4 @@
-import { type ChatInputCommandInteraction, APIEmbed, Message } from 'discord.js'
+import type { ChatInputCommandInteraction, Message } from 'discord.js'
 import { Command, container } from '@sapphire/framework'
 import { ApplyOptions } from '@sapphire/decorators'
 import { platform, arch } from 'os'
@@ -17,58 +17,58 @@ class InformationCommand extends Command {
     )
   }
 
-  private async _embed(): Promise<APIEmbed> {
-    return {
-      title: `${this.container.client.user?.username}의 정ㅂ보`,
-      fields: [
+  private async _run(ctx: Message | ChatInputCommandInteraction) {
+    await ctx.reply({
+      embeds: [
         {
-          name: '구동ㅎ환경',
-          value: `${platform()} ${arch()}`,
-          inline: false,
-        },
-        {
-          name: '버ㅈ전',
-          value: this.container.version,
-          inline: true,
-        },
-        {
-          name: '채ㄴ널',
-          value: this.container.channel.toLowerCase(),
-          inline: true,
-        },
-        {
-          name: '최근 업ㄷ데이트 날짜',
-          value: this.container.lastUpdated.toLocaleDateString('ko', {
-            dateStyle: 'long',
-          }),
-          inline: true,
-        },
-        {
-          name: '개ㅂ발자',
-          value: (
-            await this.container.client.users.fetch(
-              this.container.config.bot.owner_ID,
-            )
-          ).username,
-          inline: false,
+          title: `${this.container.client.user?.username}의 정ㅂ보`,
+          fields: [
+            {
+              name: '구동ㅎ환경',
+              value: `${platform()} ${arch()}`,
+              inline: false,
+            },
+            {
+              name: '버ㅈ전',
+              value: this.container.version,
+              inline: true,
+            },
+            {
+              name: '채ㄴ널',
+              value: this.container.channel.toLowerCase(),
+              inline: true,
+            },
+            {
+              name: '최근 업ㄷ데이트 날짜',
+              value: this.container.lastUpdated.toLocaleDateString('ko', {
+                dateStyle: 'long',
+              }),
+              inline: true,
+            },
+            {
+              name: '개ㅂ발자',
+              value: (
+                await this.container.client.users.fetch(
+                  this.container.config.bot.owner_ID,
+                )
+              ).username,
+              inline: false,
+            },
+          ],
+          thumbnail: {
+            url: this.container.client.user!.displayAvatarURL()!,
+          },
         },
       ],
-      thumbnail: {
-        url: this.container.client.user!.displayAvatarURL()!,
-      },
-    }
+    })
   }
 
   public async messageRun(msg: Message) {
-    await msg.reply({
-      embeds: [await this._embed()],
-    })
+    await this._run(msg)
   }
 
   public async chatInputRun(interaction: ChatInputCommandInteraction) {
-    await interaction.reply({
-      embeds: [await this._embed()],
-    })
+    await this._run(interaction)
   }
 }
 
