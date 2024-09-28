@@ -7,7 +7,7 @@ class MessageCreateListener extends Listener {
   public async run(msg: Message<true>) {
     const prefix = this.container.prefix
     const dokdo = new Client(this.container.client, {
-      aliases: ['dokdo', 'dok'],
+      aliases: this.container.dokdoAliases,
       owners: [this.container.config.bot.owner_ID],
       prefix: prefix,
       noPerm,
