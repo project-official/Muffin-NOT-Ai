@@ -17,12 +17,13 @@ const release = version
   .split('.')[1]
 
 container.config = config
+container.embedColor = 0xaddb87
 container.prefix = config.bot.prefix
 container.version = version
 container.database = new PrismaClient()
 container.dokdoAliases = ['dokdo', 'dok', 'Dokdo', 'Dok', '테스트']
 container.chatBot = new ChatBot(container.database)
-container.lastUpdated = new Date('2024-09-28')
+container.lastUpdated = new Date('2024-09-29')
 
 if (release.startsWith('e')) {
   container.channel = 'EXPERIMENTAL'
@@ -78,6 +79,7 @@ declare module '@sapphire/framework' {
     config: Config
     channel: 'EXPERIMENTAL' | 'DEV' | 'PREVIEW' | 'RELEASE'
     lastUpdated: Date
+    embedColor: number
   }
 }
 

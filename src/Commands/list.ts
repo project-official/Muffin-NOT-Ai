@@ -1,6 +1,6 @@
+import { Command, container } from '@sapphire/framework'
 import { ApplyOptions } from '@sapphire/decorators'
 import { Message, codeBlock } from 'discord.js'
-import { Command, container } from '@sapphire/framework'
 
 @ApplyOptions<Command.Options>({
   name: '리스트',
@@ -36,7 +36,7 @@ class ListCommand extends Command {
             'md',
             list.map(item => `-  ${item}`).join('\n'),
           )}`,
-          color: 0x0000ff,
+          color: this.container.embedColor,
           timestamp: new Date().toISOString(),
         },
       ],

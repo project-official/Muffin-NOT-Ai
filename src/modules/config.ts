@@ -8,6 +8,6 @@ export default class MAAConfig {
   }
 
   public readonly train = {
-    user_id: process.env.TRAIN_USER_ID!,
+    user_ID: process.env.TRAIN_USER_ID!,
   }
 }

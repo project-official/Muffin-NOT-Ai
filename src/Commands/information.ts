@@ -16,36 +16,39 @@ class InformationCommand extends Command {
       embeds: [
         {
           title: `${this.container.client.user?.username}의 정ㅂ보`,
+          color: this.container.embedColor,
           fields: [
             {
               name: '구동ㅎ환경',
-              value: `${platform()} ${arch()}`,
+              value: `\`${platform()} ${arch()}\``,
               inline: false,
             },
             {
               name: '버ㅈ전',
-              value: this.container.version,
+              value: `\`${this.container.version}\``,
               inline: true,
             },
             {
               name: '채ㄴ널',
-              value: this.container.channel.toLowerCase(),
+              value: `\`${this.container.channel.toLowerCase()}\``,
               inline: true,
             },
             {
               name: '최근 업ㄷ데이트 날짜',
-              value: this.container.lastUpdated.toLocaleDateString('ko', {
+              value: `\`${this.container.lastUpdated.toLocaleDateString('ko', {
                 dateStyle: 'long',
-              }),
+              })}\``,
               inline: true,
             },
             {
               name: '개ㅂ발자',
-              value: (
-                await this.container.client.users.fetch(
-                  this.container.config.bot.owner_ID,
-                )
-              ).username,
+              value: `\`${
+                (
+                  await this.container.client.users.fetch(
+                    this.container.config.bot.owner_ID,
+                  )
+                ).username
+              }\``,
               inline: false,
             },
           ],
