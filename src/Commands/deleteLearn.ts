@@ -40,7 +40,7 @@ class DeleteLearnCommand extends Command {
       },
     })
 
-    if (!deleteDatas) {
+    if (deleteDatas.length === 0) {
       return await msg.reply('해당하는 걸 찾ㅈ을 수 없어요.')
     }
 
@@ -70,7 +70,14 @@ class DeleteLearnCommand extends Command {
               type: ComponentType.StringSelect,
               customId: `${CUSTOM_ID}@${msg.author.id}`,
               placeholder: '지울 데이터를 선택해ㅈ주세요',
-              options,
+              options: [
+                ...options,
+                {
+                  label: '❌ 취소',
+                  description: '아무것도 삭제하지 않아요.',
+                  value: `${CUSTOM_ID}-cancel`,
+                },
+              ],
             },
           ],
         },

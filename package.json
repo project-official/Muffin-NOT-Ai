@@ -1,6 +1,6 @@
 {
   "name": "muffinbot",
-  "version": "4.0.0-pudding.d240929a",
+  "version": "4.0.0-pudding.d240930a",
   "main": "dist/index.js",
   "private": true,
   "dependencies": {
@@ -15,8 +15,7 @@
     "dokdo": "^1.0.1",
     "dotenv": "^16.4.5",
     "mysql2": "^3.11.3",
-    "semver": "^7.6.3",
-    "undici": "^6.19.8"
+    "semver": "^7.6.3"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.1.0",

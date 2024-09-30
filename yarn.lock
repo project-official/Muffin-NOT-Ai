@@ -2927,7 +2927,6 @@ __metadata:
     semver: "npm:^7.6.3"
     tsup: "npm:^8.3.0"
     typescript: "npm:^5.6.2"
-    undici: "npm:^6.19.8"
   languageName: unknown
   linkType: soft
 
@@ -3909,7 +3908,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"undici@npm:6.19.8, undici@npm:^6.19.8":
+"undici@npm:6.19.8":
   version: 6.19.8
   resolution: "undici@npm:6.19.8"
   checksum: 10c0/07fd8520bce7e34ea29c07ef0de27b734183042cdb4e2f1262cd1fb9b755a6b04ff2471040395dfb1770fb7786069a97c5178bcf706b80a34075994f46feb37c
