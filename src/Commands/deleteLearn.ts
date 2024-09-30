@@ -69,7 +69,14 @@ class DeleteLearnCommand extends Command {
               type: ComponentType.StringSelect,
               customId: `${CUSTOM_ID}@${msg.author.id}`,
               placeholder: '지울 데이터를 선택해ㅈ주세요',
-              options,
+              options: [
+                ...options,
+                {
+                  label: '❌ 취소',
+                  description: '아무것도 삭제하지 않아요.',
+                  value: `${CUSTOM_ID}-cancel`,
+                },
+              ],
             },
           ],
         },
