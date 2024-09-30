@@ -35,13 +35,13 @@ class DeleteLearnCommand extends Command {
     )
 
     if (!command) {
-      return await msg.channel.send(
+      return await msg.reply(
         `사용법: \n\`\`\`${(this.detailedDescription as DetailedDescriptionCommandObject).usage}\`\`\``,
       )
     }
 
-    if (!deleteDatas) {
-      return await msg.channel.send('해당하는 걸 찾ㅈ을 수 없어요.')
+    if (deleteDatas.length === 0) {
+      return await msg.reply('해당하는 걸 찾ㅈ을 수 없어요.')
     }
 
     for (let i = 1; i <= deleteDatas.length; i++) {
