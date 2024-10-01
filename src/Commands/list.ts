@@ -1,6 +1,6 @@
+import { ChatInputCommandInteraction, Message, codeBlock } from 'discord.js'
 import { Command, container } from '@sapphire/framework'
 import { ApplyOptions } from '@sapphire/decorators'
-import { Message, codeBlock } from 'discord.js'
 
 @ApplyOptions<Command.Options>({
   name: '리스트',
@@ -11,27 +11,39 @@ import { Message, codeBlock } from 'discord.js'
   },
 })
 class ListCommand extends Command {
-  public async messageRun(msg: Message<boolean>) {
+  public registerApplicationCommands(registry: Command.Registry) {
+    registry.registerChatInputCommand(builder =>
+      builder.setName(this.name).setDescription(this.description),
+    )
+  }
+
+  private async _run(ctx: Message | ChatInputCommandInteraction) {
+    const user = ctx instanceof Message ? ctx.author : ctx.user
+    const ephemeral =
+      ctx instanceof ChatInputCommandInteraction ? { ephemeral: true } : null
     const db = this.container.database
     const data = await db.learn.findMany({
       where: {
-        user_id: msg.author.id,
+        user_id: user.id,
       },
     })
     const list: string[] = []
 
     if (!data[0]) {
-      return await msg.reply('당신ㄴ은 단어를 가르쳐준 기억이 없ㅅ는데요.')
+      return await ctx.reply({
+        ...ephemeral,
+        content: '당신ㄴ은 단어를 가르쳐준 기억이 없ㅅ는데요.',
+      })
     }
 
     for (const listData of data) {
       list.push(listData.command)
     }
 
-    await msg.reply({
+    await ctx.reply({
       embeds: [
         {
-          title: `${msg.author.username}님의 지식`,
+          title: `${user.username}님의 지식`,
           description: `총합: ${data.length}개\n${codeBlock(
             'md',
             list.map(item => `-  ${item}`).join('\n'),
@@ -41,6 +53,14 @@ class ListCommand extends Command {
         },
       ],
     })
+  }
+
+  public async messageRun(msg: Message<boolean>) {
+    await this._run(msg)
+  }
+
+  public async chatInputRun(interaction: ChatInputCommandInteraction) {
+    await this._run(interaction)
   }
 }
 

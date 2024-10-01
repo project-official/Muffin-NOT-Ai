@@ -1,6 +1,6 @@
-import { ApplyOptions } from '@sapphire/decorators'
+import type { ChatInputCommandInteraction, Message } from 'discord.js'
 import { Command, container } from '@sapphire/framework'
-import { Message } from 'discord.js'
+import { ApplyOptions } from '@sapphire/decorators'
 import { platform, arch } from 'os'
 
 @ApplyOptions<Command.Options>({
@@ -11,8 +11,14 @@ import { platform, arch } from 'os'
   },
 })
 class InformationCommand extends Command {
-  public async messageRun(msg: Message) {
-    await msg.reply({
+  public registerApplicationCommands(registry: Command.Registry) {
+    registry.registerChatInputCommand(builder =>
+      builder.setName(this.name).setDescription(this.description),
+    )
+  }
+
+  private async _run(ctx: Message | ChatInputCommandInteraction) {
+    await ctx.reply({
       embeds: [
         {
           title: `${this.container.client.user?.username}의 정ㅂ보`,
@@ -58,6 +64,14 @@ class InformationCommand extends Command {
         },
       ],
     })
+  }
+
+  public async messageRun(msg: Message) {
+    await this._run(msg)
+  }
+
+  public async chatInputRun(interaction: ChatInputCommandInteraction) {
+    await this._run(interaction)
   }
 }
 

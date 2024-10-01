@@ -1,16 +1,18 @@
 import { ApplyOptions } from '@sapphire/decorators'
 import {
+  type SelectMenuComponentOptionData,
+  type User,
+  ChatInputCommandInteraction,
+  ComponentType,
+  codeBlock,
+  Message,
+} from 'discord.js'
+import {
   Args,
   Command,
   container,
   DetailedDescriptionCommandObject,
 } from '@sapphire/framework'
-import {
-  type SelectMenuComponentOptionData,
-  type Message,
-  ComponentType,
-  codeBlock,
-} from 'discord.js'
 
 @ApplyOptions<Command.Options>({
   name: '삭제',
@@ -22,13 +24,38 @@ import {
   },
 })
 class DeleteLearnCommand extends Command {
-  public async messageRun(msg: Message, args: Args) {
+  public registerApplicationCommands(registry: Command.Registry) {
+    registry.registerChatInputCommand(builder =>
+      builder
+        .setName(this.name)
+        .setDescription(this.description)
+        .addStringOption(option =>
+          option
+            .setRequired(true)
+            .setName('단어')
+            .setDescription('삭제할 단어를 입력해주세요.'),
+        ),
+    )
+  }
+
+  private async _run(ctx: Message | ChatInputCommandInteraction, args?: Args) {
+    let command: string | null
+    let user: User
+    if (ctx instanceof Message) {
+      command = await args!.rest('string').catch(() => null)
+      user = ctx.author
+    } else {
+      command = ctx.options.getString('단어', true)
+      user = ctx.user
+    }
+
+    const ephemeral =
+      ctx instanceof ChatInputCommandInteraction ? { ephemeral: true } : null
     const CUSTOM_ID = 'maa$deleteLearn'
-    const command = await args.rest('string').catch(() => null)
     const options: SelectMenuComponentOptionData[] = []
     const deleteDataList: string[] = []
     if (!command) {
-      return await msg.reply(
+      return await ctx.reply(
         `사용법: \n\`\`\`${(this.detailedDescription as DetailedDescriptionCommandObject).usage}\`\`\``,
       )
     }
@@ -36,12 +63,15 @@ class DeleteLearnCommand extends Command {
     const deleteDatas = await this.container.database.learn.findMany({
       where: {
         command,
-        user_id: msg.author.id,
+        user_id: user.id,
       },
     })
 
     if (deleteDatas.length === 0) {
-      return await msg.reply('해당하는 걸 찾ㅈ을 수 없어요.')
+      return await ctx.reply({
+        ...ephemeral,
+        content: '해당하는 걸 찾ㅈ을 수 없어요.',
+      })
     }
 
     for (let i = 1; i <= deleteDatas.length; i++) {
@@ -53,7 +83,8 @@ class DeleteLearnCommand extends Command {
       })
     }
 
-    await msg.reply({
+    await ctx.reply({
+      ...ephemeral,
       embeds: [
         {
           title: '삭제',
@@ -68,7 +99,7 @@ class DeleteLearnCommand extends Command {
           components: [
             {
               type: ComponentType.StringSelect,
-              customId: `${CUSTOM_ID}@${msg.author.id}`,
+              customId: `${CUSTOM_ID}@${user.id}`,
               placeholder: '지울 데이터를 선택해ㅈ주세요',
               options: [
                 ...options,
@@ -83,6 +114,14 @@ class DeleteLearnCommand extends Command {
         },
       ],
     })
+  }
+
+  public async messageRun(msg: Message, args: Args) {
+    await this._run(msg, args)
+  }
+
+  public async chatInputRun(interaction: ChatInputCommandInteraction) {
+    await this._run(interaction)
   }
 }
 
