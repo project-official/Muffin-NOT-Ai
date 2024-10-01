@@ -49,6 +49,8 @@ class DeleteLearnCommand extends Command {
       user = ctx.user
     }
 
+    const ephemeral =
+      ctx instanceof ChatInputCommandInteraction ? { ephemeral: true } : null
     const CUSTOM_ID = 'maa$deleteLearn'
     const options: SelectMenuComponentOptionData[] = []
     const deleteDataList: string[] = []
@@ -66,7 +68,10 @@ class DeleteLearnCommand extends Command {
     })
 
     if (!deleteDatas) {
-      return await ctx.reply('해당하는 걸 찾ㅈ을 수 없어요.')
+      return await ctx.reply({
+        ...ephemeral,
+        content: '해당하는 걸 찾ㅈ을 수 없어요.',
+      })
     }
 
     for (let i = 1; i <= deleteDatas.length; i++) {
@@ -79,6 +84,7 @@ class DeleteLearnCommand extends Command {
     }
 
     await ctx.reply({
+      ...ephemeral,
       embeds: [
         {
           title: '삭제',

@@ -19,6 +19,8 @@ class ListCommand extends Command {
 
   private async _run(ctx: Message | ChatInputCommandInteraction) {
     const user = ctx instanceof Message ? ctx.author : ctx.user
+    const ephemeral =
+      ctx instanceof ChatInputCommandInteraction ? { ephemeral: true } : null
     const db = this.container.database
     const data = await db.learn.findMany({
       where: {
@@ -28,7 +30,10 @@ class ListCommand extends Command {
     const list: string[] = []
 
     if (!data[0]) {
-      return await ctx.reply('당신ㄴ은 단어를 가르쳐준 기억이 없ㅅ는데요.')
+      return await ctx.reply({
+        ...ephemeral,
+        content: '당신ㄴ은 단어를 가르쳐준 기억이 없ㅅ는데요.',
+      })
     }
 
     for (const listData of data) {
