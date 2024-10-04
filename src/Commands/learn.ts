@@ -45,31 +45,31 @@ class LearnCommand extends Command {
     const DI_MSG = '해당 단ㅇ어는 개발자님이 특별히 금지하였ㅇ어요.'
     const SUCCESS_MSG = '을/를 배웠ㅇ어요.'
 
-    let command: string
-    let result: string
+    let command: string | undefined
+    let result: string | undefined
 
     if (ctx instanceof Message) {
-      command = (await args!.pick('string').catch(() => null))!.replaceAll(
+      command = (await args?.pick('string').catch(() => null))?.replaceAll(
         '_',
         ' ',
       )
-      result = (await args!.pick('string').catch(() => null))!.replaceAll(
+      result = (await args?.pick('string').catch(() => null))?.replaceAll(
         '_',
         ' ',
       )
-
-      if (!command || !result)
-        return await ctx.reply(
-          codeBlock(
-            'md',
-            `사용법: ${this.detailedDescription}
-            예시: ${this.detailedDescription.examples?.map(example => example).join('\n')}`,
-          ),
-        )
     } else {
       command = ctx.options.getString('단어', true)
       result = ctx.options.getString('대답', true)
     }
+
+    if (!command || !result)
+      return await ctx.reply(
+        codeBlock(
+          'md',
+          `사용법: ${this.detailedDescription.usage}\n` +
+            `예시: ${this.detailedDescription.examples?.map(example => example).join('\n')}`,
+        ),
+      )
 
     const commands: string[] = []
     const aliases: string[] = []
