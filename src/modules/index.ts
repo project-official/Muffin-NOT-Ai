@@ -1,6 +1,6 @@
 import previewWarning from './previewWarning'
 import { NODE_ENV } from './env'
-import ChatBot from './ChatBot'
+import ChatBot from './chatBot'
 import Config from './config'
 import noPerm from './noPerm'
 

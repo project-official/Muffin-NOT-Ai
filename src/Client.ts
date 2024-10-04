@@ -10,7 +10,7 @@ const config = new Config()
 // Load pieces
 import './interaction-handlers/_load'
 import './listeners/_load'
-import './Commands/_load'
+import './commands/_load'
 
 const release = version
   .slice((semver.coerce(version)?.toString() + '-').length)

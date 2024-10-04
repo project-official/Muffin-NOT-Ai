@@ -10,7 +10,7 @@ import { ApplyOptions } from '@sapphire/decorators'
     usage: '머핀아 학습데이터량',
   },
 })
-class LearnDataCommand extends Command {
+class LearnedDataCommand extends Command {
   public registerApplicationCommands(registry: Command.Registry) {
     registry.registerChatInputCommand(builder =>
       builder.setName(this.name).setDescription(this.description),
@@ -50,7 +50,7 @@ ${user.username}님이 가르쳐준 단어: ${userData.length}개`)
 }
 
 void container.stores.loadPiece({
-  piece: LearnDataCommand,
-  name: 'learn_data',
+  piece: LearnedDataCommand,
+  name: 'learnedData',
   store: 'commands',
 })
