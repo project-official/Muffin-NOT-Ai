@@ -31,8 +31,8 @@ class LearnCommand extends Command {
       return await msg.reply(
         codeBlock(
           'md',
-          `사용법: ${this.detailedDescription}
-          예시: ${this.detailedDescription.examples?.map(example => example).join('\n')}`,
+          `사용법: ${this.detailedDescription.usage}\n` +
+            `예시: ${this.detailedDescription.examples?.map(example => example).join('\n')}`,
         ),
       )
     }
