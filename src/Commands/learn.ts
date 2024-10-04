@@ -37,7 +37,7 @@ class LearnCommand extends Command {
   }
 
   private async _run(ctx: Message | ChatInputCommandInteraction, args?: Args) {
-    if (ctx instanceof ChatInputCommandInteraction) ctx.deferReply()
+    if (ctx instanceof ChatInputCommandInteraction) await ctx.deferReply()
     if (typeof this.detailedDescription === 'string') return
 
     const config = this.container.config
