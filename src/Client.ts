@@ -22,7 +22,7 @@ container.version = version
 container.database = new PrismaClient()
 container.dokdoAliases = ['dokdo', 'dok', 'Dokdo', 'Dok', '테스트']
 container.chatBot = new ChatBot(container.database)
-container.lastUpdated = new Date('2024-10-05')
+container.lastUpdated = new Date('2024-10-06')
 container.embedColors = {
   default: 0xaddb87,
   fail: 0xff0000,
