@@ -48,7 +48,7 @@ class ListCommand extends Command {
             'md',
             list.map(item => `-  ${item}`).join('\n'),
           )}`,
-          color: this.container.embedColor,
+          color: this.container.embedColors.default,
           timestamp: new Date().toISOString(),
         },
       ],

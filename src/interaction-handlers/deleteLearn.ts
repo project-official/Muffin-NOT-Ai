@@ -38,7 +38,7 @@ class DeleteLearnHandler extends InteractionHandler {
           {
             title: '삭제',
             description: '아무것도 삭제하지 않았어요.',
-            color: 0x00ff00,
+            color: this.container.embedColors.fail,
           },
         ],
         components: [],
@@ -60,7 +60,7 @@ class DeleteLearnHandler extends InteractionHandler {
           title: '삭제',
           description: `${Number(itemId[0]!)}번을 정상적으로 삭제하ㅇ였어요.`,
           timestamp: new Date().toISOString(),
-          color: this.container.embedColor,
+          color: this.container.embedColors.success,
         },
       ],
       components: [],

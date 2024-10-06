@@ -22,7 +22,7 @@ class InformationCommand extends Command {
       embeds: [
         {
           title: `${this.container.client.user?.username}의 정ㅂ보`,
-          color: this.container.embedColor,
+          color: this.container.embedColors.default,
           fields: [
             {
               name: '구동ㅎ환경',

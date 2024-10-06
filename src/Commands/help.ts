@@ -63,7 +63,7 @@ class HelpCommand extends Command {
             footer: {
               text: `머핀봇 버전: ${this.container.version}`,
             },
-            color: this.container.embedColor,
+            color: this.container.embedColors.default,
             timestamp: new Date().toISOString(),
           },
         ],
@@ -110,6 +110,7 @@ class HelpCommand extends Command {
               text: `머핀봇 버전: ${this.container.version}`,
             },
             timestamp: new Date().toISOString(),
+            color: this.container.embedColors.default,
           },
         ],
       })

@@ -90,7 +90,7 @@ class DeleteLearnCommand extends Command {
           title: '삭제',
           description: `${codeBlock('md', deleteDataList.join('\n'))}`,
           timestamp: new Date().toISOString(),
-          color: this.container.embedColor,
+          color: this.container.embedColors.default,
         },
       ],
       components: [
