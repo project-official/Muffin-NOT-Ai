@@ -33,7 +33,7 @@ class DeleteLearnHandler extends InteractionHandler {
     const decimalRegexp = /^[0-9]/g
 
     if (id === 'cancel')
-      return interaction.editReply({
+      return await interaction.editReply({
         embeds: [
           {
             title: '삭제',
