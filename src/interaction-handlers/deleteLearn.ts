@@ -28,7 +28,7 @@ class DeleteLearnHandler extends InteractionHandler {
   public async run(interaction: StringSelectMenuInteraction) {
     await interaction.deferUpdate()
 
-    const id = Number(interaction.values[0].slice(`${this._CUSTOM_ID}-`.length))
+    const id = interaction.values[0].slice(`${this._CUSTOM_ID}-`.length)
     const db = this.container.database
     const decimalRegexp = /^[0-9]/g
 
@@ -50,7 +50,7 @@ class DeleteLearnHandler extends InteractionHandler {
 
     await db.learn.delete({
       where: {
-        id,
+        id: Number(id),
       },
     })
 
