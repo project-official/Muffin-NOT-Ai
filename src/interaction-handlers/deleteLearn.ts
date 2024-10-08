@@ -1,15 +1,14 @@
-import {
-  container,
-  InteractionHandler,
-  InteractionHandlerTypes,
-} from '@sapphire/framework'
 import { type StringSelectMenuInteraction } from 'discord.js'
 import { ApplyOptions } from '@sapphire/decorators'
+import {
+  InteractionHandlerTypes,
+  InteractionHandler,
+} from '@sapphire/framework'
 
 @ApplyOptions<InteractionHandler.Options>({
   interactionHandlerType: InteractionHandlerTypes.SelectMenu,
 })
-class DeleteLearnHandler extends InteractionHandler {
+export default class DeleteLearnHandler extends InteractionHandler {
   private readonly _CUSTOM_ID = 'maa$deleteLearn'
 
   public async parse(interaction: StringSelectMenuInteraction) {
@@ -67,9 +66,3 @@ class DeleteLearnHandler extends InteractionHandler {
     })
   }
 }
-
-void container.stores.loadPiece({
-  piece: DeleteLearnHandler,
-  name: 'deleteLearn',
-  store: 'interaction-handlers',
-})

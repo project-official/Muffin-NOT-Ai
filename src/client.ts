@@ -7,11 +7,6 @@ import semver from 'semver'
 
 const config = new Config()
 
-// Load pieces
-import './interaction-handlers/_load'
-import './listeners/_load'
-import './commands/_load'
-
 const release = version
   .slice((semver.coerce(version)?.toString() + '-').length)
   .split('.')[1]
@@ -58,7 +53,6 @@ export default class MuffinBot extends SapphireClient {
         repliedUser: true,
       },
       partials: [Partials.Message, Partials.ThreadMember],
-      baseUserDirectory: null,
     })
   }
 

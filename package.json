@@ -1,7 +1,7 @@
 {
   "name": "muffinbot",
-  "version": "4.0.0-pudding.e241008b.change_build_system_and_package_manager",
-  "main": "dist/index.js",
+  "version": "4.0.0-pudding.e241008c.change_build_system_and_package_manager",
+  "main": "dist/src/index.js",
   "private": true,
   "dependencies": {
     "@prisma/client": "^5.20.0",

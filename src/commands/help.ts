@@ -1,5 +1,5 @@
-import { Args, Command, container } from '@sapphire/framework'
 import { ApplyOptions } from '@sapphire/decorators'
+import { Args, Command } from '@sapphire/framework'
 import {
   type ChatInputCommandInteraction,
   codeBlock,
@@ -15,7 +15,7 @@ import {
     examples: ['머핀아 도움말', '머핀아 도움말 배워'],
   },
 })
-class HelpCommand extends Command {
+export default class HelpCommand extends Command {
   public registerApplicationCommands(registry: Command.Registry) {
     const commands = this.container.stores.get('commands').map(command => {
       return {
@@ -124,9 +124,3 @@ class HelpCommand extends Command {
     await this._run(interaction)
   }
 }
-
-void container.stores.loadPiece({
-  piece: HelpCommand,
-  name: 'help',
-  store: 'commands',
-})
