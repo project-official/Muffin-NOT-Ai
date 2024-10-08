@@ -1,6 +1,6 @@
 {
   "name": "muffinbot",
-  "version": "4.0.0-pudding.d241006a",
+  "version": "4.0.0-pudding.e241008a.change_build_system_and_package_manager",
   "main": "dist/index.js",
   "private": true,
   "dependencies": {
@@ -39,13 +39,12 @@
     "build": "tsup",
     "dev": "cross-env NODE_ENV=development tsup --watch --onSuccess \"node --enable-source-maps dist\"",
     "start": "cross-env NODE_ENV=production node dist",
-    "db:pull": "pnpify prisma db pull",
-    "db:push": "pnpify prisma db push",
-    "db:generate": "pnpify prisma generate"
+    "db:pull": "prisma db pull",
+    "db:push": "prisma db push",
+    "db:generate": "prisma generate"
   },
   "resolutions": {
     "@types/ws": "^8.5.11",
     "ws": "8.18.0"
-  },
-  "packageManager": "yarn@4.5.0"
+  }
 }

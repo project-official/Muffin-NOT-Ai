@@ -1,5 +1,5 @@
 import type { Client, Message, TextChannel } from 'discord.js'
-import type { PrismaClient } from '../../prisma'
+import type { PrismaClient } from '@prisma/client'
 import { container } from '@sapphire/framework'
 
 export default class ChatBot {
