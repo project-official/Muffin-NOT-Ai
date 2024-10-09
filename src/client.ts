@@ -1,16 +1,11 @@
 import { SapphireClient, container, LogLevel } from '@sapphire/framework'
 import { GatewayIntentBits, Partials } from 'discord.js'
 import { ChatBot, Config, NODE_ENV } from './modules'
+import { PrismaClient } from '@prisma/client'
 import { version } from '../package.json'
-import { PrismaClient } from '../prisma'
 import semver from 'semver'
 
 const config = new Config()
-
-// Load pieces
-import './interaction-handlers/_load'
-import './listeners/_load'
-import './commands/_load'
 
 const release = version
   .slice((semver.coerce(version)?.toString() + '-').length)
@@ -22,7 +17,7 @@ container.version = version
 container.database = new PrismaClient()
 container.dokdoAliases = ['dokdo', 'dok', 'Dokdo', 'Dok', '테스트']
 container.chatBot = new ChatBot(container.database)
-container.lastUpdated = new Date('2024-10-06')
+container.lastUpdated = new Date('2024-10-09')
 container.embedColors = {
   default: 0xaddb87,
   fail: 0xff0000,
@@ -58,7 +53,6 @@ export default class MuffinBot extends SapphireClient {
         repliedUser: true,
       },
       partials: [Partials.Message, Partials.ThreadMember],
-      baseUserDirectory: null,
     })
   }
 

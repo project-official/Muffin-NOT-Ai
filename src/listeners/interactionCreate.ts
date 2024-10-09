@@ -1,8 +1,8 @@
-import { container, Listener } from '@sapphire/framework'
 import { ChatInputCommandInteraction } from 'discord.js'
+import { Listener } from '@sapphire/framework'
 import { previewWarning } from '../modules'
 
-class InteractionCreateListener extends Listener {
+export default class InteractionCreateListener extends Listener {
   public async run(interaction: ChatInputCommandInteraction<'cached'>) {
     if (interaction.isChatInputCommand()) {
       if (this.container.channel !== 'RELEASE')
@@ -10,9 +10,3 @@ class InteractionCreateListener extends Listener {
     }
   }
 }
-
-void container.stores.loadPiece({
-  piece: InteractionCreateListener,
-  name: 'interactionCreate',
-  store: 'listeners'
-})

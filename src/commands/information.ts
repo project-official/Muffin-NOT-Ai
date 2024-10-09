@@ -1,6 +1,6 @@
 import type { ChatInputCommandInteraction, Message } from 'discord.js'
-import { Command, container } from '@sapphire/framework'
 import { ApplyOptions } from '@sapphire/decorators'
+import { Command } from '@sapphire/framework'
 import { platform, arch } from 'os'
 
 @ApplyOptions<Command.Options>({
@@ -10,7 +10,7 @@ import { platform, arch } from 'os'
     usage: '머핀아 정보',
   },
 })
-class InformationCommand extends Command {
+export default class InformationCommand extends Command {
   public registerApplicationCommands(registry: Command.Registry) {
     registry.registerChatInputCommand(builder =>
       builder.setName(this.name).setDescription(this.description),
@@ -74,9 +74,3 @@ class InformationCommand extends Command {
     await this._run(interaction)
   }
 }
-
-void container.stores.loadPiece({
-  piece: InformationCommand,
-  name: 'information',
-  store: 'commands',
-})

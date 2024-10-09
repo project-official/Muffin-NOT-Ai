@@ -1,6 +1,6 @@
 import { ChatInputCommandInteraction, Message } from 'discord.js'
-import { Command, container } from '@sapphire/framework'
 import { ApplyOptions } from '@sapphire/decorators'
+import { Command } from '@sapphire/framework'
 
 @ApplyOptions<Command.Options>({
   name: '데이터학습량',
@@ -10,7 +10,7 @@ import { ApplyOptions } from '@sapphire/decorators'
     usage: '머핀아 학습데이터량',
   },
 })
-class LearnedDataCommand extends Command {
+export default class LearnedDataCommand extends Command {
   public registerApplicationCommands(registry: Command.Registry) {
     registry.registerChatInputCommand(builder =>
       builder.setName(this.name).setDescription(this.description),
@@ -48,9 +48,3 @@ ${user.username}님이 가르쳐준 단어: ${userData.length}개`)
     await this._run(interaction)
   }
 }
-
-void container.stores.loadPiece({
-  piece: LearnedDataCommand,
-  name: 'learnedData',
-  store: 'commands',
-})

@@ -6,13 +6,13 @@
 
 ### 종속성
 
-- 이 프로젝트는 Node.JS을 사용하고, 패키지 매니저를 Yarn Berry로 사용합니다.
+- 이 프로젝트는 Node.JS을 사용하고, 패키지 매니저를 PNPM을 사용합니다.
 - 이 프로젝트는 MariaDB(또는 MySQL)와 Database ORM인 Prisma를 사용합니다.
 
 #### 종속성 설치
 
 ```sh
-yarn install
+pnpm install
 ```
 
 ### 설정 파일
@@ -29,9 +29,9 @@ yarn install
 
 1. 먼저 .env에 DATABASE_URL부분을 채워 줍니다.
 
-   - 예시: `mysql://username:user_password@hostname:port/database?schema=public`
+   - 예시: `mysql://username:user_password@hostname:port/database`
 
-2. 터미널 에서 `yarn db:push`를 합니다.
+2. 터미널 에서 `pnpm db:push`를 합니다.
 
 ### 실행
 
@@ -40,7 +40,7 @@ yarn install
 #### 그냥 실행 (디버그용 로그 출력)
 
 ```sh
-yarn dev
+pnpm dev
 ```
 
 #### 빌드 후 실행
@@ -48,11 +48,11 @@ yarn dev
 ##### 빌드
 
 ```sh
-yarn build
+pnpm build
 ```
 
 ##### 실행
 
 ```sh
-yarn start
+pnpm start
 ```

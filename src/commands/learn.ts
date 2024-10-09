@@ -1,5 +1,5 @@
 import { ChatInputCommandInteraction, codeBlock, Message } from 'discord.js'
-import { type Args, Command, container } from '@sapphire/framework'
+import { type Args, Command } from '@sapphire/framework'
 import { ApplyOptions } from '@sapphire/decorators'
 
 @ApplyOptions<Command.Options>({
@@ -15,7 +15,7 @@ import { ApplyOptions } from '@sapphire/decorators'
     ],
   },
 })
-class LearnCommand extends Command {
+export default class LearnCommand extends Command {
   public registerApplicationCommands(registry: Command.Registry) {
     registry.registerChatInputCommand(builder =>
       builder
@@ -126,9 +126,3 @@ class LearnCommand extends Command {
     await this._run(interaction)
   }
 }
-
-void container.stores.loadPiece({
-  piece: LearnCommand,
-  name: 'learn',
-  store: 'commands',
-})

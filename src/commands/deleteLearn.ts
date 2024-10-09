@@ -8,10 +8,9 @@ import {
   Message,
 } from 'discord.js'
 import {
-  Args,
-  Command,
-  container,
   DetailedDescriptionCommandObject,
+  Command,
+  Args,
 } from '@sapphire/framework'
 
 @ApplyOptions<Command.Options>({
@@ -23,7 +22,7 @@ import {
     examples: ['머핀아 삭제 머핀'],
   },
 })
-class DeleteLearnCommand extends Command {
+export default class DeleteLearnCommand extends Command {
   public registerApplicationCommands(registry: Command.Registry) {
     registry.registerChatInputCommand(builder =>
       builder
@@ -124,9 +123,3 @@ class DeleteLearnCommand extends Command {
     await this._run(interaction)
   }
 }
-
-void container.stores.loadPiece({
-  piece: DeleteLearnCommand,
-  name: 'delete',
-  store: 'commands',
-})
