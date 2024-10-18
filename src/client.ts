@@ -11,13 +11,21 @@ const release = version
   .slice((semver.coerce(version)?.toString() + '-').length)
   .split('.')[1]
 
+function getLastUpdated() {
+  const updated = release.match(/[0-9]/g)!.join('')
+  const year = updated.slice(0, 2)
+  const month = updated.slice(2, 4)
+  const day = updated.slice(4, 6)
+  return `20${year}-${month}-${day}`
+}
+
 container.config = config
 container.prefix = config.bot.prefix
 container.version = version
 container.database = new PrismaClient()
 container.dokdoAliases = ['dokdo', 'dok', 'Dokdo', 'Dok', '테스트']
 container.chatBot = new ChatBot(container.database)
-container.lastUpdated = new Date('2024-10-09')
+container.lastUpdated = new Date(getLastUpdated())
 container.embedColors = {
   default: 0xaddb87,
   fail: 0xff0000,
