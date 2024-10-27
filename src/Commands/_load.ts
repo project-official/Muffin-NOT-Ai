@@ -1,5 +1,0 @@
-import './learning_data'
-import './deleteLearn'
-import './learn'
-import './help'
-import './list'

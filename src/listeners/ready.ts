@@ -1,9 +1,9 @@
-import { container, Listener } from '@sapphire/framework'
 import { ApplyOptions } from '@sapphire/decorators'
 import { ActivityType, Client } from 'discord.js'
+import { Listener } from '@sapphire/framework'
 
 @ApplyOptions<Listener.Options>({ once: true })
-class ClientReadyListener extends Listener {
+export default class ClientReadyListener extends Listener {
   public async run(client: Client<true>) {
     function setStatus() {
       client.user.setActivity({
@@ -18,9 +18,3 @@ class ClientReadyListener extends Listener {
     this.container.logger.info(`[MuffinBot] 먹힐 준ㅂ비 완료`)
   }
 }
-
-void container.stores.loadPiece({
-  piece: ClientReadyListener,
-  name: 'ready',
-  store: 'listeners',
-})

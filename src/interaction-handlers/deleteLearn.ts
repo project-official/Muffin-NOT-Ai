@@ -1,15 +1,14 @@
-import {
-  container,
-  InteractionHandler,
-  InteractionHandlerTypes,
-} from '@sapphire/framework'
 import { type StringSelectMenuInteraction } from 'discord.js'
 import { ApplyOptions } from '@sapphire/decorators'
+import {
+  InteractionHandlerTypes,
+  InteractionHandler,
+} from '@sapphire/framework'
 
 @ApplyOptions<InteractionHandler.Options>({
   interactionHandlerType: InteractionHandlerTypes.SelectMenu,
 })
-class DeleteLearnHandler extends InteractionHandler {
+export default class DeleteLearnHandler extends InteractionHandler {
   private readonly _CUSTOM_ID = 'maa$deleteLearn'
 
   public async parse(interaction: StringSelectMenuInteraction) {
@@ -33,22 +32,26 @@ class DeleteLearnHandler extends InteractionHandler {
     const decimalRegexp = /^[0-9]/g
 
     if (id === 'cancel')
-      return interaction.editReply({
+      return await interaction.editReply({
         embeds: [
           {
             title: '삭제',
             description: '아무것도 삭제하지 않았어요.',
-            color: 0x00ff00,
+            color: this.container.embedColors.fail,
           },
         ],
         components: [],
       })
 
     const itemId = interaction.component.options.map(item =>
-      item.value.endsWith(id) ? item.label.match(decimalRegexp)![0] : null,
+      item.value.endsWith(`${id}`) ? item.label.match(decimalRegexp)![0] : null,
     )
 
-    await db.learn.delete(id)
+    await db.learn.delete({
+      where: {
+        id: Number(id),
+      },
+    })
 
     await interaction.editReply({
       embeds: [
@@ -56,15 +59,10 @@ class DeleteLearnHandler extends InteractionHandler {
           title: '삭제',
           description: `${Number(itemId[0]!)}번을 정상적으로 삭제하ㅇ였어요.`,
           timestamp: new Date().toISOString(),
+          color: this.container.embedColors.success,
         },
       ],
       components: [],
     })
   }
 }
-
-void container.stores.loadPiece({
-  piece: DeleteLearnHandler,
-  name: 'deleteLearn',
-  store: 'interaction-handlers',
-})

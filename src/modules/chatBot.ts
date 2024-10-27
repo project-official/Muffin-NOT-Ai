@@ -1,19 +1,19 @@
 import type { Client, Message, TextChannel } from 'discord.js'
+import type { PrismaClient } from '@prisma/client'
 import { container } from '@sapphire/framework'
-import type { MaaDatabase } from './database'
 
 export default class ChatBot {
-  public constructor(public db: MaaDatabase) {
-    setInterval(async () => {
-      this.db.ping()
-    }, 60000)
-  }
+  public constructor(public db: PrismaClient) {}
 
   public async getResponse(msg: Message): Promise<string> {
     const prefix = container.prefix
-    const data = await this.db.statement.all()
+    const data = await this.db.statement.findMany()
     const args = msg.content.slice(prefix.length).trim().split(/ +/g).join(' ')
-    const learn = await this.db.learn.findOne(args)
+    const learn = await this.db.learn.findMany({
+      where: {
+        command: args,
+      },
+    })
     const learnData = learn[Math.floor(Math.random() * learn.length)]
     const randomNumber = Math.round(Math.random() * (2 - 1) + 1)
 
@@ -30,7 +30,7 @@ export default class ChatBot {
 
     let response: string
     if ((msg.channel as TextChannel).nsfw) {
-      const NSFWData = await this.db.nsfwContent.all()
+      const NSFWData = await this.db.nsfw_content.findMany()
       const dataList = [...data, ...NSFWData]
       response = dataList[Math.floor(Math.random() * dataList.length)].text
     } else {
@@ -50,19 +50,23 @@ export default class ChatBot {
       if (msg.author.bot) return
       if (msg.author.id === container.config.train.user_ID) {
         const response = await this.getResponse(msg)
-        await this.db.statement.insert({
-          text: msg.content,
-          persona: 'muffin',
-          in_response_to: response,
+        await this.db.statement.create({
+          data: {
+            text: msg.content,
+            persona: 'muffin',
+            in_response_to: response,
+          },
         })
       } else {
         if (!(msg.channel as TextChannel).nsfw) return
         if (!msg.content.startsWith(prefix)) return
         const persona = `user:${msg.author.username.slice(0, 50).toLowerCase()}`
         const text = msg.content.replace(prefix, '')
-        await this.db.nsfwContent.insert({
-          text,
-          persona,
+        await this.db.nsfw_content.create({
+          data: {
+            text,
+            persona,
+          },
         })
       }
     })
