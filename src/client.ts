@@ -65,8 +65,13 @@ export default class MuffinBot extends SapphireClient {
   }
 
   public override async login(): Promise<string> {
-    if (container.channel === 'RELEASE') await container.chatBot.train(this)
-    else {
+    if (container.channel === 'RELEASE') {
+      if (!config.train.user_ID)
+        container.logger.info(
+          '[MuffinBot] .env파일에 TRAIN_USER_ID값이 없어서 학습 기능이 꺼졌어요.',
+        )
+      else await container.chatBot.train(this)
+    } else {
       container.logger.info(
         '[MuffinBot] 해당 채널은 RELEASE 채널이 아니라서 학습 기능이 꺼졌습니다.',
       )

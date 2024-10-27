@@ -1,6 +1,6 @@
 {
   "name": "muffinbot",
-  "version": "4.0.0-pudding.p241018a",
+  "version": "4.0.0-pudding.p241027a",
   "main": "dist/src/index.js",
   "private": true,
   "dependencies": {
