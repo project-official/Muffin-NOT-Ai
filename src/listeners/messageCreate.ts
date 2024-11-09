@@ -10,6 +10,7 @@ export default class MessageCreateListener extends Listener {
       aliases: this.container.dokdoAliases,
       owners: [this.container.config.bot.owner_ID],
       prefix: prefix,
+      secrets: [process.env.DATABASE_URL!],
       noPerm,
     })
     if (msg.author.bot) return
