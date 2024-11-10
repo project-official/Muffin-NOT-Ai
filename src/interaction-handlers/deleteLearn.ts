@@ -31,18 +31,6 @@ export default class DeleteLearnHandler extends InteractionHandler {
     const db = this.container.database
     const decimalRegexp = /^[0-9]/g
 
-    if (id === 'cancel')
-      return await interaction.editReply({
-        embeds: [
-          {
-            title: '삭제',
-            description: '아무것도 삭제하지 않았어요.',
-            color: this.container.embedColors.fail,
-          },
-        ],
-        components: [],
-      })
-
     const itemId = interaction.component.options.map(item =>
       item.value.endsWith(`${id}`) ? item.label.match(decimalRegexp)![0] : null,
     )

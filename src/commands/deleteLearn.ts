@@ -6,6 +6,7 @@ import {
   ComponentType,
   codeBlock,
   Message,
+  ButtonStyle,
 } from 'discord.js'
 import {
   DetailedDescriptionCommandObject,
@@ -100,14 +101,18 @@ export default class DeleteLearnCommand extends Command {
               type: ComponentType.StringSelect,
               customId: `${CUSTOM_ID}@${user.id}`,
               placeholder: '지울 데이터를 선택해ㅈ주세요',
-              options: [
-                ...options,
-                {
-                  label: '❌ 취소',
-                  description: '아무것도 삭제하지 않아요.',
-                  value: `${CUSTOM_ID}-cancel`,
-                },
-              ],
+              options,
+            },
+          ],
+        },
+        {
+          type: ComponentType.ActionRow,
+          components: [
+            {
+              type: ComponentType.Button,
+              customId: `${CUSTOM_ID}-cancel`,
+              label: '취소',
+              style: ButtonStyle.Danger,
             },
           ],
         },
