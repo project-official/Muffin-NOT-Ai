@@ -1,6 +1,7 @@
 import { ChatInputCommandInteraction, codeBlock, Message } from 'discord.js'
 import { type Args, Command } from '@sapphire/framework'
 import { ApplyOptions } from '@sapphire/decorators'
+import { josa } from 'es-hangul'
 
 @ApplyOptions<Command.Options>({
   name: '배워',
@@ -43,7 +44,7 @@ export default class LearnCommand extends Command {
     const config = this.container.config
     const IG_MSG = '해ㄷ당 단어는 배울ㄹ 수 없어요.'
     const DI_MSG = '해당 단ㅇ어는 개발자님이 특별히 금지하였ㅇ어요.'
-    const SUCCESS_MSG = '을/를 배웠ㅇ어요.'
+    const SUCCESS_MSG = ' 배웠ㅇ어요.'
 
     let command: string | undefined
     let result: string | undefined
@@ -114,8 +115,8 @@ export default class LearnCommand extends Command {
     })
 
     return ctx instanceof Message
-      ? await ctx.reply(command + SUCCESS_MSG)
-      : await ctx.editReply(command + SUCCESS_MSG)
+      ? await ctx.reply(josa(command, '을/를') + SUCCESS_MSG)
+      : await ctx.editReply(josa(command, '을/를') + SUCCESS_MSG)
   }
 
   public async messageRun(msg: Message, args: Args) {

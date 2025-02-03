@@ -42,6 +42,9 @@ importers:
       dotenv:
         specifier: ^16.4.5
         version: 16.4.5
+      es-hangul:
+        specifier: ^2.3.0
+        version: 2.3.0
       semver:
         specifier: ^7.6.3
         version: 7.6.3
@@ -468,6 +471,9 @@ packages:
   dotenv@16.4.5:
     resolution: {integrity: sha512-ZmdL2rui+eB2YwhsWzjInR8LldtZHGDoQ1ugH85ppHKwpUHL7j7rN0Ti9NCnGiQbhaZ11FpR+7ao1dNsmduNUg==}
     engines: {node: '>=12'}
+
+  es-hangul@2.3.0:
+    resolution: {integrity: sha512-4Z5JYt5tDTQpxlLhJ1GtyMOOkjgN5h6zKcHoQyKf/p1DIH0wWyBZFoRTy5ImQ+DUOwntKxNJCz2NWe6YfIU1aQ==}
 
   escape-string-regexp@4.0.0:
     resolution: {integrity: sha512-TtpcNJ3XAzx3Gq8sWRzJaVajRs0uVxA2YAkdb1jm2YkPz4G6egUFAyA3n5vtEIZefPk5Wa4UXbKuS5fKkJWdgA==}
@@ -1312,6 +1318,8 @@ snapshots:
       - encoding
 
   dotenv@16.4.5: {}
+
+  es-hangul@2.3.0: {}
 
   escape-string-regexp@4.0.0: {}
 
