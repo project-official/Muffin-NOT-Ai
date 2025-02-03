@@ -27,7 +27,10 @@ export default class ListCommand extends Command {
         user_id: user.id,
       },
     })
-    const list: string[] = []
+    const list: {
+      command: string
+      result: string
+    }[] = []
 
     if (!data[0]) {
       return await ctx.reply({
@@ -36,8 +39,11 @@ export default class ListCommand extends Command {
       })
     }
 
-    for (const listData of data) {
-      list.push(listData.command)
+    for (const { command, result } of data) {
+      list.push({
+        command,
+        result,
+      })
     }
 
     await ctx.reply({
@@ -46,7 +52,7 @@ export default class ListCommand extends Command {
           title: `${user.username}님의 지식`,
           description: `총합: ${data.length}개\n${codeBlock(
             'md',
-            list.map(item => `-  ${item}`).join('\n'),
+            list.map(item => `- ${item.command}: ${item.result}`).join('\n'),
           )}`,
           color: this.container.embedColors.default,
           timestamp: new Date().toISOString(),
